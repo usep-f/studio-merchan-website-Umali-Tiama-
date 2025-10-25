@@ -101,6 +101,82 @@ background: linear-gradient(135deg, #125da8 0%, #1d9bf0 100%);
 transform: translateY(-3px);
 }
 
+/*-- Featured Artists Section */
+.featured-artists {
+background-color: #D4D4E4;
+color: #0d2240;
+}
+
+.featured-artists h2 {
+font-size: 4rem;
+letter-spacing: 1px;
+}
+
+.featured-artists p {
+font-weight: 300;
+font-size: 1.3rem;
+max-width: 700px;
+margin: 0 auto;
+color: #303030;
+}
+
+.artist-card {
+background-color: #fff;
+border-radius: 5px;
+overflow: hidden;
+width: 700px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.artist-img {
+filter: grayscale(100%);
+width: 100%;           
+height: 500px;         
+object-fit: cover;     
+border-top-left-radius: 12px;   
+border-top-right-radius: 12px;  
+border-bottom-left-radius: 0;   
+border-bottom-right-radius: 0;  
+}
+
+
+.artist-info {
+background-color: white;
+font-weight: 400;
+}
+
+.artist-name {
+font-size: 3rem;
+color: #0d2240;
+}
+
+.artist-social a {
+color: #0d2240;
+font-size: 2rem;
+transition: color 0.3s ease;
+}
+
+.artist-social a:hover {
+color: #c8761d;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+background-color: #c8761d;
+border-radius: 50%;
+width: 3rem;
+height: 3rem;
+padding: 0.6rem;   /* padding inside the circle */
+background-size: 1rem 1rem;  /* make the arrow smaller than circle */
+}
+
+.carousel-indicators [data-bs-target] {
+background-color: #c8761d;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+}
+
 /*-- Footer Customization */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
@@ -154,5 +230,11 @@ font-size: 1rem;
 .btn-hero {
 font-size: 1rem;
 padding: 0.7rem 1.5rem;
+}
+}
+
+@media (max-width: 768px) {
+.artist-img {
+height: 200px;
 }
 }
