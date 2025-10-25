@@ -101,6 +101,34 @@ background: linear-gradient(135deg, #125da8 0%, #1d9bf0 100%);
 transform: translateY(-3px);
 }
 
+/*-- Footer Customization */
+.footer-custom {
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
+}
+
+.footer-link {
+color: #ffffff;
+text-decoration: none;
+transition: color 0.3s ease;
+font-weight: 300;
+}
+
+.footer-link:hover {
+color: #8f8e8e;
+}
+
+.footer-icon {
+color: #ffffff;
+font-size: 1.3rem;
+transition: color 0.3s ease;
+}
+
+.footer-icon:hover {
+color: #8f8e8e;
+}
+
 
 /*--Responsive */
 @media (max-width: 991px) {
