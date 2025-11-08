@@ -1,0 +1,295 @@
+/* Resetting the default box-sizing for better consistency */
+html {
+box-sizing: border-box;
+}
+
+*, *::before, *::after {
+box-sizing: inherit; /* Ensures all elements use the same box-sizing model */
+}
+
+/* Improve readability by adjusting default font settings */
+body {
+font-family: 'Urbanist',sans-serif;
+line-height: 1.5;
+background-color: #003766;
+margin: 0;
+padding: 0;
+}
+
+.navbar-custom {
+background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
+}
+
+.navbar-nav .nav-link {
+color: #003766 !important;
+font-weight: 300;
+transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+color: #2979c4 !important;
+}
+
+.navbar-brand img {
+height: 9rem;
+}
+
+/* Spacing to center logo properly */
+.navbar-nav-left, .navbar-nav-right {
+display: flex;
+align-items: center;
+gap: 3rem;
+padding-left: 10rem;
+padding-right: 10rem;
+}
+
+.navbar-nav-left {
+font-size: 1.6rem;
+}
+
+.navbar-nav-right {
+font-size: 1.89rem;
+}
+
+.audio-mixing {
+position: relative;
+min-height: 80vh;
+background-image: url('../assets/services/mixing subpage/sslmixer.jpg'); 
+background-size: cover;
+background-position: center;
+display: flex;
+align-items: center;
+padding: 4rem 10rem;
+font-family: 'Urbanist', sans-serif;
+}
+
+/* Dark gradient overlay */
+.audio-mixing-overlay {
+position: absolute;
+inset: 0;
+background: #07002ABE; /* dark blue filtering */
+backdrop-filter: blur(2px);
+z-index: 1;
+}
+
+/* Text + Button Container */
+.audio-mixing-content {
+position: relative;
+z-index: 2;
+max-width: 800px;
+color: #C9761C;
+}
+
+/* Heading */
+.audio-mixing-content h1 {
+font-size: 4rem;
+font-weight: 800;
+margin-bottom: 1.2rem;
+color: #C9761C; /* bright orange */
+}
+
+.audio-mixing-content h1 span {
+color: #C9761C;
+}
+
+/* Paragraph */
+.audio-mixing-content p {
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.6;
+color: #C9761C;
+margin-bottom: 2rem;
+}
+
+/* Button */
+.mixing-btn {
+display: inline-block;
+padding: 0.9rem 2.2rem;
+background-color: #C9761C; /* orange */
+color: white;
+text-decoration: none;
+border-radius: 30px;
+font-weight: 500;
+font-size: 1rem;
+transition: background 0.3s ease;
+}
+
+.mixing-btn:hover {
+background-color: #a56017;
+}
+
+.modern-classic {
+width: 100%;
+margin: 0;
+padding: 0;
+min-height: 100vh;
+}
+
+
+/* ✅ TOP STRIP — 4 IMAGES IN A GRID */
+.mc-image-strip {
+position: relative;
+width: 100%;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+height: 360px;
+}
+.mc-img-box {
+overflow: hidden;
+border-right: 2px solid rgba(255, 255, 255); /* thin divider */
+border-left: 2px solid rgba(255, 255, 255);
+}
+
+/* ✅ OVERLAY */
+.mc-image-strip::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(
+to bottom,
+#C9761C88,
+#07002A88
+);
+pointer-events: none;   /* allows clicking through if needed */
+z-index: 2;
+}
+
+/* make images sit behind overlay */
+.mc-img-box {
+position: relative;
+z-index: 1;
+overflow: hidden;
+}
+
+.mc-img-box img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+/* ✅ BLUE TEXT SECTION UNDER IT */
+.modern-classic-content {
+background-color: #003766;
+text-align: center;
+padding: 7rem 2rem;
+color: white;
+font-family: 'Urbanist', sans-serif;
+}
+
+.modern-classic-content h2 {
+font-size: 4rem;
+font-weight: 800;
+margin-bottom: 1.5rem;
+letter-spacing: 2px;
+}
+
+.modern-classic-content p {
+max-width: 850px;
+margin: 0 auto;
+line-height: 1.6;
+font-size: 1.2rem;
+font-weight: 300;
+}
+
+.console { 
+display: grid;
+grid-template-columns: 2fr 1fr;
+min-height: 50vh;
+background-color: #D4D4E4;   /* centers vertically */
+}
+
+.console-content {
+padding: 10rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+color: #0a2a4a;
+}
+
+.console h1 {
+font-size: 4rem;
+font-weight: 800;
+line-height: 1.1;
+}
+
+.console h1 span {
+color: #C9761C; 
+}
+
+.console-content p {
+margin-top: 1rem;
+font-size: 1.2rem;
+font-weight: 300;
+max-width: 580px;
+}
+
+.console-image {
+background-image: url('../assets/services/mixing subpage/mixer.jpg'); 
+background-size: cover;
+background-position: center;
+}
+
+.footer-custom {
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
+}
+
+.footer-link {
+color: #ffffff;
+text-decoration: none;
+transition: color 0.3s ease;
+font-weight: 300;
+}
+
+.footer-link:hover {
+color: #8f8e8e;
+}
+
+.footer-icon {
+color: #ffffff;
+font-size: 1.3rem;
+transition: color 0.3s ease;
+}
+
+.footer-icon:hover {
+color: #8f8e8e;
+}
+
+
+@media (max-width: 991px) {
+.navbar-nav-left, .navbar-nav-right {
+flex-direction: column;
+gap: 1rem;
+}
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+.audio-mixing {
+padding: 3rem 2rem;
+min-height: 70vh;
+}
+
+.audio-mixing-content h1 {
+font-size: 2.5rem;
+}
+
+.audio-mixing-content p {
+font-size: 1rem;
+}
+}
+
+@media (max-width: 900px) {
+.mc-image-strip {
+grid-template-columns: 1fr 1fr;
+height: 200px;
+}
+
+.modern-classic-content h2 {
+font-size: 2.2rem;
+}
+}
