@@ -112,7 +112,7 @@ box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 .live-sound {
 display: grid;
 grid-template-columns: 2fr 1fr;
-min-height: 60vh;
+min-height: 50vh;
 background-color: #D4D4E4; 
 }
 
@@ -125,7 +125,7 @@ color: #0a2a4a;
 }
 
 .live-sound-content h1 {
-font-size: 5rem;
+font-size: 4rem;
 font-weight: 800;
 line-height: 1.1;
 }
@@ -137,6 +137,7 @@ color: #C9761C;
 .live-sound-content p {
 margin-top: 1rem;
 font-size: 1.2rem;
+font-weight: 300;
 max-width: 580px;
 }
 
@@ -161,9 +162,138 @@ background-color: #195a8f;
 
 .live-sound-image {
 background-image: url('assets/services/live.jpg'); 
-background-size: fill;
+background-size: cover;
 background-position: center;
 }
+
+/* Online Services Section */
+.online-services {
+background-color: #003766;        /* Deep studio blue */
+padding: 5rem 2rem;
+color: white;
+text-align: center;
+font-family: 'Urbanist', sans-serif;
+}
+
+.online-services-header h1 {
+font-size: 4rem;
+font-weight: 800;
+letter-spacing: 1px;
+color: white;
+}
+
+.online-services-header h1 span {
+color: #C9761C;                   /* Your orange accent */
+}
+
+.online-services-header p {
+max-width: 650px;
+margin: 1rem auto 3rem auto;
+font-weight: 300;
+font-size: 1.2rem;
+color: #ffffff;
+}
+
+/* Grid layout */
+.online-services-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1.3rem;
+padding: 0 1rem;
+}
+
+.online-service-card {
+text-align: center;
+padding: 0.2rem 1rem;
+}
+
+/* Icons */
+.online-service-card .icon {
+font-size: 8rem;
+margin-bottom: 1.2rem;
+color: white;
+}
+
+/* Titles */
+.online-service-card h3 {
+font-size: 1.5rem;
+font-weight: 600;
+margin-bottom: 1rem;
+}
+
+/* Paragraphs */
+.online-service-card p {
+color: #d2d7de;
+font-size: 1rem;
+max-width: 200px;
+margin: 0 auto;
+}
+
+.learn-with-us {
+display: grid;
+grid-template-columns: 1fr 2fr;
+min-height: 50vh;
+background-color: #d5d8e4; /* same light gray-blue tone */
+font-family: 'Urbanist', sans-serif;
+}
+
+/* Left-side image */
+.learn-image {
+background-image: url('assets/services/teach.jpg'); /* replace with your image */
+background-size: cover;
+background-position: center;
+}
+
+/* Right content block */
+.learn-content {
+padding: 4rem 10rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+text-align: right; 
+color: #003766;
+}
+
+.learn-content h1 {
+font-size: 4rem;
+font-weight: 800;
+line-height: 1.1;
+margin-bottom: 1.5rem;
+color: #003766;
+}
+
+.learn-content h1 span {
+color: #C9761C; 
+}
+
+.learn-content p {
+max-width: 740px;
+margin-left: auto;  /* ✅ right-align text block */
+font-size: 1.2rem;
+font-weight: 300;
+color: #003766;
+margin-bottom: 1.2rem;
+}
+
+/* Button */
+.learn-btn {
+display: inline-block;
+width: auto;
+padding: 0.8rem 1rem;
+background-color: #003766;
+color: white;
+text-decoration: none;
+border-radius: 30px;
+font-weight: 500;
+margin-top: 1rem;
+transition: background 0.3s ease;
+align-self: flex-end;
+}
+
+.learn-btn:hover {
+background-color: #1d5c92;
+}
+
 
 
 /* Spacing to center logo properly */
