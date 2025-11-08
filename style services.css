@@ -1,17 +1,15 @@
-/* Resetting the default box-sizing for better consistency */
 html {
 box-sizing: border-box;
 }
 
 *, *::before, *::after {
-box-sizing: inherit; /* Ensures all elements use the same box-sizing model */
+box-sizing: inherit; 
 }
 
-/* Improve readability by adjusting default font settings */
 body {
 font-family: 'Urbanist',sans-serif;
 line-height: 1.5;
-background-color: #003766;
+background-color: #D4D4E4;
 margin: 0;
 padding: 0;
 }
@@ -38,9 +36,8 @@ height: 9rem;
 .services {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-min-height: 100vh;
+min-height: 80vh;
 text-align: center;
-font-family: 'Urbanist', sans-serif;
 
 }
 
@@ -64,19 +61,15 @@ inset: 0;
 background-size: cover;
 background-position: center;
 transition: transform 0.6s ease, filter 0.4s ease;
-filter: brightness(60%);
 }
 
-/* ✨ GRADIENT MAGIC BELOW ✨ */
 .service-bg::after {
 content: "";
 position: absolute;
 inset: 0;
 background: linear-gradient(
-to top,
-rgba(10, 10, 30, 0.85) 0%,
-rgba(10, 10, 30, 0.6) 40%,
-rgba(10, 10, 30, 0.2) 100%
+#C9761C66 1%,
+#20012C 100%
 );
 pointer-events: none;
 z-index: 1;
@@ -85,7 +78,7 @@ z-index: 1;
 .service-content {
 position: relative;
 z-index: 2;
-padding: 5rem 2rem;
+padding: 17rem 2rem 0;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -94,14 +87,14 @@ height: 100%;
 }
 
 .service-content h2 {
-font-size: 2.5rem;
+font-size: 4rem;
 font-weight: 800;
 margin-bottom: 1rem;
 }
 
 .service-content p {
-font-size: 1rem;
-max-width: 320px;
+font-size: 1.2rem;
+max-width: 300px;
 line-height: 1.7;
 color: #f4f4f4;
 }
@@ -116,6 +109,61 @@ transform: translateY(-5px);
 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+.live-sound {
+display: grid;
+grid-template-columns: 2fr 1fr;
+min-height: 60vh;
+background-color: #D4D4E4; 
+}
+
+.live-sound-content {
+padding: 10rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+color: #0a2a4a;
+}
+
+.live-sound-content h1 {
+font-size: 5rem;
+font-weight: 800;
+line-height: 1.1;
+}
+
+.live-sound-content h1 span {
+color: #C9761C; 
+}
+
+.live-sound-content p {
+margin-top: 1rem;
+font-size: 1.2rem;
+max-width: 580px;
+}
+
+.live-btn {
+display: inline-block;   
+width: auto; 
+margin-top: 3rem;            
+padding: 0.8rem 3rem;
+background-color: #003766;
+color: #ffffff;
+border-radius: 55px;
+text-decoration: none;
+font-weight: 200;
+font-size: 2rem;
+transition: background 0.3s ease;
+align-self: flex-start;
+}
+
+.live-btn:hover {
+background-color: #195a8f;
+}
+
+.live-sound-image {
+background-image: url('assets/services/live.jpg'); 
+background-size: fill;
+background-position: center;
+}
 
 
 /* Spacing to center logo properly */
@@ -136,7 +184,6 @@ font-size: 1.89rem;
 }
 
 .footer-custom {
-    margin-top: 0;
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
 font-family: 'Urbanist', sans-serif;

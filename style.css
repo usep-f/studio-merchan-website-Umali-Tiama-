@@ -83,7 +83,7 @@ font-weight: 300;
 max-width: 800px;
 margin: 0 auto;
 line-height: 1.6;
-color: #e0e0e0;
+color: #ffffff;
 }
 
 .btn-hero {
@@ -104,25 +104,26 @@ transform: translateY(-3px);
 /*-- Featured Artists Section */
 .featured-artists {
 background-color: #D4D4E4;
-color: #0d2240;
+color: #003766;
 }
 
 .featured-artists h2 {
 font-size: 4rem;
+font-weight: 800;
 letter-spacing: 1px;
 }
 
 .featured-artists p {
 font-weight: 300;
-font-size: 1.3rem;
+font-size: 1.2rem;
 max-width: 700px;
 margin: 0 auto;
-color: #303030;
+color: #003766;
 }
 
 .artist-card {
-background-color: #fff;
-border-radius: 5px;
+background-color: #D4D4E4;
+border-radius: 35px;
 overflow: hidden;
 width: 700px;
 box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -142,7 +143,8 @@ border-bottom-right-radius: 0;
 
 .artist-info {
 background-color: white;
-font-weight: 400;
+font-size: 3rem;
+font-weight: 600;
 }
 
 .artist-name {
@@ -180,25 +182,26 @@ border-radius: 50%;
 /*-- Explore the Soundscapes Section */
 .explore-soundscapes {
 background-color: #D4D4E4;  
-color: #0d2240;
+color: #003766;
 }
 
 .explore-soundscapes h2 {
 font-size: 4rem;
+font-weight: 800;
 letter-spacing: 1px;
 }
 
 .explore-soundscapes p {
 font-weight: 300;
-font-size: 1.3rem;
+font-size: 1.2rem;
 max-width: 700px;
 margin: 0 auto 3rem;
-color: #303030;
+color: #003766;
 }
 
 .studio-card {
 background-color: #fff;
-border-radius: 12px 12px 0 0;  
+border-radius: 35px 35px 12px 12px;  
 overflow: hidden;
 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -216,17 +219,17 @@ object-fit: cover;
 }
 
 .studio-name {
-background-color: #0d2240;
+background-color: #003766;
 color: #fff;
 font-weight: 600;
-font-size: 1.1rem;
+font-size: 1.5rem;
 padding: 0.8rem 0;
 text-align: center;
 }
 
 .powered-by {
 background-color: #c8761d; 
-color: #0d2240;
+color: #003766;
 }
 
 .powered-logo {
@@ -247,6 +250,11 @@ background: linear-gradient(rgba(0, 30, 60, 0.9), rgba(0, 30, 60, 0.9)),
             url('assets/Index/Testimonials/background.jpg') center/cover no-repeat;
 }
 
+.testimonials h2 {
+font-size: 4rem;
+font-weight: 800;
+}
+
 .text-accent {
 color: #f29f32; /* matches your hero accent */
 }
@@ -254,7 +262,7 @@ color: #f29f32; /* matches your hero accent */
 .testimonial-card {
 background-color: #f4f4f8;
 border-radius: 10px;
-color: #0d2240;
+color: #003766;
 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

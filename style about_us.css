@@ -48,7 +48,7 @@ font-size: 1.89rem;
 }
 
 .about-section {
-height: 90vh;
+height: 80vh;
 background: 
 linear-gradient(rgba(0, 10, 40, 0.8), rgba(0, 10, 40, 0.8)),
 url('assets/about/hero-background.jfif') center center/cover no-repeat;
@@ -74,21 +74,21 @@ color: #f29f32;
 .about-text {
 font-family: 'Urbanist', sans-serif;
 font-weight: 300;
-font-size: 1.5rem;
+font-size: 1.2rem;
 line-height: 1.8;
-max-width: 1050px;
+max-width: 950px;
 margin: 0 auto;
 color: #e2e2e2;
 }
 
 .about-text.highlight {
-font-weight: 400;
+font-weight: 300;
 color: #ffffff;
 }
 
 .about-text .accent {
 color: #f29f32;
-font-weight: 600;
+font-weight: 300;
 }
 
 /*EXCELLENCE*/
@@ -112,16 +112,16 @@ gap: 1.1rem;
 
 
 .title {
-font-size: 4.5rem;
-font-weight: 700;
+font-size: 4rem;
+font-weight: 800;
 line-height: 1.2;
 color: #092b4b;
 margin-bottom: 1rem;
 }
 
 .sub {
-font-size: 4.65rem;
-font-weight: 700;
+font-size: 4rem;
+font-weight: 800;
 }
 
 .accent {
@@ -129,7 +129,7 @@ color: #f29f32;
 }
 
 .paragraph {
-font-size: 1.49rem;
+font-size: 1.2rem;
 font-weight: 300;
 line-height: 1.7;
 margin-top: 2rem;
@@ -168,7 +168,7 @@ gap: 4rem;
 }
 
 .voice-section .title {
-font-size: 4.5rem;
+font-size: 4rem;
 font-weight: 800;
 line-height: 1.2;
 color: #ffffff;
@@ -180,7 +180,7 @@ color: #f29f32;
 }
 
 .voice-section .paragraph {
-font-size: 1.49rem;
+font-size: 1.2rem;
 font-weight: 300;
 line-height: 1.7;
 margin-top: 1.5rem;
