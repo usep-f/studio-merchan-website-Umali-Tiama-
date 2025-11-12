@@ -9,11 +9,20 @@ include 'logic.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio Booking System</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
     
     <link rel="stylesheet" href="style booking.css">
 </head>
@@ -25,18 +34,18 @@ include 'logic.php';
         <div class="container-fluid navbar-grid">
           
           <ul class="navbar-nav left-nav">
-            <li class="nav-item"><a class="nav-link" href="aboutus.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-            <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="../aboutus.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="../services.html">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="../team.html">Team</a></li>
           </ul>
          
-          <a class="navbar-brand" href="index.html">
-            <img src="assets/LOGO.png" alt="navbar logo" />
+          <a class="navbar-brand" href="../index.html">
+            <img src="../assets/LOGO.png" alt="navbar logo" />
           </a>
           
           <ul class="navbar-nav right-nav">
             <li class="nav-item"><a class="nav-link" href="sample_booking\booking.php">Book Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="hiring.html">Join Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/hiring.html">Join Us</a></li>
           </ul>
         </div>
       </nav>
@@ -44,8 +53,8 @@ include 'logic.php';
       <!--mobile-->
       <nav class="navbar mobile-navbar navbar-custom py-2 d-lg-none">
         <div class="container-fluid justify-content-between">
-          <a class="navbar-brand mx-2" href="index.html">
-            <img src="assets\LOGO.png" alt="navbar logo" height="60">
+          <a class="navbar-brand mx-2" href="../index.html">
+            <img src="../assets/LOGO.png" alt="navbar logo" height="60">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
             <span class="navbar-toggler-icon"></span>
@@ -54,11 +63,11 @@ include 'logic.php';
         
         <div class="collapse" id="mobileNav">
           <ul class="navbar-nav text-center">
-            <li class="nav-item"><a class="nav-link" href="aboutus.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-            <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="../aboutus.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="../services.html">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="../team.html">Team</a></li>
             <li class="nav-item"><a class="nav-link" href="sample_booking\booking.php">Book Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="hiring.html">Join Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="../hiring.html">Join Us</a></li>
           </ul>
         </div>
       </nav>
@@ -169,7 +178,7 @@ include 'logic.php';
 
                 <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
                     <img
-                        src="assets\LOGO_3-removebg-preview.png"
+                        src="../assets/LOGO_3-removebg-preview.png"
                         alt="Studio Merchan Logo"
                         height="80"
                         class="mb-3"
@@ -180,9 +189,9 @@ include 'logic.php';
 
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <ul class="list-unstyled d-flex justify-content-center mb-0">
-                        <li><a href="aboutus.html" class="footer-link mx-3">About</a></li>
-                        <li><a href="services.html" class="footer-link mx-3">Services</a></li>
-                        <li><a href="team.html" class="footer-link mx-3">Team</a></li>
+                        <li><a href="../aboutus.html" class="footer-link mx-3">About</a></li>
+                        <li><a href="../services.html" class="footer-link mx-3">Services</a></li>
+                        <li><a href="../team.html" class="footer-link mx-3">Team</a></li>
                         <li><a href="sample_booking\booking.php" class="footer-link mx-3">Book Us</a></li>
                     </ul>
                 </div>

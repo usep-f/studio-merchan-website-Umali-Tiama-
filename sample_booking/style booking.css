@@ -1,7 +1,17 @@
+html {
+box-sizing: border-box;
+}
+*, *::before, *::after {
+box-sizing: inherit; 
+}
+
 body {
-    font-family: 'Urbanist', sans-serif; /* General text font */
+    font-family: 'Urbanist', sans-serif; 
+    line-height: 1.5;
     background-color: #D4D4E4; /* Match left panel for mobile */
     color: #003766;
+    margin: 0;
+    padding: 0;
 }
 
 /* Navbar Styles */
