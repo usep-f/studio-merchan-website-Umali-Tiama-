@@ -1,0 +1,245 @@
+
+html {
+box-sizing: border-box;
+}
+
+*, *::before, *::after {
+box-sizing: inherit;
+}
+
+body {
+font-family: 'Urbanist', sans-serif;
+line-height: 1.5;
+background-color: #003766;
+margin: 0;
+padding: 0;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
+padding-left: 5rem;
+padding-right: 10rem;
+}
+
+.navbar-grid {
+display: grid;
+grid-template-columns: 1fr auto 1fr;
+align-items: center;
+}
+
+.left-nav,
+.right-nav {
+display: flex;
+align-items: center;
+gap: 3rem;
+margin: 0;
+padding: 0;
+}
+
+.navbar-nav {
+display: flex !important;
+flex-direction: row !important;
+align-items: center;
+justify-content: center;
+gap: 3rem;
+}
+
+.navbar-nav .nav-link {
+color: #003766 !important;
+font-size: 1.8rem;
+font-weight: 300;
+transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+color: #2979c4 !important;
+}
+
+.navbar-brand img {
+height: 8.5rem;
+}
+
+.desktop-navbar {
+display: block;
+}
+
+.navbar-toggler {
+border: none;
+}
+
+.navbar-toggler-icon {
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.footer-custom {
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
+}
+
+/*-- Service Hero Banner (From Image) */
+.service-hero-banner {
+min-height: 70vh;
+/* NOTE: You must replace this URL with the correct path to your image. 
+I used the same gradient overlay technique as your main .hero section.
+*/
+background: linear-gradient(rgba(0, 20, 40, 0.8), rgba(0, 20, 40, 0.8)),
+url("/assets/services/recording subpage/In_Studio-_Track_Band_Together_or_Separately_2170x.jpg") center center/cover no-repeat;
+padding: 2rem 0; /* Provides spacing on all screen sizes */
+}
+
+.service-hero-title {
+font-size: 4.5rem;
+font-weight: 800;
+text-transform: uppercase;
+line-height: 1.2;
+color: #c8761d; /* Using the orange from your navbar */
+}
+
+.service-hero-subtext {
+font-size: 1.5rem;
+font-weight: 300;
+line-height: 1.6;
+color: #c8761d;
+}
+
+.btn-service-hero {
+background-color: #c8761d;
+color: #ffffff;
+border: none;
+border-radius: 10px; /* Matches the button in the image */
+padding: 0.8rem 2rem;
+font-size: 1.2rem;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+
+.btn-service-hero:hover {
+background-color: #f29f32; /* Using the accent orange from your hero */
+color: #ffffff;
+transform: translateY(-2px);
+}
+
+/*-- Crisp Recordings Section */
+.feature-split {
+background-color: #d4d4e4;
+overflow: hidden; /* Good practice for g-0 rows */
+}
+
+.feature-text-col {
+color: #003766; /* Matches your featured-artists text color */
+}
+
+.feature-text-content {
+/* This keeps the text block from being too wide */
+max-width: 600px;
+}
+
+.feature-title-dark {
+font-size: 4rem;
+font-weight: 800;
+letter-spacing: 1px;
+color: #003766; /* Your primary dark blue */
+line-height: 1.1;
+}
+
+.feature-title-accent {
+font-size: 4rem;
+font-weight: 800;
+letter-spacing: 1px;
+color: #c8761d; /* Your primary orange accent */
+line-height: 1.1;
+}
+
+.feature-subtext {
+font-weight: 300;
+font-size: 1.2rem;
+color: #003766;
+}
+
+.feature-image-col {
+/* NOTE: You must replace this URL with the correct path to your image. 
+*/
+background: url("/assets/services/recording subpage/mic.jpg") center center/cover
+no-repeat;
+
+/* This ensures the image has height and is visible */
+min-height: 500px;
+}
+
+/* Footer Styles */
+.footer-link {
+color: #ffffff;
+text-decoration: none;
+font-weight: 300;
+white-space: nowrap;
+transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+color: #8f8e8e;
+}
+
+.footer-icon {
+color: #ffffff;
+font-size: 1.1rem;
+transition: color 0.3s ease;
+}
+
+.footer-icon:hover {
+color: #8f8e8e;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+.desktop-navbar {
+display: none !important;
+}
+.navbar-brand img {
+height: 6rem !important;  /* much smaller on mobile */
+}
+}
+
+.mobile-navbar {
+display: none;
+}
+
+
+@media (max-width: 992px) {
+.mobile-navbar {
+display: flex !important;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+}
+}
+
+@media (max-width: 768px) {
+.service-hero-title {
+font-size: 2.5rem; /* Matching your .hero-title responsive style */
+}
+
+.service-hero-subtext {
+font-size: 1rem; /* Matching your .hero-subtext responsive style */
+}
+
+.btn-service-hero {
+font-size: 1rem;
+padding: 0.7rem 1.5rem; /* Matching your .btn-hero responsive style */
+}
+}
+@media (max-width: 768px) {
+.feature-title-dark,
+.feature-title-accent {
+font-size: 2.5rem; /* Matches your .hero-title responsive style */
+}
+
+.feature-subtext {
+font-size: 1rem; /* Matches your .hero-subtext responsive style */
+}
+
+.feature-image-col {
+min-height: 350px; /* A shorter height for smaller screens */
+}
+}
