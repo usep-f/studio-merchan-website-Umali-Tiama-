@@ -17,6 +17,8 @@ padding: 0;
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 5rem;
 padding-right: 10rem;
+position: relative; 
+z-index: 9999; /* Force it to the very top */
 }
 
 .navbar-grid {
