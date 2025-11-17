@@ -72,25 +72,19 @@ border: none;
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-.footer-custom {
-background: linear-gradient(90deg, #011b41 0%, #130029 100%);
-color: #ffffff;
-font-family: 'Urbanist', sans-serif;
-}
-
 /*-- Service Hero Banner (From Image) */
 .service-hero-banner {
-min-height: 70vh;
+min-height: 80vh;
 /* NOTE: You must replace this URL with the correct path to your image. 
 I used the same gradient overlay technique as your main .hero section.
 */
 background: linear-gradient(rgba(0, 20, 40, 0.8), rgba(0, 20, 40, 0.8)),
 url("/assets/services/recording subpage/In_Studio-_Track_Band_Together_or_Separately_2170x.jpg") center center/cover no-repeat;
-padding: 2rem 0; /* Provides spacing on all screen sizes */
+padding: 4rem 10rem; /* Provides spacing on all screen sizes */
 }
 
 .service-hero-title {
-font-size: 4.5rem;
+font-size: 4rem;
 font-weight: 800;
 text-transform: uppercase;
 line-height: 1.2;
@@ -98,7 +92,7 @@ color: #c8761d; /* Using the orange from your navbar */
 }
 
 .service-hero-subtext {
-font-size: 1.5rem;
+font-size: 1.2rem;
 font-weight: 300;
 line-height: 1.6;
 color: #c8761d;
@@ -108,8 +102,8 @@ color: #c8761d;
 background-color: #c8761d;
 color: #ffffff;
 border: none;
-border-radius: 10px; /* Matches the button in the image */
-padding: 0.8rem 2rem;
+border-radius: 30px; /* Matches the button in the image */
+padding: 1rem 2.2rem;
 font-size: 1.2rem;
 font-weight: 500;
 transition: all 0.3s ease;
@@ -121,26 +115,50 @@ color: #ffffff;
 transform: translateY(-2px);
 }
 
-/*-- Crisp Recordings Section */
-.feature-split {
+/*-- Crisp Recordings Section --*/
+/* This is the Grid-based replacement for .feature-split */
+.split-grid {
+display: grid;
+grid-template-columns: 2fr 1fr;
 background-color: #d4d4e4;
-overflow: hidden; /* Good practice for g-0 rows */
+overflow: hidden; /* Good practice */
 }
 
-.feature-text-col {
+.split-grid-content {
+padding: 5rem 1rem 10rem 10rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
 color: #003766; /* Matches your featured-artists text color */
+max-width: 600px; /* This keeps the text block from being too wide */
 }
 
-.feature-text-content {
-/* This keeps the text block from being too wide */
-max-width: 600px;
+.split-grid-image {
+background-size: cover;
+background-position: center;
+/* THIS IS THE HEIGHT ("thickness"). 
+It will now work perfectly. Set it to whatever you want.
+*/
+min-height: 400px; 
 }
 
+/* Specific image for Crisp Recordings */
+.image-mic {
+background-image: url("/assets/services/recording subpage/mic.jpg");
+}
+
+/* Specific image for Acoustics */
+.image-acoustics {
+/* NOTE: Make sure this path is correct */
+background-image: url("/assets/services/recording subpage/acoustic-materials.jpg"); 
+}
+
+/* These styles are still used by the text in the grid */
 .feature-title-dark {
 font-size: 4rem;
 font-weight: 800;
 letter-spacing: 1px;
-color: #003766; /* Your primary dark blue */
+color: #003766; 
 line-height: 1.1;
 }
 
@@ -148,7 +166,7 @@ line-height: 1.1;
 font-size: 4rem;
 font-weight: 800;
 letter-spacing: 1px;
-color: #c8761d; /* Your primary orange accent */
+color: #c8761d; 
 line-height: 1.1;
 }
 
@@ -158,17 +176,54 @@ font-size: 1.2rem;
 color: #003766;
 }
 
-.feature-image-col {
-/* NOTE: You must replace this URL with the correct path to your image. 
-*/
-background: url("/assets/services/recording subpage/mic.jpg") center center/cover
-no-repeat;
-
-/* This ensures the image has height and is visible */
-min-height: 500px;
+/* This is the new modifier class for the dark section */
+.split-grid-dark {
+    display: grid;
+grid-template-columns: 1fr 2fr;
+background-color: #003766; /* Your main dark blue */
 }
 
+/* This sets the padding for the text when it's on the RIGHT side */
+.split-grid-dark .split-grid-content {
+/* Top, Right, Bottom, Left */
+/* Scooches text away from the right edge (8rem) */
+padding: 5rem 10rem 5rem 27rem;
+margin-bottom: 4rem;
+max-width: 3000px; /* Keep consistent max-width */
+}
+
+/* New class for the mixer image */
+.image-mixer {
+/* NOTE: Make sure this path is correct */
+background-image: url("/assets/services/recording subpage/preamp.webp"); 
+}
+
+/* New class for light text (on dark background) */
+.feature-title-light {
+font-size: 4rem;
+font-weight: 800;
+letter-spacing: 1px;
+color: #ffffff; /* White text */
+line-height: 1.1;
+text-align: right;
+}
+
+/* New class for light subtext (on dark background) */
+.feature-subtext-light {
+font-weight: 300;
+font-size: 1.2rem;
+color: #ffffff; /* White text */
+text-align: right;
+}
+
+
 /* Footer Styles */
+.footer-custom {
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
+}
+
 .footer-link {
 color: #ffffff;
 text-decoration: none;
@@ -229,17 +284,53 @@ font-size: 1rem;
 padding: 0.7rem 1.5rem; /* Matching your .btn-hero responsive style */
 }
 }
+
+/* Responsive styles for the new grid */
+@media (max-width: 992px) {
+.split-grid {
+grid-template-columns: 1fr; /* Stack them vertically */
+}
+
+.split-grid-content {
+order: 2; /* Text always below image on mobile */
+padding: 3rem 2rem;
+}
+
+.split-grid-image {
+order: 1; /* Image always on top on mobile */
+min-height: 350px;
+}
+}
+
+/* Keep your existing responsive text styles.
+Just make sure the .feature-image-col rule is updated.
+*/
 @media (max-width: 768px) {
 .feature-title-dark,
 .feature-title-accent {
-font-size: 2.5rem; /* Matches your .hero-title responsive style */
+font-size: 2.5rem; 
 }
 
 .feature-subtext {
-font-size: 1rem; /* Matches your .hero-subtext responsive style */
+font-size: 1rem; 
 }
 
-.feature-image-col {
-min-height: 350px; /* A shorter height for smaller screens */
+.split-grid-image {
+min-height: 300px; /* A shorter height for smaller screens */
+}
+}
+
+@media (max-width: 768px) {
+.feature-title-light {
+font-size: 2.5rem; 
+}
+
+.feature-subtext-light {
+font-size: 1rem; 
+}
+
+/* Fix padding for dark section on mobile */
+.split-grid-dark .split-grid-content {
+padding: 3rem 2rem; /* Match the light sections on mobile */
 }
 }
