@@ -348,12 +348,41 @@ display: none;
 }
 
 
-@media (max-width: 992px) {
+/*borgir*/
+@media (max-width: 1050px) {
+.desktop-navbar { display: none !important; }
 .mobile-navbar {
 display: flex !important;
 justify-content: space-between;
 align-items: center;
 padding: 1rem 2rem;
+flex-wrap: wrap !important; 
+}
+#mobileNav {
+width: 100%;
+}
+#mobileNav .navbar-nav {
+flex-direction: row !important;
+justify-content: center !important;
+gap: 1.5rem;
+padding-top: 1rem;
+}
+.mobile-navbar .nav-link { font-size: 1.35rem; }
+}
+
+@media (max-width: 500px) {
+#mobileNav .navbar-nav {
+flex-direction: column !important;
+align-items: center !important; 
+width: 100%;
+padding-right: 1rem;
+padding-top: 1rem;
+}
+#mobileNav .nav-link {
+font-size: 1.25rem;
+text-align: right !important; 
+display: block;
+width: 100%;
 }
 }
 

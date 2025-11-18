@@ -315,15 +315,16 @@ margin-bottom: 1.2rem;
 
 /* Button */
 .learn-btn {
-display: inline-block;
-width: auto;
-padding: 0.8rem 1rem;
+display: inline-block;   
+width: auto; 
+margin-top: 3rem;            
+padding: 0.8rem 3rem;
 background-color: #003766;
-color: white;
+color: #ffffff;
+border-radius: 55px;
 text-decoration: none;
-border-radius: 30px;
-font-weight: 500;
-margin-top: 1rem;
+font-weight: 200;
+font-size: 2rem;
 transition: background 0.3s ease;
 align-self: flex-end;
 }
@@ -376,11 +377,162 @@ height: 6rem !important;  /* much smaller on mobile */
 display: none;
 }
 
-@media (max-width: 992px) {
-.mobile-navbar {
-display: flex !important;
-justify-content: space-between;
-align-items: center;
-padding: 1rem 2rem;
+/* =========================================
+   MOBILE RESPONSIVENESS: SERVICES PAGE
+   ========================================= */
+
+/* --- 1. UNIVERSAL NAVBAR FIX (Matches Index) --- */
+
+/* TABLET (1050px - 701px): Center Row */
+@media (max-width: 1050px) {
+  .desktop-navbar { display: none !important; }
+  
+  .mobile-navbar {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    flex-wrap: wrap !important; /* Allows menu to drop to new line */
+  }
+
+  #mobileNav { width: 100%; }
+
+  #mobileNav .navbar-nav {
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+  
+  .mobile-navbar .nav-link { font-size: 1.2rem; }
 }
+
+/* PHONE (700px and below): Vertical Right */
+@media (max-width: 700px) {
+  #mobileNav .navbar-nav {
+    flex-direction: column !important;
+    align-items: flex-end !important; 
+    width: 100%;
+    padding-right: 1rem;
+    padding-top: 1rem;
+  }
+
+  #mobileNav .nav-link {
+    font-size: 1.5rem;
+    text-align: right !important; 
+    display: block;
+    width: 100%;
+  }
+}
+
+
+/* --- 2. MAIN SERVICES GRID (Record, Mix, Master) --- */
+@media (max-width: 768px) {
+  .services {
+    /* Switch from 3 columns to 1 column */
+    grid-template-columns: 1fr; 
+    height: auto; /* Remove fixed height */
+  }
+
+  .service-card {
+    /* Fixed height for mobile cards */
+    height: 500px; 
+  }
+
+  /* PADDING ADJUSTMENT HERE */
+  .service-content {
+    /* Top: 8rem (moved up) | Left/Right: 2rem | Bottom: 4rem (added space) */
+    padding: 8rem 2rem 4rem !important; 
+  }
+
+  .service-content h2 {
+    font-size: 3rem; /* Slightly smaller title */
+  }
+}
+
+
+/* --- 3. LIVE SOUND SECTION (Split Layout) --- */
+@media (max-width: 768px) {
+  .live-sound {
+    /* Switch from Side-by-Side to Vertical Stack */
+    grid-template-columns: 1fr; 
+    height: auto;
+  }
+
+  .live-sound-content {
+    /* Reduce massive padding */
+    padding: 4rem 2rem; 
+    text-align: center; /* Center align text for mobile */
+    order: 2; /* Optional: Put text BELOW image if you prefer, or keep as is */
+  }
+
+  .live-sound-content h1 {
+    font-size: 2.5rem; /* Down from 4rem */
+  }
+
+  /* The Image Block */
+  .live-sound-image {
+    height: 300px; /* Give it a fixed height since it's now a stacked block */
+    width: 100%;
+  }
+  
+  .live-btn {
+    align-self: center; /* Center the button */
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+}
+
+
+/* --- 4. ONLINE SERVICES (Icon Grid) --- */
+@media (max-width: 768px) {
+  .online-services-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .online-services-grid {
+    /* Switch from 3 columns to 1 column */
+    grid-template-columns: 1fr; 
+    gap: 3rem; /* Add space between items */
+  }
+  
+  .online-service-card p {
+    max-width: 100%; /* Let text fill the screen width */
+  }
+}
+
+
+/* --- 5. LEARN WITH US (Split Layout) --- */
+@media (max-width: 768px) {
+  .learn-with-us {
+    /* Switch from Side-by-Side to Vertical Stack */
+    grid-template-columns: 1fr; 
+  }
+
+  /* The Image Block */
+  .learn-image {
+    height: 300px; /* Give it height on mobile */
+    order: 1;      /* Put image on TOP */
+  }
+
+  .learn-content {
+    order: 2;      /* Put text BELOW image */
+    padding: 4rem 2rem;
+    text-align: center; /* Center text */
+  }
+
+  .learn-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .learn-content p {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* Override right-align */
+  }
+
+  .learn-btn {
+    align-self: center; /* Center the button */
+  }
 }
