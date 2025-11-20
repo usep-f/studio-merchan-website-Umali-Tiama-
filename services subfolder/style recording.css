@@ -19,7 +19,9 @@ padding: 0;
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 5rem;
-padding-right: 10rem;
+padding-right: 5rem;
+position: relative; 
+z-index: 9999; 
 }
 
 .navbar-grid {
@@ -32,7 +34,7 @@ align-items: center;
 .right-nav {
 display: flex;
 align-items: center;
-gap: 3rem;
+gap: 7rem;
 margin: 0;
 padding: 0;
 }
@@ -57,7 +59,7 @@ color: #2979c4 !important;
 }
 
 .navbar-brand img {
-height: 8.5rem;
+height: 7.5rem;
 }
 
 .desktop-navbar {
@@ -247,19 +249,18 @@ color: #8f8e8e;
 }
 
 /* Responsive Styles */
-@media (max-width: 992px) {
+/*--navbar --*/
+@media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  /* much smaller on mobile */
+height: 6rem !important;  
 }
 }
-
 .mobile-navbar {
 display: none;
 }
-
 
 /*borgir*/
 @media (max-width: 1050px) {

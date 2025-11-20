@@ -13,10 +13,13 @@ padding: 0;
 }
 
 /* Navbar Styles */
+/* Navbar Styles */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 5rem;
-padding-right: 10rem;
+padding-right: 5rem;
+position: relative; 
+z-index: 9999; 
 }
 
 .navbar-grid {
@@ -29,7 +32,7 @@ align-items: center;
 .right-nav {
 display: flex;
 align-items: center;
-gap: 3rem;
+gap: 7rem;
 margin: 0;
 padding: 0;
 }
@@ -54,7 +57,7 @@ color: #2979c4 !important;
 }
 
 .navbar-brand img {
-height: 8.5rem;
+height: 7.5rem;
 }
 
 .desktop-navbar {
@@ -68,7 +71,6 @@ border: none;
 .navbar-toggler-icon {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
-
 
 .about-section {
 height: 80vh;
@@ -258,60 +260,56 @@ color: #8f8e8e;
 
 
 /*--Responsive */
-@media (max-width: 992px) {
+/*--navbar --*/
+@media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  /* much smaller on mobile */
+height: 6rem !important;  
 }
 }
-
 .mobile-navbar {
 display: none;
 }
 
-/* --- 1. UNIVERSAL NAVBAR FIX (Standard) --- */
+/*borgir*/
 @media (max-width: 1050px) {
-  .desktop-navbar { display: none !important; }
-  
-  .mobile-navbar {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    flex-wrap: wrap !important;
-  }
-
-  #mobileNav { width: 100%; }
-
-  #mobileNav .navbar-nav {
-    flex-direction: row !important;
-    justify-content: center !important;
-    gap: 1.5rem;
-    padding-top: 1rem;
-  }
-  
-  .mobile-navbar .nav-link { font-size: 1.2rem; }
+.desktop-navbar { display: none !important; }
+.mobile-navbar {
+display: flex !important;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+flex-wrap: wrap !important; 
+}
+#mobileNav {
+width: 100%;
+}
+#mobileNav .navbar-nav {
+flex-direction: row !important;
+justify-content: center !important;
+gap: 1.5rem;
+padding-top: 1rem;
+}
+.mobile-navbar .nav-link { font-size: 1.35rem; }
 }
 
-@media (max-width: 700px) {
-  #mobileNav .navbar-nav {
-    flex-direction: column !important;
-    align-items: flex-end !important; 
-    width: 100%;
-    padding-right: 1rem;
-    padding-top: 1rem;
-  }
-
-  #mobileNav .nav-link {
-    font-size: 1.5rem;
-    text-align: right !important; 
-    display: block;
-    width: 100%;
-  }
+@media (max-width: 500px) {
+#mobileNav .navbar-nav {
+flex-direction: column !important;
+align-items: center !important; 
+width: 100%;
+padding-right: 1rem;
+padding-top: 1rem;
 }
-
+#mobileNav .nav-link {
+font-size: 1.25rem;
+text-align: right !important; 
+display: block;
+width: 100%;
+}
+}
 
 /* --- 2. HERO SECTION FIX --- */
 @media (max-width: 768px) {
