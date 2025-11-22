@@ -549,6 +549,7 @@ width: 100%;
 
 .online-service-card p {
   max-width: 100%; /* Let text fill the screen width */
+  font-size: 1.1rem;
 }
 }
 

@@ -461,13 +461,13 @@ min-height: 75vh;
 padding: 4rem 1.5rem; 
 }
 .hero-title {
-font-size: 2.5rem;
+font-size: 3rem;
 }
 .hero-highlight {
 font-size: 3rem;
 }
 .hero-subtext {
-font-size: 1rem;
+font-size: 1.2rem;
 line-height: 1.5;
 margin-top: 1.5rem !important;
 }
@@ -493,6 +493,10 @@ margin-right: 0 !important;
 @media (max-width: 768px) {
 .featured-artists h2 {
 font-size: 2.5rem; 
+}
+
+.featured-artists p {
+font-size: 1.2rem;
 }
 .artist-card {
 width: 100%;  
@@ -528,7 +532,7 @@ height: 2.5rem;
 font-size: 2.5rem; 
 }
 .explore-soundscapes p {
-font-size: 1rem;
+font-size: 1.2rem;
 margin-bottom: 2rem;
 }
 }
@@ -539,7 +543,7 @@ margin-bottom: 2rem;
 font-size: 4rem !important;
 }
 .testimonials h2 {
-font-size: 2rem;
+font-size: 2.5rem;
 line-height: 1.2;
 }
 .testimonials .mb-9 {

@@ -388,41 +388,81 @@ width: 100%;
 }
 }
 
-@media (max-width: 900px) {
-.audio-mixing {
-padding: 3rem 2rem;
-min-height: 70vh;
+/* =========================================
+   MOBILE RESPONSIVENESS: MIXING CONTENT
+   ========================================= */
+
+@media (max-width: 992px) {
+
+  /* --- 1. Hero Section --- */
+  .audio-mixing {
+    padding: 6rem 1.5rem; /* Fix the 10rem squeeze */
+    min-height: 60vh;
+    text-align: center;
+    justify-content: center; /* Ensure text centers vertically */
+  }
+
+  .audio-mixing-content h1 {
+    font-size: 3rem; /* Down from 4rem */
+  }
+
+  .audio-mixing-content p {
+    font-size: 1.2rem;
+  }
+
+  /* --- 2. "Finding The Right Sound" Grid --- */
+  .finding-sound {
+    padding: 4rem 1.5rem;
+  }
+  
+  .finding-sound-title {
+    font-size: 2.5rem;
+  }
+
+  /* --- 3. "Modern Classic" Image Strip --- */
+  /* Currently 4 images in a row. On mobile, that's too thin.
+     Let's make it a 2x2 Grid. */
+  .mc-image-strip {
+    grid-template-columns: 1fr 1fr; /* 2 columns */
+    height: auto; /* Allow height to grow */
+  }
+  
+  .mc-img-box {
+    height: 200px; /* Set a reasonable height for each square */
+  }
+
+  .modern-classic-content {
+    padding: 4rem 2rem;
+  }
+  
+  .modern-classic-content h2 {
+    font-size: 2.5rem;
+  }
+
+  /* --- 4. Console Section (Split Layout) --- */
+  .console {
+    /* Switch to Vertical Stack */
+    grid-template-columns: 1fr; 
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Image on Top */
+  .console-image {
+    order: 1;
+    height: 300px;
+    width: 100%;
+  }
+
+  /* Text on Bottom */
+  .console-content {
+    order: 2;
+    padding: 4rem 2rem; /* Fix the massive padding */
+    text-align: center;
+  }
+
+  .console h1 {
+    font-size: 2.5rem;
+  }
 }
 
-.audio-mixing-content h1 {
-font-size: 2.5rem;
-}
-
-.audio-mixing-content p {
-font-size: 1rem;
-}
-
-.finding-sound-title {
-font-size: 2.5rem;
-}
-
-.finding-sound-text {
-font-size: 1rem;
-}
-
-.sound-image {
-height: 200px; /* Adjust height for smaller screens */
-}
-
-}
-
-@media (max-width: 900px) {
-.mc-image-strip {
-grid-template-columns: 1fr 1fr;
-height: 200px;
-}
-
-.modern-classic-content h2 {
-font-size: 2.2rem;
-}
-}

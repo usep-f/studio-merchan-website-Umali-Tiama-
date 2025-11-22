@@ -365,3 +365,59 @@ font-size: 1rem;
 padding: 3rem 2rem; /* Match the light sections on mobile */
 }
 }
+
+@media (max-width: 992px) {
+  
+  /* --- 1. Hero Section --- */
+  .service-hero-banner {
+    /* Remove the massive desktop padding */
+    padding: 6rem 1.5rem; 
+    min-height: 60vh; /* Relax height constraint */
+    text-align: center; /* Center alignment usually looks better on mobile */
+  }
+
+  .service-hero-title {
+    font-size: 3rem; /* Down from 4rem */
+  }
+
+  .service-hero-subtext{
+    font-size: 1.2rem; /* Down from 1.5rem */
+  }
+  /* --- 2. Split Grid Sections (The "Feature" Blocks) --- */
+  /* This targets both .split-grid and .split-grid-dark */
+  .split-grid, 
+  .split-grid-dark {
+    /* Switch from Side-by-Side (2 col) to Vertical Stack (1 col) */
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  /* Control the Order: Image First, Text Second */
+  .split-grid-image {
+    order: 1;
+    height: 300px; /* Give the image a fixed height block */
+    min-height: 300px;
+    width: 100%;
+  }
+
+  .split-grid-content {
+    order: 2;
+    padding: 4rem 2rem !important; /* Override the huge desktop padding */
+    text-align: center;
+    max-width: 100%; /* Let text fill the screen */
+  }
+
+  /* --- 3. Typography Adjustments --- */
+  .feature-title-dark,
+  .feature-title-accent,
+  .feature-title-light {
+    font-size: 2.5rem; /* Scale down headers */
+    text-align: center; /* Force center alignment */
+  }
+
+  .feature-subtext, 
+  .feature-subtext-light {
+    font-size: 1.2rem;
+    text-align: center; /* Force center alignment */
+  }
+}
