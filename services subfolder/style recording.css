@@ -18,33 +18,73 @@ padding: 0;
 /* Navbar Styles */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
-padding-left: 5rem;
-padding-right: 5rem;
+padding-left: 3rem;
+padding-right: 3rem;
 position: relative; 
 z-index: 9999; 
 }
 
+/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid;
-grid-template-columns: 1fr auto 1fr;
-align-items: center;
+display: grid !important; /* !important ensures grid behavior is forced */
+width: 100%;
+height: 100%;
+
+/* THE MAGIC FORMULA: 
+1. minmax(0, 1fr) = Flexible left space
+2. auto = Logo size
+3. minmax(0, 1fr) = Flexible right space (equal to left)
+*/
+grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
+/* This fixes the "staircase" issue by locking everything to the vertical center */
+align-items: center; 
 }
 
-.left-nav,
+/* --- LEFT COLUMN (About, Services, Team) --- */
+.left-nav {
+display: flex;
+align-items: center;
+justify-content: flex-start !important; /* Pushes text to the far left */
+justify-self: start; /* Grid alignment */
+gap: 2rem;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
+}
+
+/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-gap: 7rem;
-margin: 0;
-padding: 0;
+justify-content: flex-end !important; /* Pushes text to the far right */
+justify-self: end; /* Grid alignment */
+gap: 2rem;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
 }
 
+/* --- CENTER COLUMN (Logo) --- */
+.navbar-brand {
+display: flex;
+align-items: center;
+justify-content: center;
+justify-self: center; /* Locks logo to dead center of the grid */
+margin: 0 !important;
+padding: 0 !important;
+width: auto;
+}
+
+.navbar-brand img {
+height: 6.25rem;
+display: block;
+max-width: 100%;
+}
+/* --- GENERAL LINK STYLES --- */
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
-align-items: center;
-justify-content: center;
-gap: 3rem;
 }
 
 .navbar-nav .nav-link {
@@ -52,17 +92,36 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
+white-space: nowrap; /* Prevents text from wrapping weirdly */
 }
 
 .navbar-nav .nav-link:hover {
 color: #2979c4 !important;
 }
 
-.navbar-brand img {
-padding-left: 3rem;
-height: 7.5rem;
+.navbar-nav .nav-link {
+position: relative; 
 }
 
+/* 2. The Active Line Style */
+.navbar-nav .nav-link.active::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: 0; /* Moves the line to the bottom edge of the text */
+width: 100%;
+height: 3px; /* Thickness of the line */
+background-color: #c8761d; /* Your orange accent color */
+border-radius: 2px; /* Rounds the edges slightly */
+}
+
+/* 3. Optional: Keep the text color 'active' (blue) as well */
+.navbar-nav .nav-link.active {
+color: #2979c4 !important;
+font-weight: 500; /* Slightly bolder to emphasize */
+}
+
+/* --- UTILITIES --- */
 .desktop-navbar {
 display: block;
 }
@@ -76,149 +135,123 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
 }
 
 /*-- Service Hero Banner (From Image) */
+/* 1. Update the Parent Container to act like the Mixing Page */
 .service-hero-banner {
 min-height: 80vh;
-/* NOTE: You must replace this URL with the correct path to your image. 
-I used the same gradient overlay technique as your main .hero section.
-*/
 background: linear-gradient(rgba(0, 20, 40, 0.8), rgba(0, 20, 40, 0.8)),
 url("/assets/services/recording subpage/In_Studio-_Track_Band_Together_or_Separately_2170x.jpg") center center/cover no-repeat;
-padding: 4rem 10rem; /* Provides spacing on all screen sizes */
+
+/* Padding matches Mixing Page exactly */
+padding: 4rem 10rem; 
+
+/* ENABLE FLEXBOX (This aligns the content box) */
+display: flex;
+align-items: center;
+}
+
+/* 2. Add the Content Box Styling (New) */
+.service-hero-content {
+position: relative;
+z-index: 2;
+
+/* Match the Mixing Page width logic */
+max-width: 800px; 
+color: white;
 }
 
 .service-hero-title {
 font-size: 4rem;
 font-weight: 800;
 text-transform: uppercase;
-line-height: 1.2;
 color: #c8761d; /* Using the orange from your navbar */
 }
 
 .service-hero-subtext {
 font-size: 1.2rem;
 font-weight: 300;
-line-height: 1.6;
+
 color: #c8761d;
 }
 
 .btn-service-hero {
-background-color: #c8761d;
-color: #ffffff;
-border: none;
-border-radius: 30px; /* Matches the button in the image */
+display: inline-block;
 padding: 1rem 2.2rem;
-font-size: 1.2rem;
+background-color: #C9761C; /* orange */
+color: white;
+text-decoration: none;
+border-radius: 30px;
 font-weight: 500;
-transition: all 0.3s ease;
+font-size: 1.2rem;
+transition: background 0.3s ease;
 }
 
 .btn-service-hero:hover {
-background-color: #f29f32; /* Using the accent orange from your hero */
-color: #ffffff;
-transform: translateY(-2px);
+background-color: #a56017;;
 }
 
-/*-- Crisp Recordings Section --*/
-/* This is the Grid-based replacement for .feature-split */
-.split-grid {
+/* --- Shared Grid Setup --- */
+.split-grid,
+.split-grid-dark {
 display: grid;
-grid-template-columns: 2fr 1fr;
-background-color: #d4d4e4;
-overflow: hidden; /* Good practice */
+min-height: 50vh; /* Matches Console height logic */
+overflow: hidden;
 }
 
+/* --- Light Section (Text Left | Image Right) --- */
+.split-grid {
+/* Text gets 2 parts (Wide), Image gets 1 part (Narrow) */
+grid-template-columns: 2fr 1fr; 
+background-color: #d4d4e4;
+}
+
+/* --- Dark Section (Image Left | Text Right) --- */
+.split-grid-dark {
+/* Image gets 1 part (Narrow), Text gets 2 parts (Wide) */
+grid-template-columns: 1fr 2fr; 
+background-color: #003766;
+}
+
+/* --- The Text Container (The "Console" Look) --- */
 .split-grid-content {
-padding: 5rem 1rem 10rem 10rem;
+/* UNIFORM PADDING: This fixes the "cramped" feeling. 
+Matches the spacious look of your Mixing page. */
+padding: 6rem 10rem; 
+
 display: flex;
 flex-direction: column;
 justify-content: center;
-color: #003766; /* Matches your featured-artists text color */
-max-width: 600px; /* This keeps the text block from being too wide */
+
+/* IMPORTANT: Unlocks the text width so it can lengthen naturally */
+max-width: 100%; 
 }
 
+/* Specific adjustment for the Dark Section text to ensure it matches */
+.split-grid-dark .split-grid-content {
+padding: 6rem 10rem; /* Same uniform padding */
+margin-bottom: 0;
+max-width: 100%;
+}
+
+/* --- The Images --- */
 .split-grid-image {
 background-size: cover;
 background-position: center;
-/* THIS IS THE HEIGHT ("thickness"). 
-It will now work perfectly. Set it to whatever you want.
-*/
-min-height: 400px; 
+width: 100%;
+height: 100%;
+min-height: 400px; /* Ensures image doesn't disappear on short screens */
 }
 
-/* Specific image for Crisp Recordings */
-.image-mic {
-background-image: url("/assets/services/recording subpage/mic.jpg");
-}
+/* Keep your existing image identifiers */
+.image-mic { background-image: url("../assets/services/recording subpage/mic.jpg"); }
+.image-acoustics { background-image: url("../assets/services/recording subpage/acoustic-materials.jpg"); }
+.image-mixer { background-image: url("../assets/services/recording subpage/preamp.webp"); }
 
-/* Specific image for Acoustics */
-.image-acoustics {
-/* NOTE: Make sure this path is correct */
-background-image: url("/assets/services/recording subpage/acoustic-materials.jpg"); 
-}
-
-/* These styles are still used by the text in the grid */
-.feature-title-dark {
-font-size: 4rem;
-font-weight: 800;
-letter-spacing: 1px;
-color: #003766; 
-line-height: 1.1;
-}
-
-.feature-title-accent {
-font-size: 4rem;
-font-weight: 800;
-letter-spacing: 1px;
-color: #c8761d; 
-line-height: 1.1;
-}
-
-.feature-subtext {
-font-weight: 300;
-font-size: 1.2rem;
-color: #003766;
-}
-
-/* This is the new modifier class for the dark section */
-.split-grid-dark {
-    display: grid;
-grid-template-columns: 1fr 2fr;
-background-color: #003766; /* Your main dark blue */
-}
-
-/* This sets the padding for the text when it's on the RIGHT side */
-.split-grid-dark .split-grid-content {
-/* Top, Right, Bottom, Left */
-/* Scooches text away from the right edge (8rem) */
-padding: 5rem 10rem 5rem 27rem;
-margin-bottom: 4rem;
-max-width: 3000px; /* Keep consistent max-width */
-}
-
-/* New class for the mixer image */
-.image-mixer {
-/* NOTE: Make sure this path is correct */
-background-image: url("/assets/services/recording subpage/preamp.webp"); 
-}
-
-/* New class for light text (on dark background) */
-.feature-title-light {
-font-size: 4rem;
-font-weight: 800;
-letter-spacing: 1px;
-color: #ffffff; /* White text */
-line-height: 1.1;
-text-align: right;
-}
-
-/* New class for light subtext (on dark background) */
-.feature-subtext-light {
-font-weight: 300;
-font-size: 1.2rem;
-color: #ffffff; /* White text */
-text-align: right;
-}
-
+/* Keep Typography Colors */
+.feature-title-dark { font-size: 4rem; font-weight:800; color: #003766;}
+.feature-title-accent { font-size: 4rem; font-weight: 800; color: #c8761d; }
+.feature-subtext { font-weight: 300; font-size: 1.2rem; color: #003766; }
+.feature-title-light { font-size: 4rem; font-weight: 800; color: #ffffff; }
+.feature-subtext-light { font-weight: 300; font-size: 1.2rem; color: #ffffff; }
 
 /* Footer Styles */
 .footer-custom {
@@ -367,57 +400,57 @@ padding: 3rem 2rem; /* Match the light sections on mobile */
 }
 
 @media (max-width: 992px) {
-  
-  /* --- 1. Hero Section --- */
-  .service-hero-banner {
-    /* Remove the massive desktop padding */
-    padding: 6rem 1.5rem; 
-    min-height: 60vh; /* Relax height constraint */
-    text-align: center; /* Center alignment usually looks better on mobile */
-  }
 
-  .service-hero-title {
-    font-size: 3rem; /* Down from 4rem */
-  }
+/* --- 1. Hero Section --- */
+.service-hero-banner {
+/* Remove the massive desktop padding */
+padding: 6rem 1.5rem; 
+min-height: 60vh; /* Relax height constraint */
+text-align: center; /* Center alignment usually looks better on mobile */
+}
 
-  .service-hero-subtext{
-    font-size: 1.2rem; /* Down from 1.5rem */
-  }
-  /* --- 2. Split Grid Sections (The "Feature" Blocks) --- */
-  /* This targets both .split-grid and .split-grid-dark */
-  .split-grid, 
-  .split-grid-dark {
-    /* Switch from Side-by-Side (2 col) to Vertical Stack (1 col) */
-    display: flex !important;
-    flex-direction: column;
-  }
+.service-hero-title {
+font-size: 3rem; /* Down from 4rem */
+}
 
-  /* Control the Order: Image First, Text Second */
-  .split-grid-image {
-    order: 1;
-    height: 300px; /* Give the image a fixed height block */
-    min-height: 300px;
-    width: 100%;
-  }
+.service-hero-subtext{
+font-size: 1.2rem; /* Down from 1.5rem */
+}
+/* --- 2. Split Grid Sections (The "Feature" Blocks) --- */
+/* This targets both .split-grid and .split-grid-dark */
+.split-grid, 
+.split-grid-dark {
+/* Switch from Side-by-Side (2 col) to Vertical Stack (1 col) */
+display: flex !important;
+flex-direction: column;
+}
 
-  .split-grid-content {
-    order: 2;
-    padding: 4rem 2rem !important; /* Override the huge desktop padding */
-    text-align: center;
-    max-width: 100%; /* Let text fill the screen */
-  }
+/* Control the Order: Image First, Text Second */
+.split-grid-image {
+order: 1;
+height: 300px; /* Give the image a fixed height block */
+min-height: 300px;
+width: 100%;
+}
 
-  /* --- 3. Typography Adjustments --- */
-  .feature-title-dark,
-  .feature-title-accent,
-  .feature-title-light {
-    font-size: 2.5rem; /* Scale down headers */
-    text-align: center; /* Force center alignment */
-  }
+.split-grid-content {
+order: 2;
+padding: 4rem 2rem !important; /* Override the huge desktop padding */
+text-align: center;
+max-width: 100%; /* Let text fill the screen */
+}
 
-  .feature-subtext, 
-  .feature-subtext-light {
-    font-size: 1.2rem;
-    text-align: center; /* Force center alignment */
-  }
+/* --- 3. Typography Adjustments --- */
+.feature-title-dark,
+.feature-title-accent,
+.feature-title-light {
+font-size: 2.5rem; /* Scale down headers */
+text-align: center; /* Force center alignment */
+}
+
+.feature-subtext, 
+.feature-subtext-light {
+font-size: 1.2rem;
+text-align: center; /* Force center alignment */
+}
 }
