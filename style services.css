@@ -17,33 +17,74 @@ padding: 0;
 /* Navbar Styles */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
-padding-left: 5rem;
-padding-right: 5rem;
+padding-left: 3rem;
+padding-right: 3rem;
 position: relative; 
 z-index: 9999; 
 }
 
+/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid;
-grid-template-columns: 1fr auto 1fr;
-align-items: center;
+display: grid !important; /* !important ensures grid behavior is forced */
+width: 100%;
+height: 100%;
+
+/* THE MAGIC FORMULA: 
+    1. minmax(0, 1fr) = Flexible left space
+    2. auto = Logo size
+    3. minmax(0, 1fr) = Flexible right space (equal to left)
+*/
+grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
+/* This fixes the "staircase" issue by locking everything to the vertical center */
+align-items: center; 
 }
 
-.left-nav,
+/* --- LEFT COLUMN (About, Services, Team) --- */
+.left-nav {
+display: flex;
+align-items: center;
+justify-content: flex-start !important; /* Pushes text to the far left */
+justify-self: start; /* Grid alignment */
+gap: 2rem;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
+}
+
+/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-gap: 7rem;
-margin: 0;
-padding: 0;
+justify-content: flex-end !important; /* Pushes text to the far right */
+justify-self: end; /* Grid alignment */
+gap: 2rem;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
 }
 
+/* --- CENTER COLUMN (Logo) --- */
+.navbar-brand {
+display: flex;
+align-items: center;
+justify-content: center;
+justify-self: center; /* Locks logo to dead center of the grid */
+margin: 0 !important;
+padding: 0 !important;
+width: auto;
+}
+
+.navbar-brand img {
+height: 6.25rem;
+display: block;
+max-width: 100%;
+}
+
+/* --- GENERAL LINK STYLES --- */
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
-align-items: center;
-justify-content: center;
-gap: 3rem;
 }
 
 .navbar-nav .nav-link {
@@ -51,16 +92,36 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
+white-space: nowrap; /* Prevents text from wrapping weirdly */
 }
 
 .navbar-nav .nav-link:hover {
 color: #2979c4 !important;
 }
 
-.navbar-brand img {
-height: 7.5rem;
+.navbar-nav .nav-link {
+position: relative; 
 }
 
+/* 2. The Active Line Style */
+.navbar-nav .nav-link.active::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: 0; /* Moves the line to the bottom edge of the text */
+width: 100%;
+height: 3px; /* Thickness of the line */
+background-color: #c8761d; /* Your orange accent color */
+border-radius: 2px; /* Rounds the edges slightly */
+}
+
+/* 3. Optional: Keep the text color 'active' (blue) as well */
+.navbar-nav .nav-link.active {
+color: #2979c4 !important;
+font-weight: 500; /* Slightly bolder to emphasize */
+}
+
+/* --- UTILITIES --- */
 .desktop-navbar {
 display: block;
 }
@@ -418,111 +479,111 @@ width: 100%;
 
 /* --- 2. MAIN SERVICES GRID (Record, Mix, Master) --- */
 @media (max-width: 768px) {
-  .services {
-    /* Switch from 3 columns to 1 column */
-    grid-template-columns: 1fr; 
-    height: auto; /* Remove fixed height */
-  }
+.services {
+  /* Switch from 3 columns to 1 column */
+  grid-template-columns: 1fr; 
+  height: auto; /* Remove fixed height */
+}
 
-  .service-card {
-    /* Fixed height for mobile cards */
-    height: 500px; 
-  }
+.service-card {
+  /* Fixed height for mobile cards */
+  height: 500px; 
+}
 
-  /* PADDING ADJUSTMENT HERE */
-  .service-content {
-    /* Top: 8rem (moved up) | Left/Right: 2rem | Bottom: 4rem (added space) */
-    padding: 8rem 2rem 4rem !important; 
-  }
+/* PADDING ADJUSTMENT HERE */
+.service-content {
+  /* Top: 8rem (moved up) | Left/Right: 2rem | Bottom: 4rem (added space) */
+  padding: 8rem 2rem 4rem !important; 
+}
 
-  .service-content h2 {
-    font-size: 3rem; /* Slightly smaller title */
-  }
+.service-content h2 {
+  font-size: 3rem; /* Slightly smaller title */
+}
 }
 
 
 /* --- 3. LIVE SOUND SECTION (Split Layout) --- */
 @media (max-width: 768px) {
-  .live-sound {
-    /* Switch from Side-by-Side to Vertical Stack */
-    grid-template-columns: 1fr; 
-    height: auto;
-  }
+.live-sound {
+  /* Switch from Side-by-Side to Vertical Stack */
+  grid-template-columns: 1fr; 
+  height: auto;
+}
 
-  .live-sound-content {
-    /* Reduce massive padding */
-    padding: 4rem 2rem; 
-    text-align: center; /* Center align text for mobile */
-    order: 2; /* Optional: Put text BELOW image if you prefer, or keep as is */
-  }
+.live-sound-content {
+  /* Reduce massive padding */
+  padding: 4rem 2rem; 
+  text-align: center; /* Center align text for mobile */
+  order: 2; /* Optional: Put text BELOW image if you prefer, or keep as is */
+}
 
-  .live-sound-content h1 {
-    font-size: 2.5rem; /* Down from 4rem */
-  }
+.live-sound-content h1 {
+  font-size: 2.5rem; /* Down from 4rem */
+}
 
-  /* The Image Block */
-  .live-sound-image {
-    height: 300px; /* Give it a fixed height since it's now a stacked block */
-    width: 100%;
-  }
-  
-  .live-btn {
-    align-self: center; /* Center the button */
-    font-size: 1.5rem;
-    margin-top: 2rem;
-  }
+/* The Image Block */
+.live-sound-image {
+  height: 300px; /* Give it a fixed height since it's now a stacked block */
+  width: 100%;
+}
+
+.live-btn {
+  align-self: center; /* Center the button */
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
 }
 
 
 /* --- 4. ONLINE SERVICES (Icon Grid) --- */
 @media (max-width: 768px) {
-  .online-services-header h1 {
-    font-size: 2.5rem;
-  }
+.online-services-header h1 {
+  font-size: 2.5rem;
+}
 
-  .online-services-grid {
-    /* Switch from 3 columns to 1 column */
-    grid-template-columns: 1fr; 
-    gap: 3rem; /* Add space between items */
-  }
-  
-  .online-service-card p {
-    max-width: 100%; /* Let text fill the screen width */
-  }
+.online-services-grid {
+  /* Switch from 3 columns to 1 column */
+  grid-template-columns: 1fr; 
+  gap: 3rem; /* Add space between items */
+}
+
+.online-service-card p {
+  max-width: 100%; /* Let text fill the screen width */
+}
 }
 
 
 /* --- 5. LEARN WITH US (Split Layout) --- */
 @media (max-width: 768px) {
-  .learn-with-us {
-    /* Switch from Side-by-Side to Vertical Stack */
-    grid-template-columns: 1fr; 
-  }
+.learn-with-us {
+  /* Switch from Side-by-Side to Vertical Stack */
+  grid-template-columns: 1fr; 
+}
 
-  /* The Image Block */
-  .learn-image {
-    height: 300px; /* Give it height on mobile */
-    order: 1;      /* Put image on TOP */
-  }
+/* The Image Block */
+.learn-image {
+  height: 300px; /* Give it height on mobile */
+  order: 1;      /* Put image on TOP */
+}
 
-  .learn-content {
-    order: 2;      /* Put text BELOW image */
-    padding: 4rem 2rem;
-    text-align: center; /* Center text */
-  }
+.learn-content {
+  order: 2;      /* Put text BELOW image */
+  padding: 4rem 2rem;
+  text-align: center; /* Center text */
+}
 
-  .learn-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
+.learn-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
 
-  .learn-content p {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center; /* Override right-align */
-  }
+.learn-content p {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* Override right-align */
+}
 
-  .learn-btn {
-    align-self: center; /* Center the button */
-  }
+.learn-btn {
+  align-self: center; /* Center the button */
+}
 }
