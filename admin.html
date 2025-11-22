@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Studio Merchan | Admin</title>
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,26 +13,12 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <style>
-      body {
-        background-color: #f4f6f9;
-      }
-      .sidebar {
-        min-height: 100vh;
-        background-color: #003766;
-        color: white;
-      }
-      .hidden {
-        display: none !important;
-      }
-    </style>
+
+    <link rel="stylesheet" href="style admin.css" />
   </head>
   <body>
-    <div
-      id="login-screen"
-      class="container d-flex justify-content-center align-items-center vh-100"
-    >
-      <div class="card shadow p-5" style="width: 400px">
+    <div id="login-screen" class="login-container">
+      <div class="card login-card shadow p-5">
         <h3 class="text-center mb-4 fw-bold" style="color: #003766">
           ADMIN LOGIN
         </h3>
@@ -58,193 +45,132 @@
       </div>
     </div>
 
-    <div id="dashboard-screen" class="container-fluid hidden">
-      <div class="row">
-        <div class="col-md-2 sidebar p-3">
-          <h4 class="mb-4 text-center fw-bold text-warning">MERCHAN CMS</h4>
-          <button onclick="logout()" class="btn btn-outline-light w-100 mt-5">
-            Log Out
+    <div id="dashboard-screen" class="container-fluid g-0 hidden">
+      <div class="row g-0">
+        <div class="col-md-2 sidebar p-4 d-flex flex-column">
+          <h4 class="mb-5 text-center fw-bold text-white">
+            MERCHAN <span class="sidebar-brand">CMS</span>
+          </h4>
+          <div class="nav flex-column gap-2">
+            <a
+              class="nav-link active"
+              href="#"
+              onclick="showSection('carousel')"
+              id="btn-carousel"
+            >
+              <i class="bi bi-images me-2"></i> Carousel
+            </a>
+            <a
+              class="nav-link"
+              href="#"
+              onclick="showSection('bookings')"
+              id="btn-bookings"
+            >
+              <i class="bi bi-calendar-check me-2"></i> Bookings
+            </a>
+          </div>
+          <button
+            onclick="logout()"
+            class="btn btn-outline-light w-100 mt-auto"
+          >
+            <i class="bi bi-box-arrow-left me-2"></i> Log Out
           </button>
         </div>
 
-        <div class="col-md-10 p-5">
-          <h2 class="mb-4">Manage Carousel (Fixed 5 Slots)</h2>
-
-          <div class="card shadow p-4" style="max-width: 800px">
-            <div class="mb-4 p-3 bg-light border rounded">
-              <label class="fw-bold mb-2">Select which Slot to Edit:</label>
-              <select
-                id="slot-selector"
-                class="form-select form-select-lg"
-                onchange="loadSlotData()"
-              >
-                <option value="1">Slot 1 (First Slide)</option>
-                <option value="2">Slot 2</option>
-                <option value="3">Slot 3</option>
-                <option value="4">Slot 4</option>
-                <option value="5">Slot 5 (Last Slide)</option>
-              </select>
-            </div>
-
-            <div class="row g-3">
-              <div class="col-12">
-                <label class="form-label">Artist Name</label>
-                <input type="text" id="art-name" class="form-control" />
+        <div class="col-md-10 main-content">
+          <div id="section-carousel">
+            <h2 class="mb-4 fw-bold text-secondary">Manage Artist Carousel</h2>
+            <div class="card shadow p-4" style="max-width: 900px">
+              <div class="mb-4 p-3 bg-light border rounded">
+                <label class="fw-bold mb-2 text-uppercase small text-muted"
+                  >Select Slot</label
+                >
+                <select
+                  id="slot-selector"
+                  class="form-select form-select-lg"
+                  onchange="loadSlotData()"
+                >
+                  <option value="1">Slot 1 (First Slide)</option>
+                  <option value="2">Slot 2</option>
+                  <option value="3">Slot 3</option>
+                  <option value="4">Slot 4</option>
+                  <option value="5">Slot 5 (Last Slide)</option>
+                </select>
               </div>
-
-              <div class="col-12">
-                <label class="form-label">Google Drive Image Link</label>
-                <input type="text" id="art-link" class="form-control" />
-                <div class="form-text text-muted">
-                  Paste the standard "Share" link. We convert it automatically.
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Artist Name</label>
+                  <input type="text" id="art-name" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold"
+                    >Image Link (Google Drive)</label
+                  >
+                  <input type="text" id="art-link" class="form-control" />
+                </div>
+                <div class="col-12"><hr class="my-2 text-muted" /></div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted"
+                    ><i class="bi bi-facebook"></i> Facebook</label
+                  >
+                  <input type="text" id="art-fb" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted"
+                    ><i class="bi bi-instagram"></i> Instagram</label
+                  >
+                  <input type="text" id="art-ig" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted"
+                    ><i class="bi bi-soundwave"></i> SoundCloud</label
+                  >
+                  <input type="text" id="art-sc" class="form-control" />
                 </div>
               </div>
-
-              <div class="col-md-4">
-                <label class="form-label"
-                  ><i class="bi bi-facebook"></i> Facebook</label
+              <div class="mt-4 text-end">
+                <button
+                  onclick="saveSlot()"
+                  class="btn btn-success px-5 fw-bold"
+                  style="background-color: #c9761c; border: none"
                 >
-                <input type="text" id="art-fb" class="form-control" />
-              </div>
-              <div class="col-md-4">
-                <label class="form-label"
-                  ><i class="bi bi-instagram"></i> Instagram</label
-                >
-                <input type="text" id="art-ig" class="form-control" />
-              </div>
-              <div class="col-md-4">
-                <label class="form-label"
-                  ><i class="bi bi-soundwave"></i> SoundCloud</label
-                >
-                <input type="text" id="art-sc" class="form-control" />
+                  UPDATE SLOT
+                </button>
               </div>
             </div>
+          </div>
 
-            <div class="mt-4 text-end">
-              <button onclick="saveSlot()" class="btn btn-success px-5 fw-bold">
-                UPDATE SLOT
+          <div id="section-bookings" class="hidden">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="fw-bold text-secondary">Studio Bookings</h2>
+              <button
+                onclick="fetchAdminBookings()"
+                class="btn btn-outline-primary"
+              >
+                <i class="bi bi-arrow-clockwise me-2"></i> Refresh
               </button>
+            </div>
+            <div class="card shadow overflow-hidden">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                  <thead style="background-color: #003766; color: white">
+                    <tr>
+                      <th class="ps-4 py-3">Status</th>
+                      <th class="py-3">Dates</th>
+                      <th class="py-3">Details</th>
+                      <th class="py-3">Client</th>
+                      <th class="text-end pe-4 py-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bookings-table-body" class="bg-white"></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-      import {
-        getAuth,
-        signInWithEmailAndPassword,
-        signOut,
-        onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-      import {
-        getFirestore,
-        doc,
-        getDoc,
-        setDoc,
-      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-      // --- CONFIG ---
-      const firebaseConfig = {
-        // PASTE YOUR KEYS HERE
-        apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo",
-        authDomain: "studio-merchan.firebaseapp.com",
-        projectId: "studio-merchan",
-        storageBucket: "studio-merchan.firebasestorage.app",
-        messagingSenderId: "148020122490",
-        appId: "1:148020122490:web:5c06af526e6b47a77b3cc3",
-        measurementId: "G-QMC8J9PP9D",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-
-      // --- AUTH ---
-      window.login = () => {
-        const e = document.getElementById("login-email").value;
-        const p = document.getElementById("login-password").value;
-        signInWithEmailAndPassword(auth, e, p).catch((err) =>
-          alert(err.message)
-        );
-      };
-      window.logout = () => signOut(auth);
-
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          document.getElementById("login-screen").classList.add("hidden");
-          document
-            .getElementById("dashboard-screen")
-            .classList.remove("hidden");
-          loadSlotData(); // Load Slot 1 immediately
-        } else {
-          document.getElementById("login-screen").classList.remove("hidden");
-          document.getElementById("dashboard-screen").classList.add("hidden");
-        }
-      });
-
-      // --- LOAD DATA (When dropdown changes) ---
-      window.loadSlotData = async () => {
-        const slotNum = document.getElementById("slot-selector").value;
-        const docId = "artist_" + slotNum; // e.g., "artist_1"
-
-        // Clear inputs first to avoid confusion
-        document.querySelectorAll("input").forEach((i) => (i.value = ""));
-
-        try {
-          const docSnap = await getDoc(doc(db, "featured_artists", docId));
-
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-            document.getElementById("art-name").value = data.name || "";
-            // Show the original drive link if possible, or the converted one
-            document.getElementById("art-link").value = data.image_url || "";
-            document.getElementById("art-fb").value = data.fb_link || "";
-            document.getElementById("art-ig").value = data.ig_link || "";
-            document.getElementById("art-sc").value = data.sc_link || "";
-          } else {
-            console.log("Slot is empty. Ready for new data.");
-          }
-        } catch (e) {
-          console.error("Error loading slot:", e);
-        }
-      };
-
-      // --- SAVE DATA (Overwrite the specific slot) ---
-      window.saveSlot = async () => {
-        const slotNum = document.getElementById("slot-selector").value;
-        const docId = "artist_" + slotNum; // Force ID to be artist_1, artist_2, etc.
-
-        const name = document.getElementById("art-name").value;
-        const rawLink = document.getElementById("art-link").value;
-
-        if (!name || !rawLink) {
-          alert("Name and Image are required!");
-          return;
-        }
-
-        // Link Converter
-        let finalImg = rawLink;
-        const idMatch = rawLink.match(/\/d\/(.+?)\//);
-        if (idMatch && idMatch[1]) {
-          finalImg = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
-        }
-
-        try {
-          await setDoc(doc(db, "featured_artists", docId), {
-            name: name,
-            image_url: finalImg,
-            fb_link: document.getElementById("art-fb").value || "#",
-            ig_link: document.getElementById("art-ig").value || "#",
-            sc_link: document.getElementById("art-sc").value || "#",
-            order: Number(slotNum), // The order is just the slot number
-          });
-          alert(`Success! Slot ${slotNum} updated.`);
-        } catch (e) {
-          alert("Error: " + e.message);
-        }
-      };
-    </script>
+    <script type="module" src="admin.js"></script>
   </body>
 </html>
