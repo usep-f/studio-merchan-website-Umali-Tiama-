@@ -1,0 +1,529 @@
+/* =========================================
+GLOBAL RESETS & FONTS
+========================================= */
+html {
+box-sizing: border-box;
+}
+*, *::before, *::after {
+box-sizing: inherit;
+}
+body {
+font-family: 'Urbanist', sans-serif;
+line-height: 1.5;
+background-color: #D4D4E4; /* Default light background */
+margin: 0;
+padding: 0;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
+padding-left: 3rem;
+padding-right: 3rem;
+position: relative; 
+z-index: 9999; 
+}
+
+/* This is the container that holds Left, Logo, and Right */
+.navbar-grid {
+display: grid !important; /* !important ensures grid behavior is forced */
+width: 100%;
+height: 100%;
+
+/* THE MAGIC FORMULA: 
+1. minmax(0, 1fr) = Flexible left space
+2. auto = Logo size
+3. minmax(0, 1fr) = Flexible right space (equal to left)
+*/
+grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
+/* This fixes the "staircase" issue by locking everything to the vertical center */
+align-items: center; 
+}
+
+/* --- LEFT COLUMN (About, Services, Team) --- */
+.left-nav {
+display: flex;
+align-items: center;
+justify-content: flex-start !important; /* Pushes text to the far left */
+justify-self: start; /* Grid alignment */
+gap: 2rem;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
+}
+
+/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
+.right-nav {
+display: flex;
+align-items: center;
+justify-content: flex-end !important; /* Pushes text to the far right */
+justify-self: end; /* Grid alignment */
+gap: 2rem;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
+}
+
+/* --- CENTER COLUMN (Logo) --- */
+.navbar-brand {
+display: flex;
+align-items: center;
+justify-content: center;
+justify-self: center; /* Locks logo to dead center of the grid */
+margin: 0 !important;
+padding: 0 !important;
+width: auto;
+}
+
+.navbar-brand img {
+height: 6.25rem;
+display: block;
+max-width: 100%;
+}
+/* --- GENERAL LINK STYLES --- */
+.navbar-nav {
+display: flex !important;
+flex-direction: row !important;
+}
+
+.navbar-nav .nav-link {
+color: #003766 !important;
+font-size: 1.8rem;
+font-weight: 300;
+transition: color 0.3s ease;
+white-space: nowrap; /* Prevents text from wrapping weirdly */
+}
+
+.navbar-nav .nav-link:hover {
+color: #2979c4 !important;
+}
+
+.navbar-nav .nav-link {
+position: relative; 
+}
+
+/* 2. The Active Line Style */
+.navbar-nav .nav-link.active::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: 0; /* Moves the line to the bottom edge of the text */
+width: 100%;
+height: 3px; /* Thickness of the line */
+background-color: #c8761d; /* Your orange accent color */
+border-radius: 2px; /* Rounds the edges slightly */
+}
+
+/* 3. Optional: Keep the text color 'active' (blue) as well */
+.navbar-nav .nav-link.active {
+color: #2979c4 !important;
+font-weight: 500; /* Slightly bolder to emphasize */
+}
+
+/* --- UTILITIES --- */
+.desktop-navbar {
+display: block;
+}
+
+.navbar-toggler {
+border: none;
+}
+
+.navbar-toggler-icon {
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* =========================================
+STUDIO A PAGE STYLES
+========================================= */
+
+/* Parent Container */
+.studio-a-hero {
+position: relative;
+height: 80vh;
+width: 100%;
+background-image: url('../assets/Index/Soundscapes/studioA.jpg'); /* Existing Asset */
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+font-family: 'Urbanist', sans-serif;
+overflow: hidden; /* Crucial to chop off the text if it gets too big */
+display: flex;
+justify-content: center;
+}
+
+/* The Orange-to-Navy Gradient Overlay */
+.studio-a-overlay {
+position: absolute;
+inset: 0;
+background: linear-gradient(
+to bottom, 
+rgba(201, 118, 28, 0.85) 20%,   /* Brand Orange (#c8761d approx) */    /* Brand Blue (#003766) */
+rgba(7, 0, 42, 1) 100%         /* Deepest Navy */
+);
+z-index: 1;
+}
+
+/* Layout Wrapper */
+.studio-a-container {
+position: relative;
+z-index: 2;
+height: 100%;
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center; /* Vertically center the "Rich and Loud" part */
+align-items: center;
+}
+
+/* --- Top Content --- */
+.studio-a-text {
+text-align: center;
+color: white;
+padding: 0 1rem;
+max-width: 850px;
+margin-top: -30vh; /* Nudge up slightly to leave room for the big text */
+}
+
+.hero-title {
+font-size: 5rem;
+font-weight: 900; /* Extra Bold */
+text-transform: uppercase;
+margin-bottom: 1rem;
+letter-spacing: 1px;
+}
+
+.hero-desc {
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.6;
+color: #f0f0f0;
+}
+
+/* --- Bottom Signature (The Big Text) --- */
+.studio-signature {
+position: absolute;
+bottom: -0.12em; /* Pulls it down to cut off the bottom edge slightly like the design */
+left: 50%;
+transform: translateX(-50%); /* Perfect Center */
+width: 100%;
+text-align: center;
+white-space: nowrap;
+line-height: 0.8;
+z-index: 1; /* Sits behind the description if they overlap */
+pointer-events: none; /* Ensures you can't accidentally select it over buttons */
+margin-bottom: 4rem;
+}
+
+.text-studio {
+  /* Define the gradient: Dark Blue to slightly lighter Navy */
+  background: linear-gradient(to top, #c8761d, #c39eff);
+  
+  /* Clip background to text */
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
+  /* Make text transparent */
+  color: transparent;
+font-size: 20vw; /* Responsive: 22% of viewport width */
+font-weight: 900;
+color: transparent; /* Muted Dark Blue to blend with background */
+text-transform: uppercase;
+letter-spacing: -0.02em;
+}
+
+.text-a {
+font-size: 20vw;
+font-weight: 900;
+color: #c8761d; /* Brand Orange */
+text-transform: uppercase;
+}
+
+/* =========================================
+   RADIO READY EXPERIENCE SECTION
+   ========================================= */
+
+.radio-ready-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Split 50% Text, 50% Image */
+  min-height: 70vh;
+  background-color: #003766; /* Brand Dark Blue */
+}
+
+/* Text Side */
+.radio-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Standard Desktop Padding */
+  padding: 6rem 10rem; 
+  text-align: left;
+  color: #ffffff;
+}
+
+/* Typography */
+.radio-content h2 {
+  font-size: 4rem;
+  font-weight: 900; /* Extra Bold */
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.radio-content .text-white {
+  color: #ffffff;
+}
+
+.radio-content .text-orange {
+  color: #c8761d;
+}
+
+.radio-content p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #e0e0e0;
+  max-width: 650px;
+  margin-bottom: 4rem;
+}
+
+/* Genre Grid Layout */
+.genre-grid {
+  display: flex;
+  gap: 3rem; /* Space between icons */
+}
+
+.genre-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.genre-item i {
+  font-size: 3rem; /* Large Icon Size */
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.genre-item span {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+/* Image Side */
+.radio-image {
+  /* REPLACE THIS with the specific studio room image */
+  background-image: url('../assets/studio A/singerist.jpg'); 
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+}
+
+/* =========================================
+FOOTER STYLES
+========================================= */
+.footer-custom {
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
+}
+.footer-link {
+color: #ffffff;
+text-decoration: none;
+font-weight: 300;
+white-space: nowrap;
+transition: color 0.3s ease;
+}
+.footer-link:hover { color: #8f8e8e; }
+.footer-icon {
+color: #ffffff;
+font-size: 1.1rem;
+transition: color 0.3s ease;
+}
+.footer-icon:hover { color: #8f8e8e; }
+
+
+/* =========================================
+RESPONSIVE MEDIA QUERIES
+========================================= */
+
+/*--navbar --*/
+@media (max-width: 1050px) {
+.desktop-navbar {
+display: none !important;
+}
+.navbar-brand img {
+height: 6rem !important;  
+}
+}
+.mobile-navbar {
+display: none;
+}
+
+/*borgir*/
+@media (max-width: 1050px) {
+.desktop-navbar { display: none !important; }
+.mobile-navbar {
+display: flex !important;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+flex-wrap: wrap !important; 
+}
+#mobileNav {
+width: 100%;
+}
+#mobileNav .navbar-nav {
+flex-direction: row !important;
+justify-content: center !important;
+gap: 1.5rem;
+padding-top: 1rem;
+}
+.mobile-navbar .nav-link { font-size: 1.35rem; }
+}
+
+@media (max-width: 500px) {
+#mobileNav .navbar-nav {
+flex-direction: column !important;
+align-items: center !important; 
+width: 100%;
+padding-right: 1rem;
+padding-top: 1rem;
+}
+#mobileNav .nav-link {
+font-size: 1.25rem;
+text-align: right !important; 
+display: block;
+width: 100%;
+}
+}
+
+/* =========================================
+MOBILE RESPONSIVENESS (Single Line Fix)
+========================================= */
+
+@media (max-width: 1050px) {
+/* 1. Adjust the Hero Container */
+.studio-a-hero {
+height: 70vh; /* Slightly shorter on mobile to fit screen better */
+}
+
+/* 2. Resize the Content Title */
+.hero-title {
+font-size: 3rem; /* Matches your standard mobile header size */
+}
+
+.studio-a-text {
+
+margin-top: -20vh; /* Nudge up slightly to leave room for the big text */
+}
+
+.hero-desc {
+font-size: 1rem;
+padding: 0 1rem;
+}
+
+/* 3. THE BIG TEXT FIX (Single Line) */
+.studio-signature {
+/* Push it to the very bottom */
+bottom: 0; 
+
+/* Ensure it stays on one line */
+white-space: nowrap; 
+
+/* Center alignment */
+width: 100%;
+text-align: center;
+}
+
+/* Target both "STUDIO" and "A" spans */
+.text-studio, .text-a {
+/* 13vw means "13% of the screen width". 
+    This allows the long word "STUDIO" to fit on one line. */
+font-size: 22vw; 
+
+/* Ensure they sit inline */
+display: inline; 
+
+/* Tighten the letter spacing slightly for mobile */
+letter-spacing: -1px;
+}
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Bringing Studio)
+   ========================================= */
+@media (max-width: 992px) {
+  .bringing-studio-section {
+    grid-template-columns: 1fr; /* Stack vertically */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bringing-image {
+    order: 1; /* Image on Top */
+    height: 350px;
+    width: 100%;
+  }
+
+  .bringing-content {
+    order: 2; /* Text on Bottom */
+    padding: 4rem 2rem; 
+    text-align: center; /* Center text on mobile */
+  }
+
+  .bringing-content h2 {
+    font-size: 3rem; /* Scale down title */
+  }
+  
+  .bringing-content p {
+    font-size: 1rem;
+    margin: 0 auto; 
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Radio Ready)
+   ========================================= */
+@media (max-width: 992px) {
+  .radio-ready-section {
+    grid-template-columns: 1fr; /* Stack vertically */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .radio-image {
+    order: 1; /* Image on Top */
+    height: 350px;
+    width: 100%;
+  }
+
+  .radio-content {
+    order: 2; /* Text on Bottom */
+    padding: 4rem 2rem; 
+    text-align: center; /* Center everything on mobile */
+  }
+
+  .radio-content h2 {
+    font-size: 3rem; 
+  }
+  
+  .radio-content p {
+    font-size: 1rem;
+    margin: 0 auto 3rem auto; 
+  }
+
+  /* Adjust icons for mobile */
+  .genre-grid {
+    justify-content: center; /* Center the row of icons */
+    gap: 2rem;
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
+  }
+  
+  .genre-item i {
+    font-size: 2.5rem;
+  }
+}
