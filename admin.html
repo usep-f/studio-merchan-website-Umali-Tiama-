@@ -68,6 +68,14 @@
             >
               <i class="bi bi-calendar-check me-2"></i> Bookings
             </a>
+            <a
+              class="nav-link"
+              href="#"
+              onclick="showSection('testimonials')"
+              id="btn-testimonials"
+            >
+              <i class="bi bi-chat-quote me-2"></i> Testimonials
+            </a>
           </div>
           <button
             onclick="logout()"
@@ -103,10 +111,17 @@
                   <input type="text" id="art-name" class="form-control" />
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label fw-bold"
-                    >Image Link (Google Drive)</label
-                  >
-                  <input type="text" id="art-link" class="form-control" />
+                  <label class="form-label fw-bold">Artist Photo</label>
+                  <input
+                    type="file"
+                    id="art-file"
+                    class="form-control"
+                    accept="image/*"
+                  />
+                  <input type="hidden" id="art-link" />
+                  <div class="form-text text-muted small">
+                    Upload replaces the current image.
+                  </div>
                 </div>
                 <div class="col-12"><hr class="my-2 text-muted" /></div>
                 <div class="col-md-4">
@@ -164,6 +179,100 @@
                   </thead>
                   <tbody id="bookings-table-body" class="bg-white"></tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="section-testimonials" class="hidden">
+            <h2 class="mb-4 fw-bold text-secondary">Manage Testimonials</h2>
+
+            <div class="row">
+              <div class="col-lg-4 mb-4">
+                <div class="card shadow p-4">
+                  <h5 class="fw-bold mb-3" id="testi-form-title">
+                    Add New Review
+                  </h5>
+                  <input type="hidden" id="testi-id" />
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Client Name</label>
+                    <input
+                      type="text"
+                      id="testi-name"
+                      class="form-control"
+                      placeholder="e.g. John Doe"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Role / Title</label>
+                    <input
+                      type="text"
+                      id="testi-role"
+                      class="form-control"
+                      placeholder="e.g. Producer"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Quote</label>
+                    <textarea
+                      id="testi-quote"
+                      class="form-control"
+                      rows="4"
+                      placeholder="Best studio ever..."
+                    ></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Client Photo</label>
+                    <input
+                      type="file"
+                      id="testi-file"
+                      class="form-control"
+                      accept="image/*"
+                    />
+                    <input type="hidden" id="testi-img-url" />
+                    <div class="form-text text-muted small">
+                      Upload a JPG or PNG.
+                    </div>
+                  </div>
+
+                  <div class="d-grid gap-2">
+                    <button
+                      onclick="saveTestimonial()"
+                      class="btn btn-primary fw-bold"
+                      style="background-color: #003766; border: none"
+                    >
+                      SAVE REVIEW
+                    </button>
+                    <button
+                      onclick="resetTestiForm()"
+                      class="btn btn-outline-secondary btn-sm"
+                    >
+                      Clear Form
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="card shadow overflow-hidden">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                      <thead style="background-color: #003766; color: white">
+                        <tr>
+                          <th class="ps-4 py-3">Client</th>
+                          <th class="py-3">Quote</th>
+                          <th class="text-end pe-4 py-3">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        id="testimonials-table-body"
+                        class="bg-white"
+                      ></tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

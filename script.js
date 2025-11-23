@@ -1,16 +1,17 @@
-
-// 1. Import the database connection we just created
+// 1. Import the database connection
 import { db } from './firebase-config.js'; 
 
-// 2. Import the specific Firestore tools we need for logic
+// 2. Import Firestore tools
 import { collection, getDocs, query, orderBy } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 3. Your Logic Function (No changes needed inside)
+// =========================================
+// SECTION A: LOAD ARTISTS (Existing)
+// =========================================
 async function loadArtists() {
     const container = document.getElementById('dynamic-artist-container');
-    
-    // Notice: we use 'db' here, which came from the import above!
+    if (!container) return; // Skip if not on homepage
+
     const q = query(collection(db, "featured_artists"), orderBy("order"));
     
     try {
@@ -48,5 +49,57 @@ async function loadArtists() {
     }
 }
 
-// 4. Run it
+// =========================================
+// SECTION B: LOAD TESTIMONIALS (New)
+// =========================================
+async function loadTestimonials() {
+    const container = document.getElementById('dynamic-testimonials-container');
+    if (!container) return; // Skip if not on homepage
+
+    // We order by 'order' field so you can control who appears first
+    const q = query(collection(db, "testimonials"), orderBy("order"));
+
+    try {
+        const querySnapshot = await getDocs(q);
+        let finalHtml = "";
+
+        querySnapshot.forEach((doc) => {
+            const t = doc.data();
+            
+            // Using your exact CSS classes for styling
+            finalHtml += `
+            <div class="col-md-5">
+                <div class="testimonial-card p-4 text-start">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="${t.image_url}" alt="${t.name}" class="testimonial-img me-3">
+                        <div>
+                            <h5 class="mb-0">${t.name}</h5>
+                            <small class="text-muted">${t.role}</small>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        ${t.quote}
+                    </p>
+                </div>
+            </div>
+            `;
+        });
+
+        if (finalHtml === "") {
+            container.innerHTML = '<div class="text-center text-white p-5">No reviews found.</div>';
+        } else {
+            container.innerHTML = finalHtml;
+        }
+
+    } catch (error) {
+        console.error("Error loading testimonials:", error);
+        container.innerHTML = '<div class="text-center text-danger p-5">Failed to load reviews.</div>';
+    }
+}
+
+// =========================================
+// SECTION C: INITIALIZE
+// =========================================
+// Run both functions when the page loads
 loadArtists();
+loadTestimonials();
