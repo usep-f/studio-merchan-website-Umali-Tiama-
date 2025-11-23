@@ -589,3 +589,78 @@ margin: 0 auto;
 }
 }
 
+/* =========================================
+   SERVICE SUB-NAVBAR
+   ========================================= */
+
+.service-sub-nav {
+  background-color: #002a4d; /* Slightly darker than brand blue for contrast */
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 9000; /* Sits just below the main navbar z-index */
+}
+
+.sub-nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; /* Space between items */
+  margin: 0;
+  padding: 0;
+}
+
+.sub-nav-link {
+  color: #ffffff; /* White text by default */
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  opacity: 0.7; /* Slightly faded when not active */
+}
+
+.sub-nav-link:hover {
+  color: #c8761d; /* Brand Orange on hover */
+  opacity: 1;
+}
+
+/* Divider Styling */
+.sub-nav-divider {
+  color: #c8761d;
+  font-weight: 300;
+  opacity: 0.5;
+}
+
+/* ACTIVE STATE (Highlight the current page) */
+.sub-nav-link.active {
+  color: #c8761d;
+  opacity: 1;
+  border-bottom: 2px solid #c8761d;
+  padding-bottom: 3px;
+}
+
+/* =========================================
+   SUB-NAV MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 768px) {
+  .service-sub-nav {
+    padding: 0.8rem 0;
+  }
+
+  .sub-nav-list {
+    gap: 1rem; /* Tighter spacing on phones */
+  }
+
+  .sub-nav-link {
+    font-size: 0.9rem; /* Smaller text to fit on one line */
+    letter-spacing: 1px;
+  }
+  
+  .sub-nav-divider {
+    font-size: 0.9rem;
+  }
+}
+
