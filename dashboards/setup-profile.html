@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Merchan | Setup Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style auth.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-left">
+        <h1 class="auth-title">ONE LAST<br />STEP</h1>
+        <p class="auth-text">
+          Tell us a bit about yourself. This information helps us coordinate
+          your sessions and keeps your project files organized.
+        </p>
+      </div>
+
+      <div class="auth-right">
+        <div class="form-header">
+          <div class="form-title">COMPLETE</div>
+          <div class="form-subtitle">YOUR PROFILE</div>
+        </div>
+
+        <form id="profileForm">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input
+              type="text"
+              id="full_name"
+              class="form-control"
+              required
+              placeholder="e.g. Juan Dela Cruz"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input
+              type="tel"
+              id="phone_number"
+              class="form-control"
+              required
+              placeholder="0912 345 6789"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Artist / Band Name (Optional)</label>
+            <input
+              type="text"
+              id="artist_name"
+              class="form-control"
+              placeholder="e.g. The Soundscapes"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Role</label>
+            <select
+              id="role"
+              class="form-control"
+              style="appearance: auto; padding-right: 1rem"
+            >
+              <option value="Artist">Artist / Musician</option>
+              <option value="Producer">Producer</option>
+              <option value="Manager">Manager</option>
+              <option value="Label">Record Label</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-auth btn-primary">
+            Save Profile
+          </button>
+
+          <div
+            id="profile-error"
+            style="
+              color: #ff6b6b;
+              text-align: center;
+              margin-top: 15px;
+              font-size: 0.9rem;
+              display: none;
+            "
+          ></div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="profile.js"></script>
+  </body>
+</html>

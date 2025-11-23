@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Merchan | Register</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style auth.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-left">
+        <h1 class="auth-title">JOIN THE<br />COMMUNITY</h1>
+        <p class="auth-text">
+          Create an account to start booking sessions, uploading tracks for
+          remote mixing, and collaborating with our engineers.
+        </p>
+      </div>
+
+      <div class="auth-right">
+        <div class="form-header">
+          <div class="form-title">CREATE</div>
+          <div class="form-subtitle">ACCOUNT</div>
+        </div>
+
+        <form id="signupForm">
+          <div class="form-group">
+            <label class="form-label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              required
+              placeholder="name@example.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password:</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              required
+              placeholder="Create a password"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password:</label>
+            <input
+              type="password"
+              id="confirm-password"
+              class="form-control"
+              required
+              placeholder="Repeat password"
+            />
+          </div>
+
+          <button type="submit" class="btn-auth btn-primary">Register</button>
+
+          <div
+            id="auth-error"
+            style="
+              color: #ff6b6b;
+              text-align: center;
+              margin-top: 15px;
+              font-size: 0.9rem;
+              display: none;
+            "
+          ></div>
+        </form>
+
+        <div class="auth-link">
+          Already have an account? <a href="login.html">Log In</a>
+        </div>
+        <div class="auth-link">
+          <a href="/index.html">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="auth.js"></script>
+  </body>
+</html>
