@@ -47,12 +47,36 @@ window.login = () => {
 window.logout = () => signOut(auth);
 
 // Auth Listener
-onAuthStateChanged(auth, (user) => {
+// Auth Listener
+onAuthStateChanged(auth, async (user) => {
     if (user) {
-        document.getElementById("login-screen").classList.add("hidden");
-        document.getElementById("dashboard-screen").classList.remove("hidden");
-        loadSlotData(); 
+        console.log("Checking admin privileges for:", user.email);
+
+        // 1. Check Supabase for the 'is_admin' flag
+        const { data, error } = await supabase
+            .from('clients')
+            .select('is_admin')
+            .eq('client_uid', user.uid)
+            .single();
+
+        // 2. The Gatekeeper Logic
+        if (error || !data || data.is_admin !== true) {
+            // FAILED: Not an admin
+            console.warn("Access Denied: User is not an admin.");
+            alert("ACCESS DENIED: You do not have permission to view this page.");
+            await signOut(auth); // Log them out immediately
+            document.getElementById("login-screen").classList.remove("hidden");
+            document.getElementById("dashboard-screen").classList.add("hidden");
+        } else {
+            // SUCCESS: Is an admin
+            console.log("Admin Access Granted.");
+            document.getElementById("login-screen").classList.add("hidden");
+            document.getElementById("dashboard-screen").classList.remove("hidden");
+            loadSlotData(); // Load initial data
+        }
+
     } else {
+        // Not logged in at all
         document.getElementById("login-screen").classList.remove("hidden");
         document.getElementById("dashboard-screen").classList.add("hidden");
     }
@@ -62,23 +86,26 @@ onAuthStateChanged(auth, (user) => {
    3. NAVIGATION LOGIC
    ========================================= */
 window.showSection = (sectionId) => {
-    // Hide all
+    // 1. Hide all sections
     document.getElementById('section-carousel').classList.add('hidden');
     document.getElementById('section-bookings').classList.add('hidden');
-    document.getElementById('section-testimonials').classList.add('hidden'); 
+    document.getElementById('section-testimonials').classList.add('hidden');
+    document.getElementById('section-remote').classList.add('hidden'); // <--- NEW
     
-    // Reset buttons
+    // 2. Deactivate all buttons
     document.getElementById('btn-carousel').classList.remove('active');
     document.getElementById('btn-bookings').classList.remove('active');
-    document.getElementById('btn-testimonials').classList.remove('active'); 
+    document.getElementById('btn-testimonials').classList.remove('active');
+    document.getElementById('btn-remote').classList.remove('active'); // <--- NEW
 
-    // Show target
+    // 3. Show target
     document.getElementById('section-' + sectionId).classList.remove('hidden');
     document.getElementById('btn-' + sectionId).classList.add('active');
 
-    // Fetch Data
+    // 4. Fetch Data
     if (sectionId === 'bookings') fetchAdminBookings();
-    if (sectionId === 'testimonials') fetchTestimonials(); 
+    if (sectionId === 'testimonials') fetchTestimonials();
+    if (sectionId === 'remote') fetchRemoteProjects(); // <--- NEW
 };
 
 /* =========================================
@@ -354,4 +381,111 @@ window.resetTestiForm = () => {
     document.getElementById('testi-file').value = "";
     document.getElementById('testi-img-url').value = "";
     document.getElementById('testi-form-title').textContent = "Add New Review";
+};
+
+/* =========================================
+   7. REMOTE PROJECTS MANAGER
+   ========================================= */
+
+window.fetchRemoteProjects = async () => {
+    const tbody = document.getElementById('remote-table-body');
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Loading projects...</td></tr>';
+
+    try {
+        // 1. Fetch All Projects
+        const { data: projects, error: projError } = await supabase
+            .from('online_projects')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (projError) throw projError;
+
+        // 2. Fetch All Clients (To match names/emails)
+        const { data: clients, error: clientError } = await supabase
+            .from('clients')
+            .select('*');
+
+        if (clientError) throw clientError;
+
+        // 3. Create a Lookup Map (UID -> Client Data)
+        // This makes it easy to find "Who owns this project?"
+        const clientMap = {};
+        clients.forEach(c => { clientMap[c.client_uid] = c; });
+
+        if (projects.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">No projects found.</td></tr>';
+            return;
+        }
+
+        let html = '';
+        projects.forEach(p => {
+            // Find the client who owns this project
+            const client = clientMap[p.client_uid] || { full_name: 'Unknown', email: 'Unknown', phone_number: '' };
+            
+            // Status Badge Logic
+            let badgeClass = 'bg-secondary';
+            if (p.status === 'Pending') badgeClass = 'bg-warning text-dark';
+            if (p.status === 'In Progress') badgeClass = 'bg-primary';
+            if (p.status === 'Ready for Review') badgeClass = 'bg-info text-dark';
+            if (p.status === 'Completed') badgeClass = 'bg-success';
+
+            html += `
+            <tr>
+                <td class="ps-4">
+                    <span class="badge ${badgeClass} rounded-pill px-3 py-2">${p.status}</span>
+                </td>
+                <td>
+                    <div class="fw-bold text-primary">${p.project_title}</div>
+                    <div class="small text-muted">${p.service_type} • ${p.genre || 'No Genre'}</div>
+                </td>
+                <td>
+                    <div class="fw-bold">${client.full_name}</div>
+                    <div class="small text-muted"><i class="bi bi-envelope me-1"></i>${client.email}</div>
+                    <div class="small text-muted"><i class="bi bi-telephone me-1"></i>${client.phone_number}</div>
+                </td>
+                <td>
+                    <a href="${p.file_link}" target="_blank" class="btn btn-sm btn-outline-dark mb-1">
+                        <i class="bi bi-download me-1"></i> Download Files
+                    </a>
+                    <div class="small text-muted mt-1">Revisions: <strong>${p.revisions_used} / ${p.max_revisions}</strong></div>
+                </td>
+                <td class="text-end pe-4">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                            Set Status
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" onclick="setProjectStatus(${p.id}, 'In Progress')">In Progress</a></li>
+                            <li><a class="dropdown-item" onclick="setProjectStatus(${p.id}, 'Ready for Review')">Ready for Review</a></li>
+                            <li><a class="dropdown-item" onclick="setProjectStatus(${p.id}, 'Completed')">Completed</a></li>
+                        </ul>
+                    </div>
+                    <button onclick="resetRevisions(${p.id})" class="btn btn-sm btn-outline-warning ms-1" title="Reset Revision Count">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </td>
+            </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+
+    } catch (e) {
+        console.error(e);
+        alert("Error: " + e.message);
+    }
+};
+
+// Helper: Update Status
+window.setProjectStatus = async (id, status) => {
+    const { error } = await supabase.from('online_projects').update({ status: status }).eq('id', id);
+    if (error) alert(error.message);
+    else fetchRemoteProjects();
+};
+
+// Helper: Reset Revisions (The "Freebie" button)
+window.resetRevisions = async (id) => {
+    if(!confirm("Reset revision count to 0 for this project?")) return;
+    const { error } = await supabase.from('online_projects').update({ revisions_used: 0 }).eq('id', id);
+    if (error) alert(error.message);
+    else fetchRemoteProjects();
 };

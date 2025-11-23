@@ -1,0 +1,177 @@
+/* =========================================
+   DASHBOARD STYLES (Matches Main Site)
+   ========================================= */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Urbanist', sans-serif;
+    color: #003766;
+    padding-top: 0;
+    margin: 0;
+}
+
+/* --- 1. NAVBAR (The "Studio Merchan" Look) --- */
+.dashboard-nav {
+    background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%); /* Your Signature Gradient */
+    padding: 1rem 2rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.nav-brand img {
+    height: 60px; /* Consistent logo size */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: rgba(255, 255, 255, 0.2); /* Glassmorphism effect */
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+}
+
+.user-name-text {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.user-role-text {
+    color: #ffd6a5; /* Light orange text */
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #003766; /* Navy Contrast */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+/* --- 2. TABS (Navigation) --- */
+.dashboard-tabs {
+    background-color: white;
+    padding: 0 2rem;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.nav-tabs .nav-link {
+    color: #003766;
+    font-weight: 700; /* Bolder font */
+    font-size: 1.1rem;
+    border: none;
+    padding: 1.2rem 1.5rem;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #C9761C;
+    background-color: #f8f9fa;
+}
+
+.nav-tabs .nav-link.active {
+    color: #C9761C;
+    border-bottom: 4px solid #C9761C;
+    background: transparent;
+}
+
+/* --- 3. CONTENT AREA --- */
+.dashboard-content {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Project Cards */
+.project-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border-left: 6px solid #003766; 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Status Colors */
+.status-pending { border-left-color: #ffc107; } 
+.status-active { border-left-color: #0d6efd; }  
+.status-review { border-left-color: #C9761C; }  
+.status-done { border-left-color: #198754; }    
+
+/* Floating Upload Button */
+.fab-upload {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, #C9761C 0%, #d65a31 100%);
+    color: white;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    box-shadow: 0 4px 15px rgba(201, 118, 28, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s;
+    border: none;
+    z-index: 100;
+}
+
+.fab-upload:hover {
+    transform: scale(1.1) rotate(90deg);
+}
+
+/* --- 4. RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    /* Navbar tweaks */
+    .dashboard-nav {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .user-profile {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Tabs scroll horizontally on mobile */
+    .dashboard-tabs {
+        padding: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .dashboard-content {
+        padding: 1.5rem 1rem;
+    }
+}

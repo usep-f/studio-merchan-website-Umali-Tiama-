@@ -15,8 +15,8 @@ const firebaseConfig = {
 
 // 2. SUPABASE CONFIG
 // ⚠️ PASTE YOUR SUPABASE KEYS HERE ⚠️
-const supabaseUrl = 'YOUR_SUPABASE_URL_HERE';
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY_HERE';
+const supabaseUrl = 'https://cishguvndzwtlbchhqbf.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpc2hndXZuZHp3dGxiY2hocWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg0NjMsImV4cCI6MjA3OTMzNDQ2M30.kKcLTk5BTTyDF_tcwTORM93vp-3rDtCpSmj9ypoZECY';
 
 // Initialize
 const app = initializeApp(firebaseConfig);
@@ -56,8 +56,10 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
     }
 
     // Collect Data
+    // Collect Data
     const profileData = {
-        client_uid: currentUserUID, // The crucial link!
+        client_uid: currentUserUID,
+        email: auth.currentUser.email, // <--- ADD THIS LINE
         full_name: document.getElementById('full_name').value,
         phone_number: document.getElementById('phone_number').value,
         artist_name: document.getElementById('artist_name').value,
