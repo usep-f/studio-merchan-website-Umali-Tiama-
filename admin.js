@@ -450,9 +450,9 @@ window.fetchRemoteProjects = async () => {
                     <div class="small text-muted"><i class="bi bi-telephone me-1"></i>${client.phone_number}</div>
                 </td>
                 <td>
-                    <a href="${p.file_link}" target="_blank" class="btn btn-sm btn-outline-dark mb-1">
+                    <button onclick="forceDownload('${p.file_link}', '${p.project_title}')" class="btn btn-sm btn-outline-dark mb-1">
                         <i class="bi bi-download me-1"></i> Download Files
-                    </a>
+                    </button>
                     <div class="small text-muted mt-1">Revisions: <strong>${p.revisions_used} / ${p.max_revisions}</strong></div>
                 </td>
                 <td class="text-end pe-4">
@@ -471,6 +471,30 @@ window.fetchRemoteProjects = async () => {
                     </button>
                     <button onclick="openRevisionModal(${p.id})" class="btn btn-sm btn-primary me-1" title="Upload Mix">
                         <i class="bi bi-cloud-upload"></i>
+                    </button>
+                </td>
+                <td class="text-end pe-4">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                            Set Status
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" onclick="setProjectStatus(${p.id}, 'In Progress')">In Progress</a></li>
+                            <li><a class="dropdown-item" onclick="setProjectStatus(${p.id}, 'Ready for Review')">Ready for Review</a></li>
+                            <li><a class="dropdown-item" onclick="setProjectStatus(${p.id}, 'Completed')">Completed</a></li>
+                        </ul>
+                    </div>
+
+                    <button onclick="resetRevisions(${p.id})" class="btn btn-sm btn-outline-warning ms-1" title="Reset Revision Count">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+
+                    <button onclick="openRevisionModal(${p.id})" class="btn btn-sm btn-primary ms-1" title="Upload Mix">
+                        <i class="bi bi-cloud-upload"></i>
+                    </button>
+
+                    <button onclick="deleteRemoteProject(${p.id})" class="btn btn-sm btn-danger ms-1" title="Delete Project">
+                        <i class="bi bi-trash"></i>
                     </button>
                 </td>
             </tr>
@@ -574,4 +598,45 @@ window.saveRevision = async () => {
         btn.disabled = false;
         btn.textContent = "SEND TO CLIENT";
     }
+};
+
+// --- E. DOWNLOAD HELPER ---
+window.forceDownload = async (url, filename) => {
+    try {
+        // 1. Fetch the file data
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Network error");
+        
+        // 2. Turn it into a Blob (File object)
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        
+        // 3. Create a temporary link and click it
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename; // This attribute forces the "Save As" behavior
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // 4. Cleanup
+        window.URL.revokeObjectURL(blobUrl);
+    } catch (e) {
+        console.warn("Download forced failed, opening in new tab.", e);
+        // Fallback: If security rules block the download, just open it
+        window.open(url, '_blank');
+    }
+};
+
+// Delete Remote Project
+window.deleteRemoteProject = async (id) => {
+    if(!confirm("Permanently delete this project request?")) return;
+
+    const { error } = await supabase
+        .from('online_projects')
+        .delete()
+        .eq('id', id);
+
+    if (error) alert(error.message);
+    else fetchRemoteProjects();
 };

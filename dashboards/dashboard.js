@@ -31,48 +31,105 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 let currentUser = null;
 
 /* =========================================
-   2. AUTH & PROFILE CHECK
+   2. GLOBAL FUNCTIONS (DEFINED FIRST)
+   ========================================= */
+// We define these at the top so they are ready immediately
+
+// Request Revision Logic
+window.requestRevision = async (id, currentCount) => {
+    console.log("Requesting revision for:", id);
+    const notes = prompt("What changes would you like? (e.g. 'Vocals are too quiet')");
+    
+    if (notes) {
+        try {
+            const { error } = await supabase
+                .from('online_projects')
+                .update({ 
+                    revisions_used: currentCount + 1,
+                    status: 'Revision Requested',
+                    revision_notes: notes
+                })
+                .eq('id', id);
+
+            if (error) throw error;
+
+            alert("Revision requested! The engineer has been notified.");
+            // Reload data
+            if(currentUser) loadRemoteProjects(currentUser.uid);
+
+        } catch (e) {
+            console.error(e);
+            alert("Error: " + e.message);
+        }
+    }
+};
+
+// Mark Completed Logic
+window.markCompleted = async (id) => {
+    console.log("Completing project:", id);
+    if(!confirm("Happy with the mix? This will mark the project as Completed.")) return;
+    
+    const { error } = await supabase
+        .from('online_projects')
+        .update({ status: 'Completed' })
+        .eq('id', id);
+
+    if(!error) {
+        if(currentUser) loadRemoteProjects(currentUser.uid);
+    } else {
+        alert(error.message);
+    }
+};
+
+// Delete Project Logic
+window.deleteProject = async (id) => {
+    if(!confirm("Remove this project from your history? This cannot be undone.")) return;
+
+    const { error } = await supabase
+        .from('online_projects')
+        .delete()
+        .eq('id', id);
+
+    if(!error) {
+        // Refresh the list
+        if(currentUser) loadRemoteProjects(currentUser.uid);
+    } else {
+        alert("Error: " + error.message);
+    }
+};
+
+/* =========================================
+   3. AUTH & LOADING
    ========================================= */
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUser = user;
-        console.log("Logged in as:", user.email);
+        console.log("Logged in:", user.uid);
         
-        // 1. Load Profile
+        // Load Data
         loadUserProfile(user.uid);
-        // 2. Load Remote Projects
         loadRemoteProjects(user.uid);
-        // 3. Load Studio Bookings
         loadStudioBookings(user.uid);
-
     } else {
-        // Not logged in? Go back to login.
         window.location.href = "login.html";
     }
 });
 
-// Logout Logic
 document.getElementById('logout-btn').addEventListener('click', () => {
     signOut(auth).then(() => window.location.href = "login.html");
 });
 
 async function loadUserProfile(uid) {
-    const { data, error } = await supabase
-        .from('clients')
-        .select('full_name, role')
-        .eq('client_uid', uid)
-        .single();
-
+    const { data } = await supabase.from('clients').select('full_name, role').eq('client_uid', uid).single();
     if (data) {
         document.getElementById('user-name-display').textContent = data.full_name;
         document.getElementById('user-role-display').textContent = data.role || 'Client';
-        // First letter of name as avatar
         document.getElementById('user-initial').textContent = data.full_name.charAt(0).toUpperCase();
     }
 }
 
 /* =========================================
-   3. REMOTE PROJECTS (Active & Past)
+   4. REMOTE PROJECTS LOADER
    ========================================= */
 async function loadRemoteProjects(uid) {
     const activeContainer = document.getElementById('active-projects-list');
@@ -104,8 +161,9 @@ async function loadRemoteProjects(uid) {
 
     projects.forEach(proj => {
         const latestMix = deliverables.find(d => d.project_id === proj.id);
-        
         const isPast = (proj.status === 'Completed' || proj.status === 'Cancelled');
+        
+        // Styling Logic
         let statusClass = 'status-active';
         let badgeClass = 'bg-primary';
 
@@ -120,10 +178,25 @@ async function loadRemoteProjects(uid) {
         // --- DYNAMIC ACTION AREA ---
         let actionContent = '';
         
-        // A. If you sent a mix (Ready for Review)
-        if (latestMix && proj.status === 'Ready for Review') {
-            
-            // New: Engineer Notes Block
+        // CASE A: COMPLETED (Past Project) - SHOW DOWNLOAD ONLY
+        if (isPast && latestMix) {
+            actionContent = `
+                <div class="mt-3 p-3 bg-white rounded border border-success shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-success"><i class="bi bi-check2-all"></i> Final Master: ${latestMix.version_name}</strong>
+                        <span class="small text-muted">${new Date(latestMix.created_at).toLocaleDateString()}</span>
+                    </div>
+                    <div class="d-grid">
+                        <a href="${latestMix.file_link}" target="_blank" class="btn btn-success fw-bold">
+                            <i class="bi bi-cloud-download me-2"></i> RE-DOWNLOAD FINAL FILE
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // CASE B: ACTIVE - READY FOR REVIEW (Show Actions)
+        else if (latestMix && proj.status === 'Ready for Review') {
             const engineerNotes = latestMix.notes 
                 ? `<div class="alert alert-light border-start border-4 border-success py-2 px-3 mb-3 small fst-italic text-muted">
                      <strong>Note from Engineer:</strong> "${latestMix.notes}"
@@ -136,14 +209,14 @@ async function loadRemoteProjects(uid) {
                         <strong class="text-success"><i class="bi bi-check-circle-fill"></i> Review Mix: ${latestMix.version_name}</strong>
                         <span class="small text-muted">${new Date(latestMix.created_at).toLocaleDateString()}</span>
                     </div>
-                    
-                    ${engineerNotes} <div class="d-flex gap-2 flex-wrap">
+                    ${engineerNotes}
+                    <div class="d-flex gap-2 flex-wrap">
                         <a href="${latestMix.file_link}" target="_blank" class="btn btn-sm btn-success fw-bold flex-grow-1">
                             <i class="bi bi-play-circle me-1"></i> DOWNLOAD / LISTEN
                         </a>
                         
                         ${ proj.revisions_used < proj.max_revisions ? 
-                           `<button onclick="requestRevision(${proj.id}, ${proj.revisions_used})" class="btn btn-sm btn-outline-danger fw-bold">
+                           `<button onclick="window.requestRevision(${proj.id}, ${proj.revisions_used})" class="btn btn-sm btn-outline-danger fw-bold">
                                 <i class="bi bi-arrow-counterclockwise me-1"></i> REQUEST CHANGES
                             </button>` 
                            : 
@@ -152,41 +225,44 @@ async function loadRemoteProjects(uid) {
                             </button>`
                         }
                         
-                        <button onclick="markCompleted(${proj.id})" class="btn btn-sm btn-outline-primary fw-bold">
+                        <button onclick="window.markCompleted(${proj.id})" class="btn btn-sm btn-outline-primary fw-bold">
                             <i class="bi bi-hand-thumbs-up me-1"></i> APPROVE
                         </button>
                     </div>
                 </div>
             `;
         } 
-        // B. If client requested changes (Waiting)
+        // CASE C: WAITING
         else if (proj.status === 'Revision Requested') {
-            actionContent = `
-                <div class="mt-3 p-3 bg-light rounded border border-warning">
-                    <div class="text-warning fw-bold small mb-1">
-                        <i class="bi bi-hourglass-split"></i> Revision Requested
-                    </div>
-                    <div class="small text-muted fst-italic">
-                        "Waiting for the engineer to upload the next version..."
-                    </div>
-                </div>`;
+            actionContent = `<div class="mt-2 small text-warning"><i class="bi bi-hourglass-split"></i> Waiting for engineer...</div>`;
         }
 
-        const cardHtml = `
-        <div class="project-card ${statusClass}">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <h5 class="fw-bold mb-1">${proj.project_title}</h5>
-                    <div class="text-muted small">
-                        <span class="me-3"><i class="bi bi-music-note-beamed"></i> ${proj.service_type}</span>
-                        <span><i class="bi bi-arrow-repeat"></i> ${revText}</span>
-                    </div>
-                </div>
-                <span class="badge ${badgeClass} badge-custom">${proj.status}</span>
+        // Build Card
+        const deleteBtn = isPast 
+        ? `<button onclick="deleteProject(${proj.id})" class="btn btn-sm btn-outline-secondary border-0" title="Remove from list">
+             <i class="bi bi-trash"></i>
+           </button>`
+        : '';
+
+    // HTML Card
+    const cardHtml = `
+    <div class="project-card ${statusClass} d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="fw-bold mb-1">${proj.project_title}</h5>
+            <div class="text-muted small mb-2">
+                <span class="me-3"><i class="bi bi-music-note-beamed"></i> ${proj.service_type}</span>
+                <span><i class="bi bi-arrow-repeat"></i> ${revText}</span>
             </div>
             ${actionContent}
         </div>
-        `;
+        <div class="text-end">
+            <div class="mb-2">
+                <span class="badge ${badgeClass} badge-custom">${proj.status}</span>
+                ${deleteBtn} </div>
+            <div class="small text-muted">${new Date(proj.created_at).toLocaleDateString()}</div>
+        </div>
+    </div>
+    `;
 
         if (isPast) {
             pastContainer.innerHTML += cardHtml;
@@ -197,92 +273,87 @@ async function loadRemoteProjects(uid) {
         }
     });
 
-    if (!hasActive) activeContainer.innerHTML = '<div class="text-muted small p-3">No active projects right now.</div>';
+    if (!hasActive) activeContainer.innerHTML = '<div class="text-muted small p-3">No active projects. Click + to start!</div>';
     if (!hasPast) pastContainer.innerHTML = '<div class="text-muted small">No completed projects yet.</div>';
 }
 
 /* =========================================
-   4. NEW PROJECT UPLOAD LOGIC
+   5. UPLOAD HANDLER
    ========================================= */
-document.getElementById('newProjectForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const title = document.getElementById('proj-title').value;
-    const service = document.getElementById('proj-service').value;
-    const genre = document.getElementById('proj-genre').value;
-    const fileInput = document.getElementById('proj-file');
-    
-    // UI Feedback
-    const btn = e.target.querySelector('button');
-    const progressContainer = document.getElementById('upload-progress-container');
-    const progressBar = document.getElementById('upload-bar');
-    
-    btn.disabled = true;
-    btn.textContent = "UPLOADING...";
-    progressContainer.classList.remove('d-none');
-
-    // 1. Upload File to Firebase Storage
-    try {
-        const file = fileInput.files[0];
-        // Path: user_uid/timestamp_filename
-        const storagePath = `client_uploads/${currentUser.uid}/${Date.now()}_${file.name}`;
-        const storageRef = ref(storage, storagePath);
+const uploadForm = document.getElementById('newProjectForm');
+if (uploadForm) {
+    uploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const progressContainer = document.getElementById('upload-progress-container');
+        const progressBar = document.getElementById('upload-bar');
         
-        // Upload
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        
-        progressBar.style.width = "50%"; // File done
+        btn.disabled = true; 
+        btn.textContent = "UPLOADING...";
+        progressContainer.classList.remove('d-none');
 
-        // 2. Save Data to Supabase
-        const { error } = await supabase.from('online_projects').insert([{
-            client_uid: currentUser.uid,
-            project_title: title,
-            service_type: service,
-            genre: genre,
-            file_link: downloadURL,
-            status: 'Pending',
-            revisions_used: 0
-        }]);
+        try {
+            const title = document.getElementById('proj-title').value;
+            const service = document.getElementById('proj-service').value;
+            const genre = document.getElementById('proj-genre').value;
+            const file = document.getElementById('proj-file').files[0];
 
-        if (error) throw error;
-
-        progressBar.style.width = "100%";
-        setTimeout(() => {
-            alert("Project Submitted Successfully!");
-            // Close modal manually
-            const modalEl = document.getElementById('uploadModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            modal.hide();
+            const storagePath = `client_uploads/${currentUser.uid}/${Date.now()}_${file.name}`;
+            const storageRef = ref(storage, storagePath);
             
-            // Reset form & Refresh list
+            const snapshot = await uploadBytes(storageRef, file);
+            const downloadURL = await getDownloadURL(snapshot.ref);
+            
+            progressBar.style.width = "50%";
+
+            const { error } = await supabase.from('online_projects').insert([{
+                client_uid: currentUser.uid,
+                project_title: title,
+                service_type: service,
+                genre: genre,
+                file_link: downloadURL,
+                status: 'Pending',
+                revisions_used: 0
+            }]);
+
+            if (error) throw error;
+
+            progressBar.style.width = "100%";
+            alert("Project Submitted!");
+            
+            // Close Modal
+            const modalEl = document.getElementById('uploadModal');
+            if(window.bootstrap) {
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
+            }
+            
             e.target.reset();
             btn.disabled = false;
             btn.textContent = "SUBMIT PROJECT";
             progressContainer.classList.add('d-none');
             loadRemoteProjects(currentUser.uid);
-        }, 500);
 
-    } catch (error) {
-        console.error(error);
-        alert("Error: " + error.message);
-        btn.disabled = false;
-        btn.textContent = "SUBMIT PROJECT";
-    }
-});
+        } catch (error) {
+            console.error(error);
+            alert("Error: " + error.message);
+            btn.disabled = false;
+            btn.textContent = "SUBMIT PROJECT";
+        }
+    });
+}
 
 /* =========================================
-   5. STUDIO BOOKINGS LIST
+   6. STUDIO BOOKINGS
    ========================================= */
 async function loadStudioBookings(uid) {
     const container = document.getElementById('bookings-list');
-    
-    const { data, error } = await supabase
+    if(!container) return;
+
+    const { data } = await supabase
         .from('bookings')
         .select('*')
-        // NOTE: This assumes you added 'client_uid' to bookings table!
-        // If not, this query will return nothing.
-        // .eq('client_uid', uid) 
+        .eq('client_uid', uid) // Requires 'client_uid' in bookings table!
         .order('start_date', { ascending: false });
 
     if (data && data.length > 0) {
@@ -294,11 +365,8 @@ async function loadStudioBookings(uid) {
                 <td><strong>${b.start_date}</strong></td>
                 <td>${b.studio}</td>
                 <td class="${statusColor} fw-bold">${b.status}</td>
-                <td>
-                    ${b.status === 'Pending' ? '<button class="btn btn-sm btn-link text-danger p-0">Cancel</button>' : '-'}
-                </td>
-            </tr>
-            `;
+                <td>-</td>
+            </tr>`;
         });
         container.innerHTML = html;
     } else {
