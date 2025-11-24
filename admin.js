@@ -431,9 +431,15 @@ window.fetchRemoteProjects = async () => {
 
             html += `
             <tr>
-                <td class="ps-4">
-                    <span class="badge ${badgeClass} rounded-pill px-3 py-2">${p.status}</span>
-                </td>
+        <td class="ps-4">
+            <span class="badge ${badgeClass} rounded-pill px-3 py-2 mb-1">${p.status}</span>
+            ${ p.status === 'Revision Requested' && p.revision_notes ? 
+               `<div class="small text-danger mt-1" style="max-width: 150px; line-height: 1.2;">
+                  <strong>Note:</strong> "${p.revision_notes}"
+                </div>` 
+               : '' 
+            }
+        </td>
                 <td>
                     <div class="fw-bold text-primary">${p.project_title}</div>
                     <div class="small text-muted">${p.service_type} • ${p.genre || 'No Genre'}</div>
@@ -463,6 +469,9 @@ window.fetchRemoteProjects = async () => {
                     <button onclick="resetRevisions(${p.id})" class="btn btn-sm btn-outline-warning ms-1" title="Reset Revision Count">
                         <i class="bi bi-arrow-counterclockwise"></i>
                     </button>
+                    <button onclick="openRevisionModal(${p.id})" class="btn btn-sm btn-primary me-1" title="Upload Mix">
+                        <i class="bi bi-cloud-upload"></i>
+                    </button>
                 </td>
             </tr>
             `;
@@ -488,4 +497,81 @@ window.resetRevisions = async (id) => {
     const { error } = await supabase.from('online_projects').update({ revisions_used: 0 }).eq('id', id);
     if (error) alert(error.message);
     else fetchRemoteProjects();
+};
+
+/* =========================================
+   8. REVISION SYSTEM LOGIC
+   ========================================= */
+
+// 1. Open the Modal
+window.openRevisionModal = (projectId) => {
+    document.getElementById('rev-project-id').value = projectId;
+    document.getElementById('rev-name').value = "";
+    document.getElementById('rev-file').value = "";
+    document.getElementById('rev-notes').value = "";
+    document.getElementById('btn-save-rev').disabled = false;
+    document.getElementById('btn-save-rev').textContent = "SEND TO CLIENT";
+    
+    // Show Modal (Bootstrap)
+    new bootstrap.Modal(document.getElementById('revisionModal')).show();
+};
+
+// 2. Save the Revision
+window.saveRevision = async () => {
+    const projectId = document.getElementById('rev-project-id').value;
+    const name = document.getElementById('rev-name').value;
+    const fileInput = document.getElementById('rev-file');
+    const notes = document.getElementById('rev-notes').value;
+    const btn = document.getElementById('btn-save-rev');
+
+    if (!name || fileInput.files.length === 0) {
+        alert("Please provide a Version Name and a File.");
+        return;
+    }
+
+    // UI Feedback
+    btn.disabled = true;
+    btn.textContent = "Uploading...";
+
+    try {
+        // A. Upload to Firebase Storage
+        const file = fileInput.files[0];
+        // Path: deliverables/project_ID/timestamp_filename
+        const storageRef = ref(storage, `deliverables/${projectId}/${Date.now()}_${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        // B. Save to Supabase 'project_deliverables'
+        const { error: insertError } = await supabase
+            .from('project_deliverables')
+            .insert([{
+                project_id: projectId,
+                version_name: name,
+                file_link: downloadURL,
+                notes: notes
+            }]);
+
+        if (insertError) throw insertError;
+
+        // C. Update Project Status to "Ready for Review" automatically
+        await supabase
+            .from('online_projects')
+            .update({ status: 'Ready for Review' })
+            .eq('id', projectId);
+
+        alert("Revision Sent Successfully!");
+        
+        // Close Modal (Find the open one and hide it)
+        const modalEl = document.getElementById('revisionModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+        
+        fetchRemoteProjects(); // Refresh table
+
+    } catch (e) {
+        console.error(e);
+        alert("Error: " + e.message);
+        btn.disabled = false;
+        btn.textContent = "SEND TO CLIENT";
+    }
 };

@@ -78,7 +78,8 @@ async function loadRemoteProjects(uid) {
     const activeContainer = document.getElementById('active-projects-list');
     const pastContainer = document.getElementById('past-projects-list');
 
-    const { data, error } = await supabase
+    // 1. Fetch Projects
+    const { data: projects, error } = await supabase
         .from('online_projects')
         .select('*')
         .eq('client_uid', uid)
@@ -86,47 +87,104 @@ async function loadRemoteProjects(uid) {
 
     if (error) {
         console.error("Error loading projects:", error);
-        activeContainer.innerHTML = '<div class="text-danger">Failed to load projects.</div>';
         return;
     }
 
-    // Clear loaders
+    // 2. Fetch Deliverables
+    const { data: deliverables } = await supabase
+        .from('project_deliverables')
+        .select('*')
+        .order('created_at', { ascending: false });
+
     activeContainer.innerHTML = '';
     pastContainer.innerHTML = '';
 
     let hasActive = false;
     let hasPast = false;
 
-    data.forEach(proj => {
-        // Determine Status Color & Bucket
+    projects.forEach(proj => {
+        const latestMix = deliverables.find(d => d.project_id === proj.id);
+        
         const isPast = (proj.status === 'Completed' || proj.status === 'Cancelled');
         let statusClass = 'status-active';
         let badgeClass = 'bg-primary';
 
         if (proj.status === 'Pending') { statusClass = 'status-pending'; badgeClass = 'bg-warning text-dark'; }
         if (proj.status === 'Ready for Review') { statusClass = 'status-review'; badgeClass = 'bg-info text-dark'; }
+        if (proj.status === 'Revision Requested') { statusClass = 'status-pending'; badgeClass = 'bg-warning text-dark'; }
         if (proj.status === 'Completed') { statusClass = 'status-done'; badgeClass = 'bg-success'; }
 
-        // Revision Text
         let revText = `Revision ${proj.revisions_used} of ${proj.max_revisions}`;
         if(proj.revisions_used === 0) revText = "Initial Draft";
 
-        // HTML Card
-        const cardHtml = `
-        <div class="project-card ${statusClass} d-flex justify-content-between align-items-center">
-            <div>
-                <h5 class="fw-bold mb-1">${proj.project_title}</h5>
-                <div class="text-muted small">
-                    <span class="me-3"><i class="bi bi-music-note-beamed"></i> ${proj.service_type}</span>
-                    <span><i class="bi bi-arrow-repeat"></i> ${revText}</span>
+        // --- DYNAMIC ACTION AREA ---
+        let actionContent = '';
+        
+        // A. If you sent a mix (Ready for Review)
+        if (latestMix && proj.status === 'Ready for Review') {
+            
+            // New: Engineer Notes Block
+            const engineerNotes = latestMix.notes 
+                ? `<div class="alert alert-light border-start border-4 border-success py-2 px-3 mb-3 small fst-italic text-muted">
+                     <strong>Note from Engineer:</strong> "${latestMix.notes}"
+                   </div>` 
+                : '';
+
+            actionContent = `
+                <div class="mt-3 p-3 bg-white rounded border shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-success"><i class="bi bi-check-circle-fill"></i> Review Mix: ${latestMix.version_name}</strong>
+                        <span class="small text-muted">${new Date(latestMix.created_at).toLocaleDateString()}</span>
+                    </div>
+                    
+                    ${engineerNotes} <div class="d-flex gap-2 flex-wrap">
+                        <a href="${latestMix.file_link}" target="_blank" class="btn btn-sm btn-success fw-bold flex-grow-1">
+                            <i class="bi bi-play-circle me-1"></i> DOWNLOAD / LISTEN
+                        </a>
+                        
+                        ${ proj.revisions_used < proj.max_revisions ? 
+                           `<button onclick="requestRevision(${proj.id}, ${proj.revisions_used})" class="btn btn-sm btn-outline-danger fw-bold">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> REQUEST CHANGES
+                            </button>` 
+                           : 
+                           `<button disabled class="btn btn-sm btn-secondary fw-bold" title="Limit Reached">
+                                <i class="bi bi-lock me-1"></i> LIMIT REACHED
+                            </button>`
+                        }
+                        
+                        <button onclick="markCompleted(${proj.id})" class="btn btn-sm btn-outline-primary fw-bold">
+                            <i class="bi bi-hand-thumbs-up me-1"></i> APPROVE
+                        </button>
+                    </div>
                 </div>
+            `;
+        } 
+        // B. If client requested changes (Waiting)
+        else if (proj.status === 'Revision Requested') {
+            actionContent = `
+                <div class="mt-3 p-3 bg-light rounded border border-warning">
+                    <div class="text-warning fw-bold small mb-1">
+                        <i class="bi bi-hourglass-split"></i> Revision Requested
+                    </div>
+                    <div class="small text-muted fst-italic">
+                        "Waiting for the engineer to upload the next version..."
+                    </div>
+                </div>`;
+        }
+
+        const cardHtml = `
+        <div class="project-card ${statusClass}">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="fw-bold mb-1">${proj.project_title}</h5>
+                    <div class="text-muted small">
+                        <span class="me-3"><i class="bi bi-music-note-beamed"></i> ${proj.service_type}</span>
+                        <span><i class="bi bi-arrow-repeat"></i> ${revText}</span>
+                    </div>
+                </div>
+                <span class="badge ${badgeClass} badge-custom">${proj.status}</span>
             </div>
-            <div class="text-end">
-                <span class="badge ${badgeClass} badge-custom mb-2">${proj.status}</span>
-                ${ proj.status === 'Ready for Review' ? 
-                   `<br><a href="#" class="btn btn-sm btn-outline-dark mt-1">Review Track</a>` : '' 
-                }
-            </div>
+            ${actionContent}
         </div>
         `;
 
@@ -139,8 +197,7 @@ async function loadRemoteProjects(uid) {
         }
     });
 
-    // Empty States
-    if (!hasActive) activeContainer.innerHTML = '<div class="text-muted small p-3">No active projects right now. Click + to start one!</div>';
+    if (!hasActive) activeContainer.innerHTML = '<div class="text-muted small p-3">No active projects right now.</div>';
     if (!hasPast) pastContainer.innerHTML = '<div class="text-muted small">No completed projects yet.</div>';
 }
 
