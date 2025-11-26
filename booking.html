@@ -101,113 +101,268 @@
     <div class="container-fluid g-0">
       <div class="row g-0 min-vh-100">
         <div
-          class="col-lg-9 p-4 p-md-5 d-flex flex-column justify-content-center align-items-center custom-left-panel"
+          class="col-lg-9 p-4 p-md-5 d-flex flex-column align-items-center custom-left-panel"
         >
-          <h1 class="main-title">BOOK A SERVICE</h1>
+          <div class="booking-tabs-container mb-4">
+            <button
+              id="tab-studio"
+              class="booking-tab active"
+              onclick="switchTab('studio')"
+            >
+              STUDIO SERVICES
+            </button>
+            <span class="tab-divider">|</span>
+            <button
+              id="tab-live"
+              class="booking-tab"
+              onclick="switchTab('live')"
+            >
+              LIVE SOUND
+            </button>
+          </div>
 
           <div
             id="message-box"
-            class="w-100"
+            class="w-100 mb-3"
             style="display: none; max-width: 500px"
           ></div>
 
-          <form
-            id="booking-form-element"
-            class="w-100"
-            style="max-width: 500px"
+          <div
+            id="studio-section"
+            class="w-100 d-flex flex-column align-items-center"
           >
-            <div class="row mb-3">
-              <label
-                for="customer_name"
-                class="col-sm-4 col-form-label text-sm-end"
-                >Full Name:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  id="customer_name"
-                  class="form-control"
-                  required
-                />
-              </div>
-            </div>
+            <h1 class="main-title">BOOK A SERVICE</h1>
 
-            <div class="row mb-3">
-              <label
-                for="customer_address"
-                class="col-sm-4 col-form-label text-sm-end"
-                >Contact No:</label
-              >
-              <div class="col-sm-8">
-                <input
-                  type="text"
-                  id="customer_address"
-                  class="form-control"
-                  required
-                />
+            <form id="studio-form" class="w-100" style="max-width: 500px">
+              <div class="row mb-3">
+                <label
+                  for="customer_name"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Full Name:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    id="customer_name"
+                    class="form-control"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="row mb-3">
-              <label
-                for="service_type"
-                class="col-sm-4 col-form-label text-sm-end"
-                >Service Type:</label
-              >
-              <div class="col-sm-8">
-                <select id="service_type" class="form-select">
-                  <option value="Recording">RECORDING</option>
-                  <option value="Mixing">MIXING</option>
-                  <option value="Mastering">MASTERING</option>
-                </select>
+              <div class="row mb-3">
+                <label
+                  for="customer_address"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Contact No:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    id="customer_address"
+                    class="form-control"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="row mb-3">
-              <label for="studio" class="col-sm-4 col-form-label text-sm-end"
-                >Studio:</label
-              >
-              <div class="col-sm-8">
-                <select id="studio" class="form-select">
-                  <option value="Studio A">STUDIO A</option>
-                  <option value="Studio B">STUDIO B</option>
-                  <option value="Studio C">STUDIO C</option>
-                </select>
+              <div class="row mb-3">
+                <label
+                  for="service_type"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Service Type:</label
+                >
+                <div class="col-sm-8">
+                  <select id="service_type" class="form-select">
+                    <option value="Recording">RECORDING</option>
+                    <option value="Mixing">MIXING</option>
+                    <option value="Mastering">MASTERING</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div class="row mb-3">
-              <label
-                for="start_date"
-                class="col-sm-4 col-form-label text-sm-end"
-                >Date:</label
-              >
-              <div class="col-sm-8 d-flex gap-2">
-                <input
-                  type="date"
-                  id="start_date"
-                  class="form-control date-input"
-                  required
-                />
-                <input
-                  type="date"
-                  id="end_date"
-                  class="form-control date-input"
-                  required
-                />
+              <div class="row mb-3">
+                <label for="studio" class="col-sm-4 col-form-label text-sm-end"
+                  >Studio:</label
+                >
+                <div class="col-sm-8">
+                  <select id="studio" class="form-select">
+                    <option value="Studio A">STUDIO A</option>
+                    <option value="Studio B">STUDIO B</option>
+                    <option value="Studio C">STUDIO C</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div class="text-center">
-              <button type="submit" class="btn book-button">BOOK</button>
-            </div>
-          </form>
+              <div class="row mb-3">
+                <label
+                  for="start_date"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Date:</label
+                >
+                <div class="col-sm-8 d-flex gap-2">
+                  <input
+                    type="date"
+                    id="start_date"
+                    class="form-control date-input"
+                    required
+                  />
+                  <input
+                    type="date"
+                    id="end_date"
+                    class="form-control date-input"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn book-button">
+                  BOOK STUDIO
+                </button>
+              </div>
+            </form>
+
+            <div
+              id="calendar-studio"
+              class="w-100 mt-4"
+              style="max-width: 600px; min-height: 500px"
+            ></div>
+          </div>
 
           <div
-            id="calendar"
-            class="w-100 mt-4"
-            style="max-width: 600px; min-height: 500px"
-          ></div>
+            id="live-section"
+            class="w-100 d-none flex-column align-items-center"
+          >
+            <h1 class="main-title">LIVE SOUND</h1>
+
+            <form id="live-form" class="w-100" style="max-width: 500px">
+              <div class="row mb-3">
+                <label
+                  for="live_customer_name"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Full Name:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    id="live_customer_name"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="live_contact"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Contact No:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    id="live_contact"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="live_event_type"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Event Type:</label
+                >
+                <div class="col-sm-8">
+                  <select id="live_event_type" class="form-select">
+                    <option value="Concert">Concert</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Party">Party</option>
+                    <option value="Family Event">Family Event</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="live_location"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Location:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="text"
+                    id="live_location"
+                    class="form-control"
+                    placeholder="Event Address"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="live_package"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Package:</label
+                >
+                <div class="col-sm-8">
+                  <select id="live_package" class="form-select">
+                    <option value="Package A">Package A (Basic)</option>
+                    <option value="Package B">Package B (Standard)</option>
+                    <option value="Package C">Package C (Full Setup)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="live_start_time"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >Start:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="datetime-local"
+                    id="live_start_time"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label
+                  for="live_end_time"
+                  class="col-sm-4 col-form-label text-sm-end"
+                  >End:</label
+                >
+                <div class="col-sm-8">
+                  <input
+                    type="datetime-local"
+                    id="live_end_time"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn book-button">
+                  BOOK LIVE SOUND
+                </button>
+              </div>
+            </form>
+
+            <div
+              id="calendar-live"
+              class="w-100 mt-4"
+              style="max-width: 600px; min-height: 500px"
+            ></div>
+          </div>
         </div>
 
         <div class="col-lg-3 d-none d-lg-block right-panel"></div>
@@ -272,5 +427,13 @@
     ></script>
 
     <script type="module" src="booking.js"></script>
+
+    <script>
+      function switchTab(mode) {
+        window.dispatchEvent(
+          new CustomEvent("switchBookingTab", { detail: { mode } })
+        );
+      }
+    </script>
   </body>
 </html>

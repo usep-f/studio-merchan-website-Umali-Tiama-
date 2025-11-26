@@ -71,6 +71,14 @@
             <a
               class="nav-link"
               href="#"
+              onclick="showSection('live')"
+              id="btn-live"
+            >
+              <i class="bi bi-music-note-beamed me-2"></i> Live Events
+            </a>
+            <a
+              class="nav-link"
+              href="#"
               onclick="showSection('testimonials')"
               id="btn-testimonials"
             >
@@ -191,6 +199,35 @@
             </div>
           </div>
 
+          <div id="section-live" class="hidden">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="fw-bold text-secondary">Live Sound Bookings</h2>
+              <button
+                onclick="fetchLiveBookings()"
+                class="btn btn-outline-primary"
+              >
+                <i class="bi bi-arrow-clockwise me-2"></i> Refresh
+              </button>
+            </div>
+            <div class="card shadow overflow-hidden">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                  <thead style="background-color: #c8761d; color: white">
+                    <tr>
+                      <th class="ps-4 py-3">Status</th>
+                      <th class="py-3">Event Date</th>
+                      <th class="py-3">Event Details</th>
+                      <th class="py-3">Location</th>
+                      <th class="py-3">Client</th>
+                      <th class="text-end pe-4 py-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="live-table-body" class="bg-white"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
           <div id="section-testimonials" class="hidden">
             <h2 class="mb-4 fw-bold text-secondary">Manage Testimonials</h2>
 
@@ -284,6 +321,7 @@
               </div>
             </div>
           </div>
+
           <div id="section-remote" class="hidden">
             <div class="d-flex justify-content-between align-items-center mb-4">
               <h2 class="fw-bold text-secondary">Remote Project Requests</h2>
