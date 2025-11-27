@@ -114,6 +114,14 @@
             >
               <i class="bi bi-cloud-download me-2"></i> Remote Projects
             </a>
+            <a
+              class="nav-link"
+              href="#"
+              onclick="showSection('reviews')"
+              id="btn-reviews"
+            >
+              <i class="bi bi-star-half me-2"></i> Reviews
+            </a>
           </div>
           <button
             onclick="logout()"
@@ -306,6 +314,38 @@
                     <tr>
                       <td colspan="5" class="text-center p-5 text-muted">
                         Loading messages...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="section-reviews" class="hidden">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="fw-bold text-secondary">User Reviews</h2>
+              <button onclick="fetchReviews()" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-clockwise me-2"></i> Refresh
+              </button>
+            </div>
+
+            <div class="card shadow overflow-hidden">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                  <thead style="background-color: #003766; color: white">
+                    <tr>
+                      <th class="ps-4 py-3">Rating</th>
+                      <th class="py-3">Reviewer</th>
+                      <th class="py-3">Review Content</th>
+                      <th class="py-3">Status</th>
+                      <th class="text-end pe-4 py-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reviews-table-body" class="bg-white">
+                    <tr>
+                      <td colspan="5" class="text-center p-5 text-muted">
+                        Loading reviews...
                       </td>
                     </tr>
                   </tbody>

@@ -175,6 +175,73 @@
 
       </div>
     </div>
+
+    <section class="py-5 bg-review-gradient">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            
+            <div class="card border-0 shadow-lg my-4">
+              <div class="card-body p-5">
+                
+                <div class="text-center mb-4">
+                  <h3 class="fw-bold" style="color: #4b0082;">RATE YOUR EXPERIENCE</h3>
+                  <p class="text-muted">We value your feedback. Tell us how we did!</p>
+                </div>
+
+                <form id="review-form">
+                  <div class="mb-4 text-center">
+                    <div class="star-rating">
+                      <input type="radio" id="star5" name="rating" value="5" />
+                      <label for="star5" title="5 stars"><i class="bi bi-star-fill"></i></label>
+                      
+                      <input type="radio" id="star4" name="rating" value="4" />
+                      <label for="star4" title="4 stars"><i class="bi bi-star-fill"></i></label>
+                      
+                      <input type="radio" id="star3" name="rating" value="3" />
+                      <label for="star3" title="3 stars"><i class="bi bi-star-fill"></i></label>
+                      
+                      <input type="radio" id="star2" name="rating" value="2" />
+                      <label for="star2" title="2 stars"><i class="bi bi-star-fill"></i></label>
+                      
+                      <input type="radio" id="star1" name="rating" value="1" />
+                      <label for="star1" title="1 star"><i class="bi bi-star-fill"></i></label>
+                    </div>
+                    <div class="small text-danger mt-2 d-none" id="rating-error">Please select a star rating</div>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label fw-bold small text-uppercase" style="color: #003766;">Your Name</label>
+                      <input type="text" id="rev-name" class="form-control bg-light border-0" required>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <label class="form-label fw-bold small text-uppercase" style="color: #003766;">Role / Title (Optional)</label>
+                      <input type="text" id="rev-role" class="form-control bg-light border-0" placeholder="e.g. Artist, Producer">
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold small text-uppercase" style="color: #003766;">Review</label>
+                      <textarea id="rev-msg" class="form-control bg-light border-0" rows="3" placeholder="Share your thoughts..." required></textarea>
+                    </div>
+
+                    <div class="col-12 mt-4 text-center">
+                      <button type="submit" id="btn-submit-review" class="btn btn-lg px-5 text-white fw-bold shadow-sm" 
+                              style="background-color: #c9761c; border-radius: 30px;">
+                        SUBMIT REVIEW
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
     </main>
     <!--FOOTER-->
     <footer class="footer-custom text-light mt-0">

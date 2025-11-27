@@ -71,3 +71,58 @@ if (contactForm) {
         }
     });
 }
+
+/* =========================================
+   3. REVIEW SUBMISSION LOGIC
+   ========================================= */
+const reviewForm = document.getElementById('review-form');
+
+if (reviewForm) {
+    reviewForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // 1. Get Selected Rating
+        const ratingInput = document.querySelector('input[name="rating"]:checked');
+        const errorMsg = document.getElementById('rating-error');
+        
+        if (!ratingInput) {
+            errorMsg.classList.remove('d-none');
+            return;
+        }
+        errorMsg.classList.add('d-none');
+
+        // 2. UI Feedback
+        const btn = document.getElementById('btn-submit-review');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.textContent = "POSTING...";
+
+        // 3. Gather Data
+        const reviewData = {
+            rating: parseInt(ratingInput.value),
+            name: document.getElementById('rev-name').value,
+            role: document.getElementById('rev-role').value || 'Client',
+            message: document.getElementById('rev-msg').value,
+            timestamp: serverTimestamp(),
+            status: 'pending' // pending approval
+        };
+
+        try {
+            // 4. Save to Firestore 'reviews' collection
+            await addDoc(collection(db, "reviews"), reviewData);
+
+            alert("Thank you! Your review has been submitted.");
+            reviewForm.reset();
+            
+            // Reset stars (radio buttons don't clear automatically with reset() in some browsers)
+            document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
+
+        } catch (error) {
+            console.error("Error submitting review: ", error);
+            alert("Error submitting review. Please try again.");
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    });
+}

@@ -80,6 +80,7 @@ window.showSection = (sectionId) => {
     document.getElementById('section-remote').classList.add('hidden');
     document.getElementById('section-clients').classList.add('hidden'); // <--- NEW
     document.getElementById('section-messages').classList.add('hidden');
+    document.getElementById('section-reviews').classList.add('hidden');
 
     // 2. Deactivate all buttons
     document.getElementById('btn-carousel').classList.remove('active');
@@ -89,6 +90,7 @@ window.showSection = (sectionId) => {
     document.getElementById('btn-remote').classList.remove('active');
     document.getElementById('btn-clients').classList.remove('active'); // <--- NEW
     document.getElementById('btn-messages').classList.remove('active');
+    document.getElementById('btn-reviews').classList.remove('active');
 
     // 3. Show target
     document.getElementById('section-' + sectionId).classList.remove('hidden');
@@ -101,6 +103,7 @@ window.showSection = (sectionId) => {
     if (sectionId === 'remote') fetchRemoteProjects();
     if (sectionId === 'clients') fetchClients(); // <--- NEW
     if (sectionId === 'messages') fetchMessages();
+    if (sectionId === 'reviews') fetchReviews();
     
 };
 
@@ -931,5 +934,94 @@ window.deleteMessage = async (id) => {
         fetchMessages(); // Refresh list
     } catch (e) {
         alert("Error deleting: " + e.message);
+    }
+};
+
+/* =========================================
+   12. REVIEWS MANAGEMENT (Firestore)
+   ========================================= */
+
+// --- A. FETCH REVIEWS ---
+window.fetchReviews = async () => {
+    const tbody = document.getElementById('reviews-table-body');
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Loading reviews...</td></tr>';
+
+    try {
+        const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">No reviews yet.</td></tr>';
+            return;
+        }
+
+        let html = '';
+        querySnapshot.forEach((doc) => {
+            const r = doc.data();
+            const id = doc.id;
+            
+            // Generate Stars HTML
+            let starsHtml = '';
+            for(let i=1; i<=5; i++) {
+                if(i <= r.rating) starsHtml += '<i class="bi bi-star-fill text-warning"></i>';
+                else starsHtml += '<i class="bi bi-star text-muted"></i>';
+            }
+
+            // Status Badge
+            const statusBadge = r.status === 'approved' 
+                ? '<span class="badge bg-success">Live</span>' 
+                : '<span class="badge bg-warning text-dark">Pending</span>';
+
+            // Actions
+            const approveBtn = r.status === 'pending'
+                ? `<button onclick="approveReview('${id}')" class="btn btn-sm btn-success me-1" title="Approve & Publish"><i class="bi bi-check-lg"></i></button>`
+                : `<button disabled class="btn btn-sm btn-outline-secondary me-1"><i class="bi bi-check2-all"></i></button>`;
+
+            html += `
+            <tr>
+                <td class="ps-4 text-nowrap">${starsHtml}</td>
+                <td>
+                    <div class="fw-bold">${r.name}</div>
+                    <div class="small text-muted">${r.role}</div>
+                </td>
+                <td style="max-width: 350px;">
+                    <div class="text-truncate" title="${r.message}">"${r.message}"</div>
+                </td>
+                <td>${statusBadge}</td>
+                <td class="text-end pe-4">
+                    ${approveBtn}
+                    <button onclick="deleteReview('${id}')" class="btn btn-sm btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+            `;
+        });
+
+        tbody.innerHTML = html;
+
+    } catch (e) {
+        console.error("Error fetching reviews:", e);
+        alert("Error: " + e.message);
+    }
+};
+
+// --- B. APPROVE REVIEW ---
+window.approveReview = async (id) => {
+    if(!confirm("Approve this review? It will be marked as 'Live'.")) return;
+    try {
+        await updateDoc(doc(db, "reviews", id), { status: 'approved' });
+        fetchReviews(); // Refresh list
+    } catch (e) {
+        alert("Error: " + e.message);
+    }
+};
+
+// --- C. DELETE REVIEW ---
+window.deleteReview = async (id) => {
+    if(!confirm("Delete this review permanently?")) return;
+    try {
+        await deleteDoc(doc(db, "reviews", id));
+        fetchReviews();
+    } catch (e) {
+        alert("Error: " + e.message);
     }
 };
