@@ -1,11 +1,29 @@
 /* =========================================
-   1. SUPABASE CONFIGURATION
+   1. IMPORTS & CONFIG
    ========================================= */
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+// NEW: Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// KEYS
+// --- FIREBASE CONFIG (Matches your admin/signup config) ---
+const firebaseConfig = {
+    apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo",
+    authDomain: "studio-merchan.firebaseapp.com",
+    projectId: "studio-merchan",
+    storageBucket: "studio-merchan.firebasestorage.app",
+    messagingSenderId: "148020122490",
+    appId: "1:148020122490:web:5c06af526e6b47a77b3cc3",
+    measurementId: "G-QMC8J9PP9D"
+};
+
+// --- SUPABASE CONFIG ---
 const supabaseUrl = 'https://cishguvndzwtlbchhqbf.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpc2hndXZuZHp3dGxiY2hocWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg0NjMsImV4cCI6MjA3OTMzNDQ2M30.kKcLTk5BTTyDF_tcwTORM93vp-3rDtCpSmj9ypoZECY'
+
+// Initialize
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 /* =========================================
@@ -15,6 +33,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 let studioCalendar, liveCalendar;
 let studioBookedRanges = [];
 let liveBookedRanges = [];
+let currentUserUid = null; // <--- The Important Link Variable
 
 // STUDIO Elements
 const studioSection = document.getElementById('studio-section');
@@ -36,11 +55,56 @@ const tabStudio = document.getElementById('tab-studio');
 const tabLive = document.getElementById('tab-live');
 
 /* =========================================
-   3. INITIALIZATION
+   3. INITIALIZATION & AUTH LISTENER
    ========================================= */
 document.addEventListener('DOMContentLoaded', function() {
     
-    // A. Init Studio Calendar
+    // A. Init Calendars
+    initStudioCalendar();
+    initLiveCalendar();
+
+    // B. Fetch Bookings (Red Blocks)
+    fetchStudioBookings('Studio A');
+    fetchLiveBookings();
+
+    // C. Setup Event Listeners
+    setupEventListeners();
+
+    // D. NEW: Auth State Listener (The "Brain")
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            console.log("User Logged In:", user.email);
+            currentUserUid = user.uid; // 1. Save the Link
+            
+            // 2. Fetch User Profile to Auto-Fill Forms
+            const { data, error } = await supabase
+                .from('clients')
+                .select('*')
+                .eq('client_uid', currentUserUid)
+                .single();
+            
+            if (data && !error) {
+                console.log("Profile Found. Auto-filling forms...");
+                // Auto-fill Studio Form
+                document.getElementById('customer_name').value = data.full_name || '';
+                document.getElementById('customer_address').value = data.phone_number || ''; // contact input
+                
+                // Auto-fill Live Form
+                document.getElementById('live_customer_name').value = data.full_name || '';
+                document.getElementById('live_contact').value = data.phone_number || '';
+            }
+        } else {
+            console.log("Guest Mode (No User)");
+            currentUserUid = null;
+            // Optional: Clear fields if user logs out on this page, but usually unnecessary
+        }
+    });
+});
+
+/* =========================================
+   4. CALENDAR SETUP FUNCTIONS
+   ========================================= */
+function initStudioCalendar() {
     var studioCalEl = document.getElementById('calendar-studio');
     studioCalendar = new FullCalendar.Calendar(studioCalEl, {
         initialView: 'dayGridMonth',
@@ -50,24 +114,23 @@ document.addEventListener('DOMContentLoaded', function() {
         events: []
     });
     studioCalendar.render();
+}
 
-    // B. Init Live Calendar
+function initLiveCalendar() {
     var liveCalEl = document.getElementById('calendar-live');
     liveCalendar = new FullCalendar.Calendar(liveCalEl, {
         initialView: 'dayGridMonth',
         validRange: { start: new Date().toISOString().split('T')[0] },
         headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
-        eventDisplay: 'block', // Shows event as a block with title (time)
+        eventDisplay: 'block',
         dateClick: function(info) { handleDateClick(info.dateStr, 'live'); },
         events: []
     });
     liveCalendar.render();
+}
 
-    // C. Fetch Initial Data
-    fetchStudioBookings('Studio A'); // Default
-    fetchLiveBookings();
-
-    // D. Listeners
+function setupEventListeners() {
+    // Studio Dropdown Logic
     studioSelect.addEventListener('change', (e) => fetchStudioBookings(e.target.value));
     
     // Mastering Logic
@@ -85,53 +148,42 @@ document.addEventListener('DOMContentLoaded', function() {
     studioForm.addEventListener('submit', handleStudioSubmit);
     liveForm.addEventListener('submit', handleLiveSubmit);
 
-    // Tab Switching Listener (via custom event from HTML)
-    window.addEventListener('switchBookingTab', (e) => {
-        toggleSection(e.detail.mode);
-    });
-});
+    // Tabs
+    window.addEventListener('switchBookingTab', (e) => toggleSection(e.detail.mode));
+}
 
 /* =========================================
-   4. UI LOGIC (TABS)
+   5. UI LOGIC (TABS)
    ========================================= */
 function toggleSection(mode) {
-    showMessage('', 'none'); // Clear messages
+    showMessage('', 'none'); 
     
     if (mode === 'studio') {
-        // SHOW STUDIO: Remove hidden class, add flex class
         studioSection.classList.remove('d-none');
         studioSection.classList.add('d-flex');
         
-        // HIDE LIVE: Remove flex class, add hidden class
         liveSection.classList.remove('d-flex');
         liveSection.classList.add('d-none');
         
-        // Update Tabs
         tabStudio.classList.add('active');
         tabLive.classList.remove('active');
-        
         studioCalendar.updateSize(); 
     } else {
-        // HIDE STUDIO
         studioSection.classList.remove('d-flex');
         studioSection.classList.add('d-none');
         
-        // SHOW LIVE
         liveSection.classList.remove('d-none');
         liveSection.classList.add('d-flex');
         
-        // Update Tabs
         tabStudio.classList.remove('active');
         tabLive.classList.add('active');
-        
         liveCalendar.updateSize(); 
     }
 }
 
 /* =========================================
-   5. STUDIO BOOKING FUNCTIONS
+   6. STUDIO BOOKING FUNCTIONS
    ========================================= */
-
 async function fetchStudioBookings(studioName) {
     studioCalendar.removeAllEvents();
     studioBookedRanges = [];
@@ -141,10 +193,7 @@ async function fetchStudioBookings(studioName) {
         .select('start_date, end_date')
         .eq('studio', studioName);
 
-    if (error) {
-        console.error('Studio Fetch Error:', error);
-        return;
-    }
+    if (error) { console.error('Studio Fetch Error:', error); return; }
 
     const events = data.map(booking => {
         studioBookedRanges.push({
@@ -173,7 +222,9 @@ async function handleStudioSubmit(e) {
         studio: studioSelect.value,
         start_date: startDateInput.value,
         end_date: endDateInput.value,
-        status: 'Pending'
+        status: 'Pending',
+        // NEW: Attach the User ID (will be null if Guest)
+        client_uid: currentUserUid 
     };
 
     if (!validateStudioBooking(booking)) return;
@@ -187,6 +238,8 @@ async function handleStudioSubmit(e) {
         studioForm.reset();
         studioSelect.disabled = false;
         fetchStudioBookings(booking.studio);
+        // If user is still logged in, re-fill name/contact for convenience?
+        // For now, let's leave it cleared to indicate success state clearly.
     }
 }
 
@@ -203,7 +256,6 @@ function validateStudioBooking(b) {
         showMessage('Cannot book past dates.', 'error');
         return false;
     }
-    // Conflict Check
     const start = new Date(b.start_date);
     const end = new Date(b.end_date);
     for (let range of studioBookedRanges) {
@@ -216,22 +268,17 @@ function validateStudioBooking(b) {
 }
 
 /* =========================================
-   6. LIVE BOOKING FUNCTIONS
+   7. LIVE BOOKING FUNCTIONS
    ========================================= */
-
 async function fetchLiveBookings() {
     liveCalendar.removeAllEvents();
     liveBookedRanges = [];
 
-    // Assuming table name 'live_bookings' exists
     const { data, error } = await supabase
         .from('live_bookings')
         .select('start_time, end_time, event_type');
 
-    if (error) {
-        console.error('Live Fetch Error:', error);
-        return;
-    }
+    if (error) { console.error('Live Fetch Error:', error); return; }
 
     const events = data.map(booking => {
         liveBookedRanges.push({
@@ -243,7 +290,7 @@ async function fetchLiveBookings() {
             start: booking.start_time,
             end: booking.end_time,
             title: 'Booked: ' + booking.event_type,
-            color: '#c8761d' // Orange for Live
+            color: '#c8761d'
         };
     });
     liveCalendar.addEventSource(events);
@@ -261,12 +308,13 @@ async function handleLiveSubmit(e) {
         package: document.getElementById('live_package').value,
         start_time: liveStartInput.value,
         end_time: liveEndInput.value,
-        status: 'Pending'
+        status: 'Pending',
+        // NEW: Attach the User ID
+        client_uid: currentUserUid 
     };
 
     if (!validateLiveBooking(booking)) return;
 
-    // Assuming table 'live_bookings'
     const { error } = await supabase.from('live_bookings').insert([booking]);
 
     if (error) {
@@ -284,7 +332,6 @@ function validateLiveBooking(b) {
         showMessage('Please select start and end times.', 'error');
         return false;
     }
-    
     const start = new Date(b.start_time);
     const end = new Date(b.end_time);
     const now = new Date();
@@ -297,10 +344,7 @@ function validateLiveBooking(b) {
         showMessage('Cannot book in the past.', 'error');
         return false;
     }
-
-    // Conflict Check (Time based)
     for (let range of liveBookedRanges) {
-        // Overlap logic: (StartA < EndB) and (EndA > StartB)
         if (start < range.end && end > range.start) {
             showMessage('That time slot is already booked.', 'error');
             return false;
@@ -310,18 +354,14 @@ function validateLiveBooking(b) {
 }
 
 /* =========================================
-   7. SHARED HELPERS
+   8. SHARED HELPERS
    ========================================= */
-
 function handleDateClick(dateStr, mode) {
     if (mode === 'studio') {
         startDateInput.value = dateStr;
         endDateInput.value = dateStr;
         studioForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
-        // For Live, we autofill the date part of datetime-local
-        // dateStr is usually YYYY-MM-DD
-        // We set default times: Start 12:00, End 16:00
         liveStartInput.value = `${dateStr}T12:00`;
         liveEndInput.value = `${dateStr}T16:00`;
         liveForm.scrollIntoView({ behavior: 'smooth', block: 'center' });

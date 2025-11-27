@@ -29,6 +29,7 @@ const storage = getStorage(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 let currentUser = null;
+let userProfileData = null; // NEW: Stores name/phone for Quick Book
 
 /* =========================================
    2. GLOBAL FUNCTIONS (DEFINED FIRST)
@@ -110,6 +111,7 @@ onAuthStateChanged(auth, async (user) => {
         loadUserProfile(user.uid);
         loadRemoteProjects(user.uid);
         loadStudioBookings(user.uid);
+        loadLiveBookings(user.uid); // NEW: Load Live Sound history
     } else {
         window.location.href = "login.html";
     }
@@ -120,11 +122,18 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 });
 
 async function loadUserProfile(uid) {
-    const { data } = await supabase.from('clients').select('full_name, role').eq('client_uid', uid).single();
+    // UPDATED: Fetching '*' to get phone_number as well
+    const { data } = await supabase.from('clients').select('*').eq('client_uid', uid).single();
+    
     if (data) {
+        userProfileData = data; // Store globally for Quick Book usage
+        
         document.getElementById('user-name-display').textContent = data.full_name;
         document.getElementById('user-role-display').textContent = data.role || 'Client';
-        document.getElementById('user-initial').textContent = data.full_name.charAt(0).toUpperCase();
+        
+        // Safety check for user-initial element
+        const initEl = document.getElementById('user-initial');
+        if(initEl && data.full_name) initEl.textContent = data.full_name.charAt(0).toUpperCase();
     }
 }
 
@@ -371,5 +380,130 @@ async function loadStudioBookings(uid) {
         container.innerHTML = html;
     } else {
         container.innerHTML = '<tr><td colspan="4" class="text-center text-muted p-4">No studio sessions found.</td></tr>';
+    }
+}
+
+/* =========================================
+   7. NEW: QUICK BOOK LOGIC
+   ========================================= */
+const quickBookForm = document.getElementById('quick-book-form');
+if (quickBookForm) {
+    quickBookForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!userProfileData) {
+            alert("Profile loading... please try again in a second.");
+            return;
+        }
+
+        const btn = e.target.querySelector('button');
+        btn.textContent = "BOOKING...";
+        btn.disabled = true;
+
+        const service = document.getElementById('qb-service').value;
+        const studio = document.getElementById('qb-studio').value;
+        const start = document.getElementById('qb-start').value;
+        const end = document.getElementById('qb-end').value;
+
+        // Basic Validation
+        if (end < start) { alert("End date cannot be before start date."); btn.disabled = false; return; }
+        
+        try {
+            const { error } = await supabase.from('bookings').insert([{
+                client_uid: currentUser.uid,
+                customer_name: userProfileData.full_name,     // Auto-filled
+                customer_contact: userProfileData.phone_number, // Auto-filled
+                service_type: service,
+                studio: studio,
+                start_date: start,
+                end_date: end,
+                status: 'Pending'
+            }]);
+
+            if (error) throw error;
+
+            alert("Session Requested! We will contact you shortly.");
+            e.target.reset();
+            
+            // Close the collapse menu
+            const collapseElement = document.getElementById('quickBookCollapse');
+            if (window.bootstrap) {
+                new bootstrap.Collapse(collapseElement, { toggle: false }).hide();
+            }
+
+            // Refresh the list immediately
+            loadStudioBookings(currentUser.uid);
+
+        } catch (err) {
+            alert("Error: " + err.message);
+        } finally {
+            btn.textContent = "CONFIRM BOOKING";
+            btn.disabled = false;
+        }
+    });
+}
+
+/* =========================================
+   8. UPDATED: STUDIO BOOKINGS LOADER
+   ========================================= */
+// (Overwrite your existing loadStudioBookings if you want the columns to match the new HTML)
+async function loadStudioBookings(uid) {
+    const container = document.getElementById('bookings-list');
+    if(!container) return;
+
+    const { data } = await supabase
+        .from('bookings')
+        .select('*')
+        .eq('client_uid', uid)
+        .order('start_date', { ascending: false });
+
+    if (data && data.length > 0) {
+        container.innerHTML = data.map(b => {
+            let badgeClass = b.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark';
+            return `
+            <tr>
+                <td><span class="badge ${badgeClass}">${b.status}</span></td>
+                <td>${b.service_type}</td>
+                <td>${b.studio}</td>
+                <td>${b.start_date} <small class="text-muted">to</small> ${b.end_date}</td>
+            </tr>`;
+        }).join('');
+    } else {
+        container.innerHTML = '<tr><td colspan="4" class="text-center text-muted p-4">No studio sessions found.</td></tr>';
+    }
+}
+
+/* =========================================
+   9. NEW: LIVE BOOKINGS LOADER
+   ========================================= */
+async function loadLiveBookings(uid) {
+    const container = document.getElementById('live-bookings-list');
+    if(!container) return;
+
+    const { data } = await supabase
+        .from('live_bookings')
+        .select('*')
+        .eq('client_uid', uid)
+        .order('start_time', { ascending: false });
+
+    if (data && data.length > 0) {
+        container.innerHTML = data.map(b => {
+            let badgeClass = b.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark';
+            const dateStr = new Date(b.start_time).toLocaleDateString();
+            const timeStr = new Date(b.start_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            return `
+            <tr>
+                <td><span class="badge ${badgeClass}">${b.status}</span></td>
+                <td>${b.event_type}</td>
+                <td>${b.package}</td>
+                <td>
+                    <div class="fw-bold">${dateStr}</div>
+                    <div class="small text-muted">${timeStr}</div>
+                </td>
+            </tr>`;
+        }).join('');
+    } else {
+        container.innerHTML = '<tr><td colspan="4" class="text-center text-muted p-4">No live events found.</td></tr>';
     }
 }
