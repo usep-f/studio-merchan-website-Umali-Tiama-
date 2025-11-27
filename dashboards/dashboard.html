@@ -178,10 +178,62 @@
 
       <div class="tab-pane fade" id="live-pane">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-secondary">Live Sound Events</h4>
-            <a href="booking.html#live-sound" class="btn btn-outline-primary btn-sm">
-                Request New Quote
-            </a>
+          <h4 class="fw-bold text-secondary">Live Sound Events</h4>
+          <button
+            class="btn btn-primary fw-bold shadow-sm"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#quickBookLiveCollapse"
+            style="background-color: #c9761c; border: none"
+          >
+            <i class="bi bi-plus-lg me-2"></i> Quick Book Event
+          </button>
+        </div>
+
+        <div class="collapse mb-4" id="quickBookLiveCollapse">
+          <div class="card shadow-sm border-0 p-4" style="background-color: #f8f9fa;">
+            <h5 class="fw-bold mb-3" style="color: #003766;">Book Live Event</h5>
+            <form id="quick-book-live-form">
+              <div class="row g-3">
+                
+                <div class="col-md-4">
+                  <label class="form-label fw-bold small">Event Type</label>
+                  <select id="qbl-type" class="form-select">
+                    <option value="Concert">Concert</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Party">Party</option>
+                    <option value="Family Event">Family Event</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold small">Package</label>
+                  <select id="qbl-package" class="form-select">
+                    <option value="Package A">Package A (Basic)</option>
+                    <option value="Package B">Package B (Standard)</option>
+                    <option value="Package C">Package C (Full)</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold small">Location</label>
+                  <input type="text" id="qbl-location" class="form-control" placeholder="Address / Venue" required />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small">Start Time</label>
+                  <input type="datetime-local" id="qbl-start" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold small">End Time</label>
+                  <input type="datetime-local" id="qbl-end" class="form-control" required />
+                </div>
+
+                <div class="col-12 text-end mt-3">
+                   <button type="submit" class="btn btn-dark fw-bold">CONFIRM EVENT</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
 
         <div class="card shadow-sm border-0 overflow-hidden">
@@ -202,7 +254,6 @@
           </div>
         </div>
       </div>
-    </div>
 
     <button
       class="fab-upload"

@@ -18,7 +18,6 @@ const firebaseConfig = {
 };
 
 // --- SUPABASE CONFIG ---
-// ⚠️ PASTE YOUR KEYS HERE ⚠️
 const supabaseUrl = 'https://cishguvndzwtlbchhqbf.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpc2hndXZuZHp3dGxiY2hocWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg0NjMsImV4cCI6MjA3OTMzNDQ2M30.kKcLTk5BTTyDF_tcwTORM93vp-3rDtCpSmj9ypoZECY';
 
@@ -29,89 +28,57 @@ const storage = getStorage(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 let currentUser = null;
-let userProfileData = null; // NEW: Stores name/phone for Quick Book
+let userProfileData = null; // Global store for Quick Book data
 
 /* =========================================
-   2. GLOBAL FUNCTIONS (DEFINED FIRST)
+   2. GLOBAL FUNCTIONS (Defined Top-Level)
    ========================================= */
-// We define these at the top so they are ready immediately
-
-// Request Revision Logic
 window.requestRevision = async (id, currentCount) => {
-    console.log("Requesting revision for:", id);
     const notes = prompt("What changes would you like? (e.g. 'Vocals are too quiet')");
-    
     if (notes) {
         try {
-            const { error } = await supabase
-                .from('online_projects')
-                .update({ 
-                    revisions_used: currentCount + 1,
-                    status: 'Revision Requested',
-                    revision_notes: notes
-                })
-                .eq('id', id);
+            const { error } = await supabase.from('online_projects').update({ 
+                revisions_used: currentCount + 1,
+                status: 'Revision Requested',
+                revision_notes: notes
+            }).eq('id', id);
 
             if (error) throw error;
-
-            alert("Revision requested! The engineer has been notified.");
-            // Reload data
+            alert("Revision requested!");
             if(currentUser) loadRemoteProjects(currentUser.uid);
-
         } catch (e) {
-            console.error(e);
             alert("Error: " + e.message);
         }
     }
 };
 
-// Mark Completed Logic
 window.markCompleted = async (id) => {
-    console.log("Completing project:", id);
-    if(!confirm("Happy with the mix? This will mark the project as Completed.")) return;
-    
-    const { error } = await supabase
-        .from('online_projects')
-        .update({ status: 'Completed' })
-        .eq('id', id);
-
-    if(!error) {
-        if(currentUser) loadRemoteProjects(currentUser.uid);
-    } else {
-        alert(error.message);
-    }
+    if(!confirm("Mark as Completed?")) return;
+    const { error } = await supabase.from('online_projects').update({ status: 'Completed' }).eq('id', id);
+    if(!error && currentUser) loadRemoteProjects(currentUser.uid);
 };
 
-// Delete Project Logic
 window.deleteProject = async (id) => {
-    if(!confirm("Remove this project from your history? This cannot be undone.")) return;
-
-    const { error } = await supabase
-        .from('online_projects')
-        .delete()
-        .eq('id', id);
-
-    if(!error) {
-        // Refresh the list
-        if(currentUser) loadRemoteProjects(currentUser.uid);
-    } else {
-        alert("Error: " + error.message);
-    }
+    if(!confirm("Remove this project history?")) return;
+    const { error } = await supabase.from('online_projects').delete().eq('id', id);
+    if(!error && currentUser) loadRemoteProjects(currentUser.uid);
 };
 
 /* =========================================
-   3. AUTH & LOADING
+   3. AUTH & LOADING (The Main Entry Point)
    ========================================= */
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUser = user;
         console.log("Logged in:", user.uid);
         
-        // Load Data
-        loadUserProfile(user.uid);
+        // 1. Wait for Profile (Vital for Quick Book)
+        await loadUserProfile(user.uid);
+        
+        // 2. Load Tables
         loadRemoteProjects(user.uid);
         loadStudioBookings(user.uid);
-        loadLiveBookings(user.uid); // NEW: Load Live Sound history
+        loadLiveBookings(user.uid);
     } else {
         window.location.href = "login.html";
     }
@@ -121,216 +88,129 @@ document.getElementById('logout-btn').addEventListener('click', () => {
     signOut(auth).then(() => window.location.href = "login.html");
 });
 
+/* =========================================
+   4. USER PROFILE LOADER
+   ========================================= */
 async function loadUserProfile(uid) {
-    // UPDATED: Fetching '*' to get phone_number as well
-    const { data } = await supabase.from('clients').select('*').eq('client_uid', uid).single();
-    
+    const { data, error } = await supabase.from('clients').select('*').eq('client_uid', uid).single();
+
     if (data) {
-        userProfileData = data; // Store globally for Quick Book usage
-        
+        userProfileData = data; 
         document.getElementById('user-name-display').textContent = data.full_name;
         document.getElementById('user-role-display').textContent = data.role || 'Client';
         
-        // Safety check for user-initial element
         const initEl = document.getElementById('user-initial');
         if(initEl && data.full_name) initEl.textContent = data.full_name.charAt(0).toUpperCase();
+    } else {
+        console.error("Profile missing:", error);
+        document.getElementById('user-name-display').textContent = "Profile Error";
+        alert("Account Error: Your profile is missing. Please create a NEW account via Sign Up.");
     }
 }
 
 /* =========================================
-   4. REMOTE PROJECTS LOADER
+   5. REMOTE PROJECTS LOADER
    ========================================= */
 async function loadRemoteProjects(uid) {
     const activeContainer = document.getElementById('active-projects-list');
     const pastContainer = document.getElementById('past-projects-list');
 
-    // 1. Fetch Projects
-    const { data: projects, error } = await supabase
-        .from('online_projects')
-        .select('*')
-        .eq('client_uid', uid)
-        .order('created_at', { ascending: false });
+    const { data: projects } = await supabase.from('online_projects').select('*').eq('client_uid', uid).order('created_at', { ascending: false });
+    const { data: deliverables } = await supabase.from('project_deliverables').select('*').order('created_at', { ascending: false });
 
-    if (error) {
-        console.error("Error loading projects:", error);
-        return;
-    }
-
-    // 2. Fetch Deliverables
-    const { data: deliverables } = await supabase
-        .from('project_deliverables')
-        .select('*')
-        .order('created_at', { ascending: false });
+    if (!activeContainer || !pastContainer) return;
 
     activeContainer.innerHTML = '';
     pastContainer.innerHTML = '';
-
     let hasActive = false;
     let hasPast = false;
 
-    projects.forEach(proj => {
-        const latestMix = deliverables.find(d => d.project_id === proj.id);
-        const isPast = (proj.status === 'Completed' || proj.status === 'Cancelled');
-        
-        // Styling Logic
-        let statusClass = 'status-active';
-        let badgeClass = 'bg-primary';
+    if (projects) {
+        projects.forEach(proj => {
+            const latestMix = deliverables ? deliverables.find(d => d.project_id === proj.id) : null;
+            const isPast = (proj.status === 'Completed' || proj.status === 'Cancelled');
+            
+            let statusClass = 'status-active';
+            let badgeClass = 'bg-primary';
 
-        if (proj.status === 'Pending') { statusClass = 'status-pending'; badgeClass = 'bg-warning text-dark'; }
-        if (proj.status === 'Ready for Review') { statusClass = 'status-review'; badgeClass = 'bg-info text-dark'; }
-        if (proj.status === 'Revision Requested') { statusClass = 'status-pending'; badgeClass = 'bg-warning text-dark'; }
-        if (proj.status === 'Completed') { statusClass = 'status-done'; badgeClass = 'bg-success'; }
+            if (proj.status === 'Pending') { statusClass = 'status-pending'; badgeClass = 'bg-warning text-dark'; }
+            if (proj.status === 'Ready for Review') { statusClass = 'status-review'; badgeClass = 'bg-info text-dark'; }
+            if (proj.status === 'Completed') { statusClass = 'status-done'; badgeClass = 'bg-success'; }
 
-        let revText = `Revision ${proj.revisions_used} of ${proj.max_revisions}`;
-        if(proj.revisions_used === 0) revText = "Initial Draft";
+            let actionContent = '';
+            if (isPast && latestMix) {
+                actionContent = `<div class="mt-2"><a href="${latestMix.file_link}" target="_blank" class="btn btn-sm btn-success w-100"><i class="bi bi-download"></i> Final Master</a></div>`;
+            } else if (latestMix && proj.status === 'Ready for Review') {
+                actionContent = `
+                    <div class="mt-2 p-2 bg-white border rounded">
+                        <strong class="text-success small d-block mb-2">New Mix: ${latestMix.version_name}</strong>
+                        <div class="d-flex gap-1">
+                            <a href="${latestMix.file_link}" target="_blank" class="btn btn-sm btn-success flex-grow-1"><i class="bi bi-play-circle"></i> Listen</a>
+                            <button onclick="window.requestRevision(${proj.id}, ${proj.revisions_used})" class="btn btn-sm btn-outline-danger"><i class="bi bi-arrow-counterclockwise"></i></button>
+                            <button onclick="window.markCompleted(${proj.id})" class="btn btn-sm btn-outline-primary"><i class="bi bi-check"></i></button>
+                        </div>
+                    </div>`;
+            } else if (proj.status === 'Revision Requested') {
+                actionContent = `<div class="mt-2 small text-warning"><i class="bi bi-hourglass-split"></i> Waiting for engineer...</div>`;
+            }
 
-        // --- DYNAMIC ACTION AREA ---
-        let actionContent = '';
-        
-        // CASE A: COMPLETED (Past Project) - SHOW DOWNLOAD ONLY
-        if (isPast && latestMix) {
-            actionContent = `
-                <div class="mt-3 p-3 bg-white rounded border border-success shadow-sm">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <strong class="text-success"><i class="bi bi-check2-all"></i> Final Master: ${latestMix.version_name}</strong>
-                        <span class="small text-muted">${new Date(latestMix.created_at).toLocaleDateString()}</span>
+            const cardHtml = `
+            <div class="project-card ${statusClass} mb-3 p-3 border rounded bg-light">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">${proj.project_title}</h5>
+                        <div class="small text-muted">${proj.service_type} • Rev: ${proj.revisions_used}</div>
+                        ${actionContent}
                     </div>
-                    <div class="d-grid">
-                        <a href="${latestMix.file_link}" target="_blank" class="btn btn-success fw-bold">
-                            <i class="bi bi-cloud-download me-2"></i> RE-DOWNLOAD FINAL FILE
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // CASE B: ACTIVE - READY FOR REVIEW (Show Actions)
-        else if (latestMix && proj.status === 'Ready for Review') {
-            const engineerNotes = latestMix.notes 
-                ? `<div class="alert alert-light border-start border-4 border-success py-2 px-3 mb-3 small fst-italic text-muted">
-                     <strong>Note from Engineer:</strong> "${latestMix.notes}"
-                   </div>` 
-                : '';
-
-            actionContent = `
-                <div class="mt-3 p-3 bg-white rounded border shadow-sm">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <strong class="text-success"><i class="bi bi-check-circle-fill"></i> Review Mix: ${latestMix.version_name}</strong>
-                        <span class="small text-muted">${new Date(latestMix.created_at).toLocaleDateString()}</span>
-                    </div>
-                    ${engineerNotes}
-                    <div class="d-flex gap-2 flex-wrap">
-                        <a href="${latestMix.file_link}" target="_blank" class="btn btn-sm btn-success fw-bold flex-grow-1">
-                            <i class="bi bi-play-circle me-1"></i> DOWNLOAD / LISTEN
-                        </a>
-                        
-                        ${ proj.revisions_used < proj.max_revisions ? 
-                           `<button onclick="window.requestRevision(${proj.id}, ${proj.revisions_used})" class="btn btn-sm btn-outline-danger fw-bold">
-                                <i class="bi bi-arrow-counterclockwise me-1"></i> REQUEST CHANGES
-                            </button>` 
-                           : 
-                           `<button disabled class="btn btn-sm btn-secondary fw-bold" title="Limit Reached">
-                                <i class="bi bi-lock me-1"></i> LIMIT REACHED
-                            </button>`
-                        }
-                        
-                        <button onclick="window.markCompleted(${proj.id})" class="btn btn-sm btn-outline-primary fw-bold">
-                            <i class="bi bi-hand-thumbs-up me-1"></i> APPROVE
-                        </button>
+                    <div class="text-end">
+                        <span class="badge ${badgeClass} mb-2">${proj.status}</span>
+                        ${isPast ? `<button onclick="deleteProject(${proj.id})" class="btn btn-sm btn-link text-muted p-0 d-block ms-auto"><i class="bi bi-trash"></i></button>` : ''}
                     </div>
                 </div>
-            `;
-        } 
-        // CASE C: WAITING
-        else if (proj.status === 'Revision Requested') {
-            actionContent = `<div class="mt-2 small text-warning"><i class="bi bi-hourglass-split"></i> Waiting for engineer...</div>`;
-        }
+            </div>`;
 
-        // Build Card
-        const deleteBtn = isPast 
-        ? `<button onclick="deleteProject(${proj.id})" class="btn btn-sm btn-outline-secondary border-0" title="Remove from list">
-             <i class="bi bi-trash"></i>
-           </button>`
-        : '';
-
-    // HTML Card
-    const cardHtml = `
-    <div class="project-card ${statusClass} d-flex justify-content-between align-items-center">
-        <div>
-            <h5 class="fw-bold mb-1">${proj.project_title}</h5>
-            <div class="text-muted small mb-2">
-                <span class="me-3"><i class="bi bi-music-note-beamed"></i> ${proj.service_type}</span>
-                <span><i class="bi bi-arrow-repeat"></i> ${revText}</span>
-            </div>
-            ${actionContent}
-        </div>
-        <div class="text-end">
-            <div class="mb-2">
-                <span class="badge ${badgeClass} badge-custom">${proj.status}</span>
-                ${deleteBtn} </div>
-            <div class="small text-muted">${new Date(proj.created_at).toLocaleDateString()}</div>
-        </div>
-    </div>
-    `;
-
-        if (isPast) {
-            pastContainer.innerHTML += cardHtml;
-            hasPast = true;
-        } else {
-            activeContainer.innerHTML += cardHtml;
-            hasActive = true;
-        }
-    });
+            if (isPast) { pastContainer.innerHTML += cardHtml; hasPast = true; } 
+            else { activeContainer.innerHTML += cardHtml; hasActive = true; }
+        });
+    }
 
     if (!hasActive) activeContainer.innerHTML = '<div class="text-muted small p-3">No active projects. Click + to start!</div>';
     if (!hasPast) pastContainer.innerHTML = '<div class="text-muted small">No completed projects yet.</div>';
 }
 
 /* =========================================
-   5. UPLOAD HANDLER
+   6. UPLOAD FORM HANDLER
    ========================================= */
 const uploadForm = document.getElementById('newProjectForm');
 if (uploadForm) {
     uploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = e.target.querySelector('button');
-        const progressContainer = document.getElementById('upload-progress-container');
         const progressBar = document.getElementById('upload-bar');
-        
-        btn.disabled = true; 
-        btn.textContent = "UPLOADING...";
-        progressContainer.classList.remove('d-none');
+        document.getElementById('upload-progress-container').classList.remove('d-none');
+        btn.disabled = true; btn.textContent = "UPLOADING...";
 
         try {
-            const title = document.getElementById('proj-title').value;
-            const service = document.getElementById('proj-service').value;
-            const genre = document.getElementById('proj-genre').value;
             const file = document.getElementById('proj-file').files[0];
-
-            const storagePath = `client_uploads/${currentUser.uid}/${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, storagePath);
-            
+            const storageRef = ref(storage, `client_uploads/${currentUser.uid}/${Date.now()}_${file.name}`);
             const snapshot = await uploadBytes(storageRef, file);
             const downloadURL = await getDownloadURL(snapshot.ref);
             
             progressBar.style.width = "50%";
 
-            const { error } = await supabase.from('online_projects').insert([{
+            await supabase.from('online_projects').insert([{
                 client_uid: currentUser.uid,
-                project_title: title,
-                service_type: service,
-                genre: genre,
+                project_title: document.getElementById('proj-title').value,
+                service_type: document.getElementById('proj-service').value,
+                genre: document.getElementById('proj-genre').value,
                 file_link: downloadURL,
                 status: 'Pending',
                 revisions_used: 0
             }]);
 
-            if (error) throw error;
-
             progressBar.style.width = "100%";
             alert("Project Submitted!");
             
-            // Close Modal
             const modalEl = document.getElementById('uploadModal');
             if(window.bootstrap) {
                 const modal = bootstrap.Modal.getInstance(modalEl);
@@ -338,115 +218,22 @@ if (uploadForm) {
             }
             
             e.target.reset();
-            btn.disabled = false;
-            btn.textContent = "SUBMIT PROJECT";
-            progressContainer.classList.add('d-none');
             loadRemoteProjects(currentUser.uid);
 
         } catch (error) {
             console.error(error);
             alert("Error: " + error.message);
+        } finally {
             btn.disabled = false;
             btn.textContent = "SUBMIT PROJECT";
+            document.getElementById('upload-progress-container').classList.add('d-none');
         }
     });
 }
 
 /* =========================================
-   6. STUDIO BOOKINGS
+   7. STUDIO BOOKINGS LOADER
    ========================================= */
-async function loadStudioBookings(uid) {
-    const container = document.getElementById('bookings-list');
-    if(!container) return;
-
-    const { data } = await supabase
-        .from('bookings')
-        .select('*')
-        .eq('client_uid', uid) // Requires 'client_uid' in bookings table!
-        .order('start_date', { ascending: false });
-
-    if (data && data.length > 0) {
-        let html = '';
-        data.forEach(b => {
-            let statusColor = b.status === 'Confirmed' ? 'text-success' : 'text-warning';
-            html += `
-            <tr>
-                <td><strong>${b.start_date}</strong></td>
-                <td>${b.studio}</td>
-                <td class="${statusColor} fw-bold">${b.status}</td>
-                <td>-</td>
-            </tr>`;
-        });
-        container.innerHTML = html;
-    } else {
-        container.innerHTML = '<tr><td colspan="4" class="text-center text-muted p-4">No studio sessions found.</td></tr>';
-    }
-}
-
-/* =========================================
-   7. NEW: QUICK BOOK LOGIC
-   ========================================= */
-const quickBookForm = document.getElementById('quick-book-form');
-if (quickBookForm) {
-    quickBookForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        if (!userProfileData) {
-            alert("Profile loading... please try again in a second.");
-            return;
-        }
-
-        const btn = e.target.querySelector('button');
-        btn.textContent = "BOOKING...";
-        btn.disabled = true;
-
-        const service = document.getElementById('qb-service').value;
-        const studio = document.getElementById('qb-studio').value;
-        const start = document.getElementById('qb-start').value;
-        const end = document.getElementById('qb-end').value;
-
-        // Basic Validation
-        if (end < start) { alert("End date cannot be before start date."); btn.disabled = false; return; }
-        
-        try {
-            const { error } = await supabase.from('bookings').insert([{
-                client_uid: currentUser.uid,
-                customer_name: userProfileData.full_name,     // Auto-filled
-                customer_contact: userProfileData.phone_number, // Auto-filled
-                service_type: service,
-                studio: studio,
-                start_date: start,
-                end_date: end,
-                status: 'Pending'
-            }]);
-
-            if (error) throw error;
-
-            alert("Session Requested! We will contact you shortly.");
-            e.target.reset();
-            
-            // Close the collapse menu
-            const collapseElement = document.getElementById('quickBookCollapse');
-            if (window.bootstrap) {
-                new bootstrap.Collapse(collapseElement, { toggle: false }).hide();
-            }
-
-            // Refresh the list immediately
-            loadStudioBookings(currentUser.uid);
-
-        } catch (err) {
-            alert("Error: " + err.message);
-        } finally {
-            btn.textContent = "CONFIRM BOOKING";
-            btn.disabled = false;
-        }
-    });
-}
-
-/* =========================================
-   8. UPDATED: STUDIO BOOKINGS LOADER
-   ========================================= */
-// (Overwrite your existing loadStudioBookings if you want the columns to match the new HTML)
 async function loadStudioBookings(uid) {
     const container = document.getElementById('bookings-list');
     if(!container) return;
@@ -474,7 +261,7 @@ async function loadStudioBookings(uid) {
 }
 
 /* =========================================
-   9. NEW: LIVE BOOKINGS LOADER
+   8. LIVE BOOKINGS LOADER
    ========================================= */
 async function loadLiveBookings(uid) {
     const container = document.getElementById('live-bookings-list');
@@ -506,4 +293,129 @@ async function loadLiveBookings(uid) {
     } else {
         container.innerHTML = '<tr><td colspan="4" class="text-center text-muted p-4">No live events found.</td></tr>';
     }
+}
+
+/* =========================================
+   9. QUICK BOOK HANDLER
+   ========================================= */
+const quickBookForm = document.getElementById('quick-book-form');
+if (quickBookForm) {
+    quickBookForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!userProfileData) {
+            alert("Profile loading... please wait.");
+            return;
+        }
+
+        const btn = e.target.querySelector('button');
+        btn.textContent = "BOOKING...";
+        btn.disabled = true;
+
+        const start = document.getElementById('qb-start').value;
+        const end = document.getElementById('qb-end').value;
+
+        if (end < start) { 
+            alert("End date cannot be before start date."); 
+            btn.textContent = "CONFIRM BOOKING";
+            btn.disabled = false; 
+            return; 
+        }
+        
+        try {
+            const { error } = await supabase.from('bookings').insert([{
+                client_uid: currentUser.uid,
+                customer_name: userProfileData.full_name,
+                customer_contact: userProfileData.phone_number,
+                service_type: document.getElementById('qb-service').value,
+                studio: document.getElementById('qb-studio').value,
+                start_date: start,
+                end_date: end,
+                status: 'Pending'
+            }]);
+
+            if (error) throw error;
+
+            alert("Session Requested Successfully!");
+            e.target.reset();
+            
+            // Close Collapse if using Bootstrap
+            const collapseEl = document.getElementById('quickBookCollapse');
+            if(window.bootstrap && collapseEl) {
+                new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
+            }
+
+            loadStudioBookings(currentUser.uid); // Refresh Table
+
+        } catch (err) {
+            alert("Error: " + err.message);
+        } finally {
+            btn.textContent = "CONFIRM BOOKING";
+            btn.disabled = false;
+        }
+    });
+}
+
+/* =========================================
+   10. LIVE SOUND QUICK BOOK HANDLER
+   ========================================= */
+const quickBookLiveForm = document.getElementById('quick-book-live-form');
+if (quickBookLiveForm) {
+    quickBookLiveForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!userProfileData) {
+            alert("Profile loading... please wait.");
+            return;
+        }
+
+        const btn = e.target.querySelector('button');
+        btn.textContent = "BOOKING...";
+        btn.disabled = true;
+
+        const start = document.getElementById('qbl-start').value;
+        const end = document.getElementById('qbl-end').value;
+
+        // Validation: End must be after Start
+        if (end <= start) { 
+            alert("End time must be after start time."); 
+            btn.textContent = "CONFIRM EVENT";
+            btn.disabled = false; 
+            return; 
+        }
+        
+        try {
+            const { error } = await supabase.from('live_bookings').insert([{
+                client_uid: currentUser.uid,
+                customer_name: userProfileData.full_name,       // Auto-filled
+                contact_number: userProfileData.phone_number,   // Auto-filled (Note: column is 'contact_number' in live_bookings)
+                event_type: document.getElementById('qbl-type').value,
+                package: document.getElementById('qbl-package').value,
+                location: document.getElementById('qbl-location').value,
+                start_time: start,
+                end_time: end,
+                status: 'Pending'
+            }]);
+
+            if (error) throw error;
+
+            alert("Live Event Requested Successfully!");
+            e.target.reset();
+            
+            // Close Collapse if using Bootstrap
+            const collapseEl = document.getElementById('quickBookLiveCollapse');
+            if(window.bootstrap && collapseEl) {
+                new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
+            }
+
+            // Refresh the Live table immediately
+            loadLiveBookings(currentUser.uid);
+
+        } catch (err) {
+            alert("Error: " + err.message);
+        } finally {
+            btn.textContent = "CONFIRM EVENT";
+            btn.disabled = false;
+        }
+    });
 }
