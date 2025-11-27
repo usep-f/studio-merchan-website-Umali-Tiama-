@@ -55,6 +55,20 @@
             <a
               class="nav-link"
               href="#"
+              onclick="showSection('messages')"
+              id="btn-messages"
+            >
+              <i class="bi bi-envelope-paper-fill me-2"></i> Messages
+              <span
+                id="unread-badge"
+                class="badge bg-danger ms-auto"
+                style="display: none"
+                >0</span
+              >
+            </a>
+            <a
+              class="nav-link"
+              href="#"
               onclick="showSection('clients')"
               id="btn-clients"
             >
@@ -268,6 +282,38 @@
             </div>
           </div>
 
+          <div id="section-messages" class="hidden">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="fw-bold text-secondary">Inbox</h2>
+              <button onclick="fetchMessages()" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-clockwise me-2"></i> Refresh
+              </button>
+            </div>
+
+            <div class="card shadow overflow-hidden">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                  <thead style="background-color: #003766; color: white">
+                    <tr>
+                      <th class="ps-4 py-3">Status</th>
+                      <th class="py-3">From</th>
+                      <th class="py-3">Subject</th>
+                      <th class="py-3">Date</th>
+                      <th class="text-end pe-4 py-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="messages-table-body" class="bg-white">
+                    <tr>
+                      <td colspan="5" class="text-center p-5 text-muted">
+                        Loading messages...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
           <div id="section-testimonials" class="hidden">
             <h2 class="mb-4 fw-bold text-secondary">Manage Testimonials</h2>
 
@@ -355,6 +401,43 @@
                         id="testimonials-table-body"
                         class="bg-white"
                       ></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div id="section-messages" class="hidden">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+                  <h2 class="fw-bold text-secondary">Inbox</h2>
+                  <button
+                    onclick="fetchMessages()"
+                    class="btn btn-outline-primary"
+                  >
+                    <i class="bi bi-arrow-clockwise me-2"></i> Refresh
+                  </button>
+                </div>
+
+                <div class="card shadow overflow-hidden">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                      <thead style="background-color: #003766; color: white">
+                        <tr>
+                          <th class="ps-4 py-3">Status</th>
+                          <th class="py-3">From</th>
+                          <th class="py-3">Subject</th>
+                          <th class="py-3">Date</th>
+                          <th class="text-end pe-4 py-3">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="messages-table-body" class="bg-white">
+                        <tr>
+                          <td colspan="5" class="text-center p-5 text-muted">
+                            Loading messages...
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -559,6 +642,71 @@
           </div>
 
           <div class="modal-footer bg-light">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="readMessageModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header"
+            style="background-color: #003766; color: white"
+          >
+            <h5 class="modal-title fw-bold">Message Details</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="d-flex justify-content-between mb-3">
+              <div>
+                <h5 class="fw-bold mb-0" id="msg-sender">Name</h5>
+                <div class="text-muted small" id="msg-email">
+                  email@example.com
+                </div>
+              </div>
+              <div class="text-end">
+                <span class="badge bg-secondary" id="msg-date"
+                  >Oct 24, 2025</span
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bold small text-muted text-uppercase"
+                >Subject</label
+              >
+              <div class="fw-bold" id="msg-subject" style="color: #c9761c">
+                Inquiry
+              </div>
+            </div>
+
+            <div class="p-3 bg-light rounded border">
+              <p class="mb-0" id="msg-body" style="white-space: pre-wrap">
+                Message content...
+              </p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" id="btn-reply" class="btn btn-primary" target="_blank">
+              <i class="bi bi-reply-fill me-2"></i> Reply via Email
+            </a>
             <button
               type="button"
               class="btn btn-secondary"

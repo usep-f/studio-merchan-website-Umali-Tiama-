@@ -79,6 +79,7 @@ window.showSection = (sectionId) => {
     document.getElementById('section-testimonials').classList.add('hidden');
     document.getElementById('section-remote').classList.add('hidden');
     document.getElementById('section-clients').classList.add('hidden'); // <--- NEW
+    document.getElementById('section-messages').classList.add('hidden');
 
     // 2. Deactivate all buttons
     document.getElementById('btn-carousel').classList.remove('active');
@@ -87,6 +88,7 @@ window.showSection = (sectionId) => {
     document.getElementById('btn-testimonials').classList.remove('active');
     document.getElementById('btn-remote').classList.remove('active');
     document.getElementById('btn-clients').classList.remove('active'); // <--- NEW
+    document.getElementById('btn-messages').classList.remove('active');
 
     // 3. Show target
     document.getElementById('section-' + sectionId).classList.remove('hidden');
@@ -98,6 +100,8 @@ window.showSection = (sectionId) => {
     if (sectionId === 'testimonials') fetchTestimonials();
     if (sectionId === 'remote') fetchRemoteProjects();
     if (sectionId === 'clients') fetchClients(); // <--- NEW
+    if (sectionId === 'messages') fetchMessages();
+    
 };
 
 /* =========================================
@@ -792,5 +796,140 @@ window.deleteUser = async (uid) => {
 
     } catch (e) {
         alert("Delete failed: " + e.message);
+    }
+};
+
+/* =========================================
+   11. MESSAGES / INBOX SYSTEM (Firestore)
+   ========================================= */
+
+// --- A. FETCH MESSAGES & UPDATE BADGE ---
+window.fetchMessages = async () => {
+    const tbody = document.getElementById('messages-table-body');
+    const badgeEl = document.getElementById('unread-badge');
+    
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Loading inbox...</td></tr>';
+
+    try {
+        // 1. Fetch from Firestore (Collection: 'contact_messages')
+        // We use the existing 'db' variable initialized at the top of admin.js
+        const q = query(collection(db, "contact_messages"), orderBy("timestamp", "desc"));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Inbox is empty.</td></tr>';
+            badgeEl.style.display = 'none';
+            return;
+        }
+
+        let html = '';
+        let unreadCount = 0;
+
+        querySnapshot.forEach((doc) => {
+            const msg = doc.data();
+            const id = doc.id;
+            
+            // Calculate Status
+            const isUnread = msg.status === 'unread';
+            if (isUnread) unreadCount++;
+
+            const statusBadge = isUnread 
+                ? '<span class="badge bg-danger">NEW</span>' 
+                : '<span class="badge bg-secondary">Read</span>';
+            
+            const rowClass = isUnread ? 'fw-bold bg-light' : ''; // Highlight unread rows
+
+            // Format Date
+            let dateStr = '-';
+            if (msg.timestamp) {
+                // Firestore Timestamp to JS Date
+                dateStr = msg.timestamp.toDate().toLocaleDateString() + ' ' + 
+                          msg.timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }
+
+            // Escape quotes for the onclick handler
+            const safeData = JSON.stringify({ id, ...msg }).replace(/"/g, "&quot;");
+
+            html += `
+            <tr class="${rowClass}">
+                <td class="ps-4">${statusBadge}</td>
+                <td>
+                    <div>${msg.name}</div>
+                    <div class="small text-muted">${msg.email}</div>
+                </td>
+                <td class="text-primary">${msg.subject}</td>
+                <td class="small text-muted">${dateStr}</td>
+                <td class="text-end pe-4">
+                    <button onclick="viewMessage(${safeData})" class="btn btn-sm btn-primary me-1" title="Read Message">
+                        <i class="bi bi-envelope-open"></i>
+                    </button>
+                    <button onclick="deleteMessage('${id}')" class="btn btn-sm btn-outline-danger" title="Delete">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            `;
+        });
+
+        tbody.innerHTML = html;
+
+        // Update Sidebar Badge
+        if (unreadCount > 0) {
+            badgeEl.textContent = unreadCount;
+            badgeEl.style.display = 'inline-block';
+        } else {
+            badgeEl.style.display = 'none';
+        }
+
+    } catch (e) {
+        console.error("Error fetching messages:", e);
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-5 text-danger">Error: ${e.message}</td></tr>`;
+    }
+};
+
+// --- B. VIEW MESSAGE (OPEN MODAL) ---
+window.viewMessage = async (data) => {
+    // 1. Populate Modal
+    document.getElementById('msg-sender').textContent = data.name;
+    document.getElementById('msg-email').textContent = data.email;
+    document.getElementById('msg-subject').textContent = data.subject;
+    document.getElementById('msg-body').textContent = data.message;
+    
+    // Format Date for Modal
+    if (data.timestamp && data.timestamp.seconds) {
+        const dateObj = new Date(data.timestamp.seconds * 1000);
+        document.getElementById('msg-date').textContent = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
+    }
+
+    // Setup "Reply" Button
+    const replyBtn = document.getElementById('btn-reply');
+    replyBtn.href = `mailto:${data.email}?subject=Re: ${data.subject}`;
+
+    // 2. Show Modal
+    new bootstrap.Modal(document.getElementById('readMessageModal')).show();
+
+    // 3. Mark as Read (if currently unread)
+    if (data.status === 'unread') {
+        try {
+            const msgRef = doc(db, "contact_messages", data.id);
+            await updateDoc(msgRef, { status: 'read' });
+            
+            // Refresh list in background to update badge/status
+            fetchMessages(); 
+        } catch (e) {
+            console.error("Error marking as read:", e);
+        }
+    }
+};
+
+// --- C. DELETE MESSAGE ---
+window.deleteMessage = async (id) => {
+    if(!confirm("Delete this message permanently?")) return;
+
+    try {
+        await deleteDoc(doc(db, "contact_messages", id));
+        fetchMessages(); // Refresh list
+    } catch (e) {
+        alert("Error deleting: " + e.message);
     }
 };

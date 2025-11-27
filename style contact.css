@@ -1,0 +1,361 @@
+html {
+box-sizing: border-box;
+}
+*, *::before, *::after {
+box-sizing: inherit; 
+}
+body {
+font-family: 'Urbanist',sans-serif;
+line-height: 1.5;
+background-color: #003766;
+margin: 0;
+padding: 0;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+  background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
+  padding-left: 3rem;
+  padding-right: 3rem;
+  position: relative; 
+  z-index: 9999; 
+}
+
+/* This is the container that holds Left, Logo, and Right */
+.navbar-grid {
+  display: grid !important; /* !important ensures grid behavior is forced */
+  width: 100%;
+  height: 100%;
+  
+  /* THE MAGIC FORMULA: 
+     1. minmax(0, 1fr) = Flexible left space
+     2. auto = Logo size
+     3. minmax(0, 1fr) = Flexible right space (equal to left)
+  */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  
+  /* This fixes the "staircase" issue by locking everything to the vertical center */
+  align-items: center; 
+}
+
+/* --- LEFT COLUMN (About, Services, Team) --- */
+.left-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important; /* Pushes text to the far left */
+  justify-self: start; /* Grid alignment */
+  gap: 2rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
+.right-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end !important; /* Pushes text to the far right */
+  justify-self: end; /* Grid alignment */
+  gap: 2rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+/* --- CENTER COLUMN (Logo) --- */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center; /* Locks logo to dead center of the grid */
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto;
+}
+
+.navbar-brand img {
+  height: 6.25rem;
+  display: block;
+  max-width: 100%;
+}
+
+/* --- GENERAL LINK STYLES --- */
+.navbar-nav {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.navbar-nav .nav-link {
+  color: #003766 !important;
+  font-size: 1.8rem;
+  font-weight: 300;
+  transition: color 0.3s ease;
+  white-space: nowrap; /* Prevents text from wrapping weirdly */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #2979c4 !important;
+}
+
+.navbar-nav .nav-link {
+  position: relative; 
+}
+
+/* 2. The Active Line Style */
+.navbar-nav .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0; /* Moves the line to the bottom edge of the text */
+  width: 100%;
+  height: 3px; /* Thickness of the line */
+  background-color: #2979c4; /* Your orange accent color */
+  border-radius: 2px; /* Rounds the edges slightly */
+}
+
+/* 3. Optional: Keep the text color 'active' (blue) as well */
+.navbar-nav .nav-link.active {
+  color: #2979c4 !important;
+  font-weight: 500; /* Slightly bolder to emphasize */
+}
+
+/* --- UTILITIES --- */
+.desktop-navbar {
+  display: block;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* =========================================
+   1. GLOBAL & TYPOGRAPHY
+   ========================================= */
+body {
+    font-family: 'Urbanist', sans-serif;
+    background-color: #f8f9fa; /* Light fallback */
+}
+
+/* Ensure full height layout */
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+/* =========================================
+   2. LEFT PANEL (INFO & BRANDING)
+   ========================================= */
+/* The dark blue gradient background */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #003766 0%, #051b2e 100%);
+}
+
+/* The Circle Icons for Address/Phone/Email */
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #c9761c; /* Brand Orange */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(201, 118, 28, 0.3); /* Subtle orange glow */
+    transition: transform 0.3s ease;
+}
+
+.icon-circle:hover {
+    transform: scale(1.1); /* Pop effect on hover */
+}
+
+/* Social Media Links */
+.hover-orange {
+    transition: all 0.3s ease;
+}
+
+.hover-orange:hover {
+    color: #c9761c !important; /* Turn orange on hover */
+    transform: translateY(-3px); /* Float up slightly */
+    opacity: 1 !important;
+}
+
+/* =========================================
+   3. RIGHT PANEL (FORM STYLING)
+   ========================================= */
+/* Form Labels */
+.form-label {
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+/* Inputs & Textareas */
+.form-control, 
+.form-select {
+    padding: 1rem 1.2rem; /* Taller, comfortable inputs */
+    font-size: 1rem;
+    font-weight: 500;
+    color: #003766;
+    border-radius: 8px; /* Slightly rounded corners */
+    transition: all 0.3s ease;
+}
+
+/* Input Focus State (The Orange Glow) */
+.form-control:focus, 
+.form-select:focus {
+    box-shadow: 0 0 0 4px rgba(201, 118, 28, 0.1); /* Soft orange ring */
+    border: 1px solid #c9761c !important;
+    background-color: #fff !important;
+}
+
+/* Placeholder Text Color */
+::placeholder {
+    color: #aab2bd !important;
+    font-weight: 400;
+}
+
+/* Submit Button */
+#btn-send {
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+#btn-send:hover {
+    background-color: #a05a12 !important; /* Darker orange */
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+#btn-send:disabled {
+    background-color: #ccc !important;
+    transform: none;
+}
+
+/*-- Footer Customization */
+.footer-custom {
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
+}
+
+.footer-link {
+color: #ffffff;
+text-decoration: none;
+transition: color 0.3s ease;
+font-weight: 300;
+white-space: nowrap;
+}
+
+.footer-link:hover {
+color: #8f8e8e;
+}
+
+.footer-icon {
+color: #ffffff;
+font-size: 1.3rem;
+transition: color 0.3s ease;
+}
+
+.footer-icon:hover {
+color: #8f8e8e;
+}
+
+
+/*--Responsive Design --*/
+
+/*--navbar --*/
+@media (max-width: 1050px) {
+.desktop-navbar {
+display: none !important;
+}
+.navbar-brand img {
+height: 6rem !important;  
+}
+}
+.mobile-navbar {
+display: none;
+}
+
+/*borgir*/
+@media (max-width: 1050px) {
+.desktop-navbar { display: none !important; }
+.mobile-navbar {
+display: flex !important;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+flex-wrap: wrap !important; 
+}
+#mobileNav {
+width: 100%;
+}
+#mobileNav .navbar-nav {
+flex-direction: row !important;
+justify-content: center !important;
+gap: 1.5rem;
+padding-top: 1rem;
+}
+.mobile-navbar .nav-link { font-size: 1.35rem; }
+}
+
+@media (max-width: 500px) {
+#mobileNav .navbar-nav {
+flex-direction: column !important;
+align-items: center !important; 
+width: 100%;
+padding-right: 1rem;
+padding-top: 1rem;
+}
+#mobileNav .nav-link {
+font-size: 1.25rem;
+text-align: right !important; 
+display: block;
+width: 100%;
+}
+}
+
+@media (max-width: 991.98px) {
+    /* Stack columns vertically on tablets/mobile */
+    .row.g-0 {
+        flex-direction: column;
+    }
+
+    /* Reset min-heights so panels don't stretch weirdly */
+    .min-vh-100 {
+        min-height: auto;
+    }
+
+    /* Left Panel Mobile Adjustments */
+    .col-lg-5 {
+        padding: 4rem 2rem !important; /* More padding for breathing room */
+        text-align: center;
+    }
+
+    /* Right Panel Mobile Adjustments */
+    .col-lg-7 {
+        padding: 3rem 1.5rem !important;
+    }
+
+    .display-5 {
+        font-size: 2.5rem; /* Smaller title on mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    /* Tiny screens (phones) */
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .bi {
+        font-size: 1rem;
+    }
+    
+    .form-control {
+        padding: 0.8rem;
+    }
+}
