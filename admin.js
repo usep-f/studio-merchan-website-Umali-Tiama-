@@ -75,16 +75,18 @@ window.showSection = (sectionId) => {
     // 1. Hide all sections
     document.getElementById('section-carousel').classList.add('hidden');
     document.getElementById('section-bookings').classList.add('hidden');
-    document.getElementById('section-live').classList.add('hidden'); // NEW
+    document.getElementById('section-live').classList.add('hidden');
     document.getElementById('section-testimonials').classList.add('hidden');
-    document.getElementById('section-remote').classList.add('hidden'); 
-    
+    document.getElementById('section-remote').classList.add('hidden');
+    document.getElementById('section-clients').classList.add('hidden'); // <--- NEW
+
     // 2. Deactivate all buttons
     document.getElementById('btn-carousel').classList.remove('active');
     document.getElementById('btn-bookings').classList.remove('active');
-    document.getElementById('btn-live').classList.remove('active'); // NEW
+    document.getElementById('btn-live').classList.remove('active');
     document.getElementById('btn-testimonials').classList.remove('active');
-    document.getElementById('btn-remote').classList.remove('active'); 
+    document.getElementById('btn-remote').classList.remove('active');
+    document.getElementById('btn-clients').classList.remove('active'); // <--- NEW
 
     // 3. Show target
     document.getElementById('section-' + sectionId).classList.remove('hidden');
@@ -92,9 +94,10 @@ window.showSection = (sectionId) => {
 
     // 4. Fetch Data
     if (sectionId === 'bookings') fetchAdminBookings();
-    if (sectionId === 'live') fetchLiveBookings(); // NEW
+    if (sectionId === 'live') fetchLiveBookings();
     if (sectionId === 'testimonials') fetchTestimonials();
-    if (sectionId === 'remote') fetchRemoteProjects(); 
+    if (sectionId === 'remote') fetchRemoteProjects();
+    if (sectionId === 'clients') fetchClients(); // <--- NEW
 };
 
 /* =========================================
@@ -617,4 +620,177 @@ window.deleteRemoteProject = async (id) => {
     const { error } = await supabase.from('online_projects').delete().eq('id', id);
     if (error) alert(error.message);
     else fetchRemoteProjects();
+};
+
+/* =========================================
+   10. CLIENT MANAGEMENT SYSTEM
+   ========================================= */
+
+// --- A. FETCH & DISPLAY CLIENTS ---
+window.fetchClients = async () => {
+    const tbody = document.getElementById('clients-table-body');
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Loading clients and calculating stats...</td></tr>';
+
+    try {
+        // 1. Fetch All Users
+        const { data: clients, error: clientError } = await supabase.from('clients').select('*').order('created_at', { ascending: false });
+        if (clientError) throw clientError;
+
+        // 2. Fetch All Activity (To calculate stats)
+        const { data: studioData } = await supabase.from('bookings').select('client_uid');
+        const { data: liveData } = await supabase.from('live_bookings').select('client_uid');
+        const { data: remoteData } = await supabase.from('online_projects').select('client_uid');
+
+        // 3. Render
+        if (clients.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">No registered clients found.</td></tr>';
+            return;
+        }
+
+        let html = '';
+        const currentAdminUid = auth.currentUser ? auth.currentUser.uid : null;
+
+        clients.forEach(c => {
+            // Count Stats
+            const studioCount = studioData.filter(b => b.client_uid === c.client_uid).length;
+            const liveCount = liveData.filter(b => b.client_uid === c.client_uid).length;
+            const remoteCount = remoteData.filter(b => b.client_uid === c.client_uid).length;
+
+            // Admin Badge Logic
+            const roleBadge = c.is_admin 
+                ? '<span class="badge bg-danger">ADMIN</span>' 
+                : '<span class="badge bg-secondary">User</span>';
+
+            // Prevent deleting yourself
+            const isMe = c.client_uid === currentAdminUid;
+            const deleteBtn = isMe 
+                ? `<button disabled class="btn btn-sm btn-secondary" title="You cannot delete yourself"><i class="bi bi-trash"></i></button>`
+                : `<button onclick="deleteUser('${c.client_uid}')" class="btn btn-sm btn-danger" title="Hard Delete User"><i class="bi bi-trash"></i></button>`;
+
+            const adminBtn = isMe
+                ? ''
+                : `<button onclick="toggleAdmin('${c.client_uid}', ${c.is_admin})" class="btn btn-sm ${c.is_admin ? 'btn-outline-secondary' : 'btn-outline-success'} me-1" title="${c.is_admin ? 'Revoke Admin' : 'Make Admin'}">
+                     <i class="bi ${c.is_admin ? 'bi-person-dash' : 'bi-shield-check'}"></i>
+                   </button>`;
+
+            html += `
+            <tr>
+                <td class="ps-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-3 text-secondary fw-bold" style="width:40px; height:40px;">
+                            ${c.full_name ? c.full_name.charAt(0).toUpperCase() : '?'}
+                        </div>
+                        <div class="fw-bold">${c.full_name}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="small"><i class="bi bi-envelope me-2"></i>${c.email}</div>
+                    <div class="small text-muted"><i class="bi bi-telephone me-2"></i>${c.phone_number || '-'}</div>
+                </td>
+                <td>${roleBadge}</td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-light text-dark border" title="Studio Sessions"><i class="bi bi-mic me-1"></i>${studioCount}</span>
+                        <span class="badge bg-light text-dark border" title="Live Events"><i class="bi bi-speaker me-1"></i>${liveCount}</span>
+                        <span class="badge bg-light text-dark border" title="Remote Projects"><i class="bi bi-cloud me-1"></i>${remoteCount}</span>
+                    </div>
+                </td>
+                <td class="text-end pe-4">
+                    <button onclick="viewUserHistory('${c.client_uid}', '${c.full_name}')" class="btn btn-sm btn-primary me-1" title="View Details"><i class="bi bi-eye"></i></button>
+                    ${adminBtn}
+                    ${deleteBtn}
+                </td>
+            </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+
+    } catch (e) {
+        alert("Error loading clients: " + e.message);
+    }
+};
+
+// --- B. VIEW HISTORY MODAL ---
+window.viewUserHistory = async (uid, name) => {
+    // Set Header
+    document.getElementById('history-modal-title').textContent = `${name}'s History`;
+    document.getElementById('history-modal-subtitle').textContent = `Client ID: ${uid}`;
+
+    // Load Data for Tabs
+    const studioBody = document.getElementById('hist-studio-body');
+    const liveBody = document.getElementById('hist-live-body');
+    const remoteBody = document.getElementById('hist-remote-body');
+
+    studioBody.innerHTML = '<tr><td colspan="3">Loading...</td></tr>';
+    liveBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+    remoteBody.innerHTML = '<tr><td colspan="3">Loading...</td></tr>';
+
+    // Show Modal
+    new bootstrap.Modal(document.getElementById('userHistoryModal')).show();
+
+    // 1. Fetch Studio
+    const { data: studio } = await supabase.from('bookings').select('*').eq('client_uid', uid).order('start_date', { ascending: false });
+    studioBody.innerHTML = studio.length ? studio.map(b => `
+        <tr>
+            <td>${b.start_date}</td>
+            <td>${b.service_type} (${b.studio})</td>
+            <td><span class="badge ${b.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark'}">${b.status}</span></td>
+        </tr>
+    `).join('') : '<tr><td colspan="3" class="text-muted">No studio history.</td></tr>';
+
+    // 2. Fetch Live
+    const { data: live } = await supabase.from('live_bookings').select('*').eq('client_uid', uid).order('start_time', { ascending: false });
+    liveBody.innerHTML = live.length ? live.map(b => `
+        <tr>
+            <td>${new Date(b.start_time).toLocaleDateString()}</td>
+            <td>${b.event_type}</td>
+            <td>${b.location}</td>
+            <td><span class="badge ${b.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark'}">${b.status}</span></td>
+        </tr>
+    `).join('') : '<tr><td colspan="4" class="text-muted">No live event history.</td></tr>';
+
+    // 3. Fetch Remote
+    const { data: remote } = await supabase.from('online_projects').select('*').eq('client_uid', uid).order('created_at', { ascending: false });
+    remoteBody.innerHTML = remote.length ? remote.map(p => `
+        <tr>
+            <td>${p.project_title}</td>
+            <td>${p.service_type}</td>
+            <td><span class="badge bg-secondary">${p.status}</span></td>
+        </tr>
+    `).join('') : '<tr><td colspan="3" class="text-muted">No project history.</td></tr>';
+};
+
+// --- C. TOGGLE ADMIN STATUS ---
+window.toggleAdmin = async (uid, currentStatus) => {
+    const action = currentStatus ? "REVOKE Admin access" : "GRANT Admin access";
+    if (!confirm(`Are you sure you want to ${action} for this user?`)) return;
+
+    const { error } = await supabase.from('clients').update({ is_admin: !currentStatus }).eq('client_uid', uid);
+    
+    if (error) alert("Error: " + error.message);
+    else fetchClients();
+};
+
+// --- D. HARD DELETE USER ---
+window.deleteUser = async (uid) => {
+    if (!confirm("WARNING: This will perform a HARD DELETE.\n\n- The user's profile will be removed.\n- ALL their booking history and projects will be erased.\n- They will be locked out of the dashboard.\n\nAre you absolutely sure?")) return;
+
+    try {
+        // 1. Delete Studio History
+        await supabase.from('bookings').delete().eq('client_uid', uid);
+        // 2. Delete Live History
+        await supabase.from('live_bookings').delete().eq('client_uid', uid);
+        // 3. Delete Remote Projects (Deliverables cascade if setup, otherwise delete them too)
+        await supabase.from('online_projects').delete().eq('client_uid', uid);
+        // 4. Delete Profile
+        const { error } = await supabase.from('clients').delete().eq('client_uid', uid);
+
+        if (error) throw error;
+
+        alert("User and all associated data have been wiped.");
+        fetchClients();
+
+    } catch (e) {
+        alert("Delete failed: " + e.message);
+    }
 };
