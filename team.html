@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style team.css" />
+
+    <title>Studio Merchan | Team</title>
+  </head>
+
+  <body>
+    <!--HEADER-->
+    <header class="navwrapper">
+      <!--desktop -->
+      <nav class="navbar desktop-navbar navbar-custom py-1 d-none d-lg-flex">
+        <div class="container-fluid navbar-grid">
+          
+          <ul class="navbar-nav left-nav">
+            <li class="nav-item"><a class="nav-link" href="/aboutus.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="/services.html">Services</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/team.html">Team</a></li>
+          </ul>
+         
+          <a class="navbar-brand" href="/index.html">
+            <img src="/assets/LOGO.png" alt="navbar logo" />
+          </a>
+          
+          <ul class="navbar-nav right-nav">
+            <li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="/booking.html">Book Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="dashboards\dashboard.html">Account</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!--mobile-->
+      <nav class="navbar mobile-navbar navbar-custom py-2 d-lg-none">
+        <div class="container-fluid justify-content-between">
+          <a class="navbar-brand mx-2" href="/index.html">
+            <img src="/assets/LOGO.png" alt="navbar logo" height="60">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        
+        <div class="collapse" id="mobileNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/aboutus.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="/services.html">Services</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/team.html">Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="/booking.html">Book Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="dashboards\dashboard.html">Account</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO SECTION -->
+      <section class="team-hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+          <h1 class="hero-title">THE EARS<br>BEHIND THE ART</h1>
+          <p class="hero-subtitle">18 Specialists. 2 Divisions. 1 Standard of Audio Excellence.</p>
+        </div>
+      </section>
+
+      <!-- SECTION A: CHIEF ENGINEERS (Zig-Zag) -->
+      <section class="chiefs-section">
+        <div class="container">
+          
+          <!-- Chief 1 -->
+          <div class="row align-items-center chief-row">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+              <div class="placeholder-portrait">
+                <span class="initials-lg">JD</span>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="chief-info">
+                <h2 class="chief-name">JOHN DOE</h2>
+                <h3 class="chief-role">HEAD OF AUDIO / CHIEF ENGINEER</h3>
+                <p class="chief-bio">
+                  With over 20 years in the industry, John has shaped the sonic identity of Studio Merchan. 
+                  His philosophy blends analog warmth with modern precision, ensuring every record has a timeless character.
+                </p>
+                <div class="credits-box">
+                  <span class="credits-label">SELECTED CREDITS:</span>
+                  <p>The Rolling Stones, Local Indie Heroes, Jazz Collective 5, Symphony X</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chief 2 (Reverse Layout) -->
+          <div class="row align-items-center chief-row flex-lg-row-reverse">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+              <div class="placeholder-portrait">
+                <span class="initials-lg">JS</span>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="chief-info text-lg-end"> <!-- Align right for variety -->
+                <h2 class="chief-name">JANE SMITH</h2>
+                <h3 class="chief-role">SENIOR MIXING ENGINEER</h3>
+                <p class="chief-bio">
+                  Jane is the master of the mix. Known for her punchy drums and crystal-clear vocals, 
+                  she brings a radio-ready polish to every track she touches. Her workflow on the SSL is legendary.
+                </p>
+                <div class="credits-box justify-content-lg-end">
+                  <span class="credits-label">SELECTED CREDITS:</span>
+                  <p>Pop Star A, Rock Band B, The Acoustic Sessions, Film Score Z</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chief 3 -->
+          <div class="row align-items-center chief-row">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+              <div class="placeholder-portrait">
+                <span class="initials-lg">RJ</span>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="chief-info">
+                <h2 class="chief-name">ROBERT JOHNSON</h2>
+                <h3 class="chief-role">STUDIO MANAGER / PRODUCER</h3>
+                <p class="chief-bio">
+                  The glue that holds the sessions together. Robert ensures that creativity flows uninterrupted. 
+                  As a producer, he has a knack for getting the best performance out of any artist.
+                </p>
+                <div class="credits-box">
+                  <span class="credits-label">SELECTED CREDITS:</span>
+                  <p>Indie Darling, The Big Festival, Commercial Spot X, Album of the Year</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION B: STUDIO STAFF (Grid) -->
+      <section class="studio-staff-section">
+        <div class="container">
+          <h2 class="section-header text-center mb-5">
+            <span class="text-blue">STUDIO</span> <span class="text-orange">TEAM</span>
+          </h2>
+          
+          <!-- Row 1 (4 People) -->
+          <div class="row g-4 justify-content-center mb-4">
+            <!-- Staff 1 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">AB</span></div>
+                <h4 class="staff-name">ALEX BROWN</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+            <!-- Staff 2 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">CD</span></div>
+                <h4 class="staff-name">CHRIS DAVIS</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+            <!-- Staff 3 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">EF</span></div>
+                <h4 class="staff-name">EMILY FOX</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+            <!-- Staff 4 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">GH</span></div>
+                <h4 class="staff-name">GREG HILL</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2 (3 People Centered) -->
+          <div class="row g-4 justify-content-center">
+            <!-- Staff 5 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">IJ</span></div>
+                <h4 class="staff-name">IAN JONES</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+            <!-- Staff 6 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">KL</span></div>
+                <h4 class="staff-name">KATE LEE</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+            <!-- Staff 7 -->
+            <div class="col-6 col-md-3">
+              <div class="staff-card">
+                <div class="placeholder-square"><span class="initials-sm">MN</span></div>
+                <h4 class="staff-name">MIKE NOAH</h4>
+                <span class="staff-role">STUDIO STAFF</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION C: LIVE CREW (Dark Grid) -->
+      <section class="live-crew-section">
+        <div class="container">
+          <h2 class="section-header text-center mb-5 text-white">
+            LIVE CREW
+          </h2>
+
+          <div class="row g-4 justify-content-center">
+            <!-- Loop for 8 People -->
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">OP</span></div>
+                <h4 class="live-name">OLIVIA P.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">QR</span></div>
+                <h4 class="live-name">QUINN R.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">ST</span></div>
+                <h4 class="live-name">SAM T.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">UV</span></div>
+                <h4 class="live-name">UMA V.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">WX</span></div>
+                <h4 class="live-name">WILL X.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">YZ</span></div>
+                <h4 class="live-name">YARA Z.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">AB</span></div>
+                <h4 class="live-name">ADAM B.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="live-card">
+                <div class="placeholder-circle"><span class="initials-sm">CD</span></div>
+                <h4 class="live-name">CARL D.</h4>
+                <span class="live-role">LIVE CREW</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!--FOOTER-->
+    <footer class="footer-custom text-light mt-0">
+        <div class="container py-5">
+            <div class="row align-items-center">
+
+                <div class="col-md-4 mb-4 mb-md-1 text-center text-md-start">
+                    <img
+                        src="/assets/LOGO_3-removebg-preview.png"
+                        alt="Studio Merchan Logo"
+                        height="80"
+                        class="mb-3"
+                    />
+                    <p class="mb-1">Studio Merchan</p>
+                    <p class="small">Para sa Musikerong Lucenahin.</p>
+                </div>
+
+                <div class="col-md-4 mb-4 mb-md-1 text-center">
+                    <ul class="list-unstyled d-flex justify-content-center mb-0">
+                        <li><a href="/aboutus.html" class="footer-link mx-3">About</a></li>
+                        <li><a href="/services.html" class="footer-link mx-3">Services</a></li>
+                        <li><a href="/team.html" class="footer-link mx-3">Team</a></li>
+                        <li><a href="/booking.html" class="footer-link mx-3">Book Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 text-center text-md-end">
+                    <p class="mb-2">Follow us</p>
+                    <a href="#" class="footer-icon mx-2"></a>
+                        <a href="#" class="footer-icon mx-2" aria-label="Facebook"
+                        ><i class="bi bi-facebook"></i
+                        ></a>
+                        <a href="#" class="footer-icon mx-2" aria-label="Instagram"
+                        ><i class="bi bi-instagram"></i
+                        ></a>
+                        <a href="#" class="footer-icon mx-2" aria-label="YouTube"
+                        ><i class="bi bi-youtube"></i
+                        ></a>
+                        <a href="#" class="footer-icon mx-2" aria-label="twitter"
+                        ><i class="bi bi-twitter"></i
+                        ></a>
+                        <a href="#" class="footer-icon mx-2" aria-label="TikTok"
+                        ><i class="bi bi-tiktok"></i></a
+                    ></a>
+                    <p class="small mt-3 mb-0">
+                        &copy; 2025 Studio Merchan. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script type="module" src="script.js"></script>
+    <!--SCRIPTING FOR BOOTSTRAP-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
