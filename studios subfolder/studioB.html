@@ -4,16 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- BOOTSTRAP 5 & ICONS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      xintegrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
     <link
@@ -21,13 +24,19 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style studioA.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="style studioB.css" />
     <title>Studio Merchan | Studio B</title>
   </head>
   <body>
-    <!--HEADER-->
+    <!-- HEADER / NAVBAR -->
     <header class="navwrapper">
-      <!--desktop -->
+      <!-- Desktop Navbar -->
       <nav class="navbar desktop-navbar navbar-custom py-1 d-none d-lg-flex">
         <div class="container-fluid navbar-grid">
           <ul class="navbar-nav left-nav">
@@ -60,7 +69,7 @@
         </div>
       </nav>
 
-      <!--mobile-->
+      <!-- Mobile Navbar -->
       <nav class="navbar mobile-navbar navbar-custom py-2 d-lg-none">
         <div class="container-fluid justify-content-between">
           <a class="navbar-brand mx-2" href="/index.html">
@@ -99,6 +108,8 @@
           </ul>
         </div>
       </nav>
+
+      <!-- Sub-Nav -->
       <nav class="service-sub-nav">
         <div class="container">
           <ul class="sub-nav-list">
@@ -107,17 +118,13 @@
                 >STUDIO A</a
               >
             </li>
-
             <li class="sub-nav-divider">|</li>
-
             <li>
               <a href="studioB.html" class="sub-nav-link active" id="studio-b"
                 >STUDIO B</a
               >
             </li>
-
             <li class="sub-nav-divider">|</li>
-
             <li>
               <a href="studioC.html" class="sub-nav-link" id="studio-c"
                 >STUDIO C</a
@@ -129,20 +136,17 @@
     </header>
 
     <main>
+      <!-- HERO SECTION -->
       <section class="studio-a-hero">
         <div class="studio-a-overlay"></div>
-
         <div class="studio-a-container">
           <div class="studio-a-text">
             <h1 class="hero-title">WARM AND COZY</h1>
             <p class="hero-desc">
-              We take pride in catering our quality services to great artists
-              that make inspiring music for all of us to listen and enjoy. We
-              take pride in catering our quality services to great artists that
-              make inspiring music for all of us to listen and enjoy.
+              We strive for soulful vibes here. Our intimate space is perfect
+              for vocalists and small ensembles seeking only good warm vibes.
             </p>
           </div>
-
           <div class="studio-signature">
             <span class="text-studio">STUDIO</span>
             <span class="text-studio">B</span>
@@ -150,46 +154,408 @@
         </div>
       </section>
 
+      <!-- RADIO READY SECTION -->
       <section class="radio-ready-section">
         <div class="radio-content">
           <h2>
-            <span class="text-white">RADIO READY</span><br />
-            <span class="text-orange">EXPERIENCE</span>
+            <span class="text-white">TAKE A</span><br />
+            <span class="text-orange">CHILL PILL</span>
           </h2>
           <p>
-            We take pride in catering our quality services to great artists that
-            make inspiring music for all of us to listen and We take pride in
-            catering our quality services to great artists that make inspiring
-            music for all of us to listen and enjoy
+            Studio B is designed for artists seeking a relaxed and intimate
+            recording experience. Its warm acoustics and cozy ambiance make it suitable for genres like acoustic, ballad, jazz, and soul.
           </p>
 
           <div class="genre-grid">
             <div class="genre-item">
-              <i class="bi bi-music-player-fill"></i>
-              <span>Rock</span>
+              <i class="bi bi-music-player-fill"></i><span>Acoustic</span>
+            </div>
+            <div class="genre-item">
+              <i class="bi bi-stars"></i><span>Ballad</span>
+            </div>
+            <div class="genre-item">
+              <i class="bi bi-disc"></i><span>Jazz</span>
+            </div>
+            <div class="genre-item">
+              <i class="bi bi-boombox"></i><span>Soul</span>
+            </div>
+          </div> 
+          </div>
+        </div>
+        <div class="radio-image"></div>
+      </section>
+
+      <!-- SOUNDSCAPES CAROUSEL (SPLIT LAYOUT) -->
+      <section id="studio-a-soundscapes" class="soundscapes-section">
+        <div
+          id="soundscapesCarousel"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+        >
+          <!-- Indicators (Dots) -->
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#soundscapesCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#soundscapesCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#soundscapesCarousel"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+
+          <!-- 1. SLIDES -->
+          <div class="carousel-inner">
+            <!-- SLIDE 1: CONSOLE -->
+            <div class="carousel-item active">
+              <div class="image-wrapper">
+                <img
+                  src="../assets/studio B/Control Room.png"
+                  class="d-block w-100 slide-img"
+                  alt="Studio A Console"
+                />
+              </div>
+              <!-- Caption is now STACKED below, not overlaid -->
+              <div class="carousel-caption">
+                <h2 class="soundscape-title">THE CONSOLE</h2>
+                <p class="soundscape-desc">
+                  An old SSL analog console that imparts warmth and character to those 
+                  lush recordings, making every track sound radio-ready and giving it some needed mojo.
+                </p>
+              </div>
             </div>
 
-            <div class="genre-item">
-              <i class="bi bi-stars"></i>
-              <span>Pop</span>
+            <!-- SLIDE 2: LIVE ROOM -->
+            <div class="carousel-item">
+              <div class="image-wrapper">
+                <img
+                  src="../assets/studio B/live B.png"
+                  class="d-block w-100 slide-img"
+                  alt="Studio A Live Room"
+                />
+              </div>
+              <div class="carousel-caption">
+                <h2 class="soundscape-title">LIVE ROOM</h2>
+                <p class="soundscape-desc">
+                  Small, warm and intimate space perfect for capturing cozy vocals
+                  and acoustic instruments with a natural ambiance. Reminiscent of those
+                  old Motown recordings.
+                </p>
+              </div>
             </div>
 
-            <div class="genre-item">
-              <i class="bi bi-disc"></i>
-              <span>RnB</span>
+            <!-- SLIDE 3: ISO BOOTH -->
+            <div class="carousel-item">
+              <div class="image-wrapper">
+                <img
+                  src="../assets/studio B/iso.png"
+                  class="d-block w-100 slide-img"
+                  alt="Studio A Iso Booth"
+                />
+              </div>
+              <div class="carousel-caption">
+                <h2 class="soundscape-title">ISO BOOTH</h2>
+                <p class="soundscape-desc">
+                  A cozy isolation booth designed to capture pristine vocal and instrument
+                  recordings, minimizing bleed and external noise for maximum clarity.
+                </p>
+              </div>
             </div>
+          </div>
 
-            <div class="genre-item">
-              <i class="bi bi-boombox"></i>
-              <span>Hiphop</span>
+          <!-- 2. NAVIGATION BUTTONS -->
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#soundscapesCarousel"
+            data-bs-slide="prev"
+          >
+            <div class="custom-arrow">
+              <i class="bi bi-chevron-left"></i>
             </div>
+            <span class="visually-hidden">Previous</span>
+          </button>
+
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#soundscapesCarousel"
+            data-bs-slide="next"
+          >
+            <div class="custom-arrow">
+              <i class="bi bi-chevron-right"></i>
+            </div>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STUDIO A FEATURES (New Section) -->
+      <section class="studio-features-grid">
+        <!-- 1. PIANO SECTION (Image Left / Text Right) -->
+        <div class="feature-block light">
+          <div
+            class="feature-image"
+            style="background-image: url('../assets/studio B/rhodes.png')"
+          ></div>
+          <div class="feature-content">
+            <h2 class="feature-title">
+              <span class="text-blue">PRISTINE</span><br />
+              <span class="text-orange">RHODES</span>
+            </h2>
+            <p class="feature-desc">
+              That chimey Rhodes sound you've been searching for. Our vintage MkI Fender Rhodes electric piano is meticulously maintained to deliver warm, bell-like tones that sit perfectly in any mix. Whether you're after smooth jazz vibes or funky grooves, this classic instrument adds a timeless character to your recordings.
+            </p>
           </div>
         </div>
 
-        <div class="radio-image"></div>
+        <!-- 2. ORCHESTRA SECTION (Text Left / Image Right) -->
+        <div class="feature-block dark">
+          <div class="feature-content">
+            <h2 class="feature-title text-white">
+              HAMMOND ORGAN 
+            </h2>
+            <p class="feature-desc text-white">
+              Let the soulful sounds of our vintage Hammond B3 organ elevate your music to new heights. Known for its rich, warm tones and expressive capabilities, this iconic instrument has been a staple in genres ranging from jazz and blues to rock and gospel. Whether you're looking to add depth to your tracks or create captivating solos, our Hammond B3 is ready to inspire your creativity.
+            </p>
+          </div>
+          <div
+            class="feature-image"
+            style="background-image: url('../assets/studio b/hammond.png')"
+          ></div>
+        </div>
+      </section>
+
+      <!-- 3. MONITORS SECTION (Image Left / Text Right) -->
+      <div class="feature-block light monitors-block">
+        <div
+          class="feature-image"
+          style="background-image: url('../assets/studio B/r2r.png')"
+        ></div>
+        <div class="feature-content">
+          <h2 class="feature-title">
+            <span class="text-blue">A VERY</span><br />
+            <span class="text-orange">ANALOG EXPERIENCE</span>
+          </h2>
+          <p class="feature-desc">
+            No signs of digital here. Only utilizing vintage analog outboard gear and classic microphones to capture that authentic sound. Our commitment to analog recording techniques ensures that your music retains its warmth, depth, and character, providing a timeless quality that digital simply can't replicate.
+          </p>
+        </div>
+      </div>
+
+      <!-- STUDIO GEAR SPECIFICATIONS (Accordion) -->
+      <section class="studio-gear-section">
+        <div class="container py-5">
+          <h2
+            class="section-header text-center mb-5 text-white"
+            id="equipment-header"
+          >
+            STUDIO SPECIFICATIONS
+          </h2>
+
+          <div class="accordion custom-accordion" id="studioGearAccordion">
+            <!-- 1. MICROPHONES -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingMics">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseMics"
+                  aria-expanded="true"
+                  aria-controls="collapseMics"
+                >
+                  MICROPHONES
+                </button>
+              </h2>
+              <div
+                id="collapseMics"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingMics"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Condenser:</strong> Neumann U87 Ai (x2), AKG
+                          C414 XLII (x2), Neumann KM184 (x2)
+                        </li>
+                        <li>
+                          <strong>Tube:</strong> Telefunken ELA M 251E, Manley
+                          Reference Cardioid
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Dynamic:</strong> Shure SM7B, Sennheiser MD421
+                          (x3), Shure SM57 (x4)
+                        </li>
+                        <li>
+                          <strong>Ribbon:</strong> Royer R-121 (x2), Coles 4038
+                          Pair
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. MIXING CONSOLE & OUTBOARD -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingConsole">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseConsole"
+                  aria-expanded="false"
+                  aria-controls="collapseConsole"
+                >
+                  MIXING CONSOLE & OUTBOARD GEAR
+                </button>
+              </h2>
+              <div
+                id="collapseConsole"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingConsole"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Console:</strong> SSL AWS 948 Delta Analog
+                          Console
+                        </li>
+                        <li>
+                          <strong>Preamps:</strong> Neve 1073 (x8), API 3124+
+                          (x4), Avalon VT-737sp
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Dynamics:</strong> Universal Audio 1176LN
+                          (x2), Teletronix LA-2A, SSL G-Comp
+                        </li>
+                        <li>
+                          <strong>EQ:</strong> Pultec EQP-1A, GML 8200
+                          Parametric EQ
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. INSTRUMENTS -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingInstruments">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseInstruments"
+                  aria-expanded="false"
+                  aria-controls="collapseInstruments"
+                >
+                  INSTRUMENTS
+                </button>
+              </h2>
+              <div
+                id="collapseInstruments"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingInstruments"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Keys:</strong> Steinway & Sons Model B Grand
+                          Piano, Dave Smith Prophet-6, Moog Sub 37
+                        </li>
+                        <li>
+                          <strong>Drums:</strong> DW Collectors Series Maple
+                          Kit, Ludwig Black Beauty Snare
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Guitars:</strong> Fender Stratocaster American
+                          Pro, Gibson Les Paul Standard, Martin D-28
+                        </li>
+                        <li>
+                          <strong>Bass:</strong> Fender Precision Bass '62
+                          Reissue
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. AMPLIFIERS -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingAmps">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseAmps"
+                  aria-expanded="false"
+                  aria-controls="collapseAmps"
+                >
+                  AMPLIFIERS
+                </button>
+              </h2>
+              <div
+                id="collapseAmps"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingAmps"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <ul class="gear-list">
+                    <li>Marshall JCM800 2203 Head + 1960A Cabinet</li>
+                    <li>Fender '65 Twin Reverb Reissue</li>
+                    <li>Vox AC30 Custom</li>
+                    <li>Ampeg SVT-CL Bass Head + 8x10 Cabinet</li>
+                    <li>Kemper Profiler Rack</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer-custom text-light mt-0">
       <div class="container py-5">
         <div class="row align-items-center">
@@ -244,9 +610,10 @@
       </div>
     </footer>
 
+    <!-- BOOTSTRAP SCRIPTS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      xintegrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
   </body>

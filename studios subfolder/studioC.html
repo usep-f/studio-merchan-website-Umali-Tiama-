@@ -4,16 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- BOOTSTRAP 5 & ICONS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      xintegrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
     <link
@@ -21,13 +24,14 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style studioA.css" />
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="style studioC.css" />
     <title>Studio Merchan | Studio C</title>
   </head>
   <body>
-    <!--HEADER-->
+    <!-- HEADER / NAVBAR -->
     <header class="navwrapper">
-      <!--desktop -->
+      <!-- Desktop Navbar -->
       <nav class="navbar desktop-navbar navbar-custom py-1 d-none d-lg-flex">
         <div class="container-fluid navbar-grid">
           <ul class="navbar-nav left-nav">
@@ -60,7 +64,7 @@
         </div>
       </nav>
 
-      <!--mobile-->
+      <!-- Mobile Navbar -->
       <nav class="navbar mobile-navbar navbar-custom py-2 d-lg-none">
         <div class="container-fluid justify-content-between">
           <a class="navbar-brand mx-2" href="/index.html">
@@ -100,6 +104,7 @@
         </div>
       </nav>
 
+      <!-- Sub-Nav -->
       <nav class="service-sub-nav">
         <div class="container">
           <ul class="sub-nav-list">
@@ -108,17 +113,13 @@
                 >STUDIO A</a
               >
             </li>
-
             <li class="sub-nav-divider">|</li>
-
             <li>
               <a href="studioB.html" class="sub-nav-link" id="studio-b"
                 >STUDIO B</a
               >
             </li>
-
             <li class="sub-nav-divider">|</li>
-
             <li>
               <a href="studioC.html" class="sub-nav-link active" id="studio-c"
                 >STUDIO C</a
@@ -130,20 +131,18 @@
     </header>
 
     <main>
+      <!-- HERO SECTION -->
       <section class="studio-a-hero">
         <div class="studio-a-overlay"></div>
-
         <div class="studio-a-container">
           <div class="studio-a-text">
-            <h1 class="hero-title">PRECISE MASTERING</h1>
+            <h1 class="hero-title">SHARP AND PRECISE</h1>
             <p class="hero-desc">
-              We take pride in catering our quality services to great artists
-              that make inspiring music for all of us to listen and enjoy. We
-              take pride in catering our quality services to great artists that
-              make inspiring music for all of us to listen and enjoy.
+              We ensure that every detail of your sound is captured with utmost
+              clarity and precision, delivering a polished final product that
+              stands out in the competitive music industry.
             </p>
           </div>
-
           <div class="studio-signature">
             <span class="text-studio">STUDIO</span>
             <span class="text-studio">C</span>
@@ -151,46 +150,418 @@
         </div>
       </section>
 
+      <!-- RADIO READY SECTION -->
       <section class="radio-ready-section">
         <div class="radio-content">
           <h2>
-            <span class="text-white">RADIO READY</span><br />
-            <span class="text-orange">EXPERIENCE</span>
+            <span class="text-white">PINPOINT</span><br />
+            <span class="text-orange">PRECISION</span>
           </h2>
           <p>
-            We take pride in catering our quality services to great artists that
-            make inspiring music for all of us to listen and We take pride in
-            catering our quality services to great artists that make inspiring
-            music for all of us to listen and enjoy
+            Studio C is engineered for crystal-clear sound with surgical
+            precision. Our acoustically treated rooms and state-of-the-art
+            equipment ensure that every nuance of your performance is captured
+            flawlessly, making it ideal for radio-ready tracks across various
+            genres.
           </p>
 
           <div class="genre-grid">
             <div class="genre-item">
-              <i class="bi bi-music-player-fill"></i>
-              <span>Rock</span>
+              <i class="bi bi-music-player-fill"></i><span>Mastering</span>
             </div>
-
             <div class="genre-item">
-              <i class="bi bi-stars"></i>
-              <span>Pop</span>
+              <i class="bi bi-stars"></i><span>Enhancement</span>
             </div>
-
             <div class="genre-item">
-              <i class="bi bi-disc"></i>
-              <span>RnB</span>
-            </div>
-
-            <div class="genre-item">
-              <i class="bi bi-boombox"></i>
-              <span>Hiphop</span>
+              <i class="bi bi-wrench"></i><span>Repair</span>
             </div>
           </div>
         </div>
-
         <div class="radio-image"></div>
+      </section>
+
+      <!-- SOUNDSCAPES CAROUSEL (SPLIT LAYOUT) -->
+      <section id="studio-a-soundscapes" class="soundscapes-section">
+        <div
+          id="soundscapesCarousel"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+        >
+          <!-- Indicators (Dots) -->
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#soundscapesCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#soundscapesCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#soundscapesCarousel"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+
+          <!-- 1. SLIDES -->
+          <div class="carousel-inner">
+            <!-- SLIDE 1: CONSOLE -->
+            <div class="carousel-item active">
+              <div class="image-wrapper">
+                <img
+                  src="../assets/studio C/room.png"
+                  class="d-block w-100 slide-img"
+                  alt="Mastering Suite"
+                />
+              </div>
+              <!-- Caption is now STACKED below, not overlaid -->
+              <div class="carousel-caption">
+                <h2 class="soundscape-title">THE CONSOLE</h2>
+                <p class="soundscape-desc">
+                  Only built from premium analog gear, our console is the heart
+                  of Studio C's precision sound. It offers unparalleled control
+                  over your sound, allowing for meticulous adjustments that
+                  bring out the finest details in your tracks.
+                </p>
+              </div>
+            </div>
+
+            <!-- SLIDE 2: LIVE ROOM -->
+            <div class="carousel-item">
+              <div class="image-wrapper">
+                <img
+                  src="../assets/studio C/surround sound.png"
+                  class="d-block w-100 slide-img"
+                  alt="Studio A Live Room"
+                />
+              </div>
+              <div class="carousel-caption">
+                <h2 class="soundscape-title">SURROUND SOUND</h2>
+                <p class="soundscape-desc">
+                  A spacious, acoustically treated environment designed to
+                  capture the natural reverb and energy of your performance.
+                </p>
+              </div>
+            </div>
+
+            <!-- SLIDE 3: ISO BOOTH -->
+            <div class="carousel-item">
+              <div class="image-wrapper">
+                <img
+                  src="../assets/studio C/monitors.png"
+                  class="d-block w-100 slide-img"
+                  alt="Studio A Iso Booth"
+                />
+              </div>
+              <div class="carousel-caption">
+                <h2 class="soundscape-title">AUDIO MONITORS</h2>
+                <p class="soundscape-desc">
+                  Complete isolation for vocals and solo instruments, ensuring a
+                  pristine signal path with zero bleed.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. NAVIGATION BUTTONS -->
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#soundscapesCarousel"
+            data-bs-slide="prev"
+          >
+            <div class="custom-arrow">
+              <i class="bi bi-chevron-left"></i>
+            </div>
+            <span class="visually-hidden">Previous</span>
+          </button>
+
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#soundscapesCarousel"
+            data-bs-slide="next"
+          >
+            <div class="custom-arrow">
+              <i class="bi bi-chevron-right"></i>
+            </div>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STUDIO A FEATURES (New Section) -->
+      <section class="studio-features-grid">
+        <!-- 1. PIANO SECTION (Image Left / Text Right) -->
+        <div class="feature-block light">
+          <div
+            class="feature-image"
+            style="background-image: url('../assets/studio C/analysis.png')"
+          ></div>
+          <div class="feature-content">
+            <h2 class="feature-title">
+              <span class="text-blue">PRECISE</span><br />
+              <span class="text-orange">ANALYSIS</span>
+            </h2>
+            <p class="feature-desc">
+              Our control room is equipped with advanced audio analysis tools
+              that allow engineers to scrutinize every aspect of your mix. From
+              spectral analyzers to phase meters, we ensure your tracks meet the
+              highest standards of audio fidelity.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. ORCHESTRA SECTION (Text Left / Image Right) -->
+        <div class="feature-block dark">
+          <div class="feature-content">
+            <h2 class="feature-title text-white">
+              SURGICAL<br />
+              TOOLS
+            </h2>
+            <p class="feature-desc text-white">
+              Studio C boasts a meticulously curated selection of outboard gear
+              designed for precision editing and enhancement. From high-end
+              equalizers to dynamic processors, our tools empower engineers to
+              sculpt your sound with surgical accuracy.
+            </p>
+          </div>
+          <div
+            class="feature-image"
+            style="background-image: url('../assets/studio C/outboard.png')"
+          ></div>
+        </div>
+      </section>
+
+      <!-- 3. MONITORS SECTION (Image Left / Text Right) -->
+      <div class="feature-block light monitors-block">
+        <div
+          class="feature-image"
+          style="background-image: url('../assets/studio C/vinyl.png')"
+        ></div>
+        <div class="feature-content">
+          <h2 class="feature-title">
+            <span class="text-blue">IN HOUSE</span><br />
+            <span class="text-orange">VINYL</span>
+          </h2>
+          <p class="feature-desc">
+            For those seeking the true analog vibe, Studio C offers in-house
+            vinyl cutting services. Our state-of-the-art lathe system allows for
+            the creation of high-quality vinyl records, ensuring that your music
+            is presented with the warmth and depth that only vinyl can provide.
+          </p>
+        </div>
+      </div>
+
+      <!-- STUDIO GEAR SPECIFICATIONS (Accordion) -->
+      <section class="studio-gear-section">
+        <div class="container py-5">
+          <h2
+            class="section-header text-center mb-5 text-white"
+            id="equipment-header"
+          >
+            STUDIO SPECIFICATIONS
+          </h2>
+
+          <div class="accordion custom-accordion" id="studioGearAccordion">
+            <!-- 1. MICROPHONES -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingMics">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseMics"
+                  aria-expanded="true"
+                  aria-controls="collapseMics"
+                >
+                  MICROPHONES
+                </button>
+              </h2>
+              <div
+                id="collapseMics"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingMics"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Condenser:</strong> Neumann U87 Ai (x2), AKG
+                          C414 XLII (x2), Neumann KM184 (x2)
+                        </li>
+                        <li>
+                          <strong>Tube:</strong> Telefunken ELA M 251E, Manley
+                          Reference Cardioid
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Dynamic:</strong> Shure SM7B, Sennheiser MD421
+                          (x3), Shure SM57 (x4)
+                        </li>
+                        <li>
+                          <strong>Ribbon:</strong> Royer R-121 (x2), Coles 4038
+                          Pair
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. MIXING CONSOLE & OUTBOARD -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingConsole">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseConsole"
+                  aria-expanded="false"
+                  aria-controls="collapseConsole"
+                >
+                  MIXING CONSOLE & OUTBOARD GEAR
+                </button>
+              </h2>
+              <div
+                id="collapseConsole"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingConsole"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Console:</strong> SSL AWS 948 Delta Analog
+                          Console
+                        </li>
+                        <li>
+                          <strong>Preamps:</strong> Neve 1073 (x8), API 3124+
+                          (x4), Avalon VT-737sp
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Dynamics:</strong> Universal Audio 1176LN
+                          (x2), Teletronix LA-2A, SSL G-Comp
+                        </li>
+                        <li>
+                          <strong>EQ:</strong> Pultec EQP-1A, GML 8200
+                          Parametric EQ
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. INSTRUMENTS -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingInstruments">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseInstruments"
+                  aria-expanded="false"
+                  aria-controls="collapseInstruments"
+                >
+                  INSTRUMENTS
+                </button>
+              </h2>
+              <div
+                id="collapseInstruments"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingInstruments"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Keys:</strong> Steinway & Sons Model B Grand
+                          Piano, Dave Smith Prophet-6, Moog Sub 37
+                        </li>
+                        <li>
+                          <strong>Drums:</strong> DW Collectors Series Maple
+                          Kit, Ludwig Black Beauty Snare
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="gear-list">
+                        <li>
+                          <strong>Guitars:</strong> Fender Stratocaster American
+                          Pro, Gibson Les Paul Standard, Martin D-28
+                        </li>
+                        <li>
+                          <strong>Bass:</strong> Fender Precision Bass '62
+                          Reissue
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. AMPLIFIERS -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingAmps">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseAmps"
+                  aria-expanded="false"
+                  aria-controls="collapseAmps"
+                >
+                  AMPLIFIERS
+                </button>
+              </h2>
+              <div
+                id="collapseAmps"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingAmps"
+                data-bs-parent="#studioGearAccordion"
+              >
+                <div class="accordion-body">
+                  <ul class="gear-list">
+                    <li>Marshall JCM800 2203 Head + 1960A Cabinet</li>
+                    <li>Fender '65 Twin Reverb Reissue</li>
+                    <li>Vox AC30 Custom</li>
+                    <li>Ampeg SVT-CL Bass Head + 8x10 Cabinet</li>
+                    <li>Kemper Profiler Rack</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer-custom text-light mt-0">
       <div class="container py-5">
         <div class="row align-items-center">
@@ -245,9 +616,10 @@
       </div>
     </footer>
 
+    <!-- BOOTSTRAP SCRIPTS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      xintegrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
   </body>

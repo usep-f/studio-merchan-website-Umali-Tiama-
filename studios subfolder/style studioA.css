@@ -2,282 +2,234 @@
 GLOBAL RESETS & FONTS
 ========================================= */
 html {
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 *, *::before, *::after {
-box-sizing: inherit;
+  box-sizing: inherit;
 }
 body {
-font-family: 'Urbanist', sans-serif;
-line-height: 1.5;
-background-color: #D4D4E4; /* Default light background */
-margin: 0;
-padding: 0;
+  font-family: 'Urbanist', sans-serif;
+  line-height: 1.5;
+  background-color: #D4D4E4;
+  margin: 0;
+  padding: 0;
 }
 
-/* Navbar Styles */
+/* =========================================
+   NAVBAR STYLES
+   ========================================= */
 .navbar-custom {
-background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
-padding-left: 3rem;
-padding-right: 3rem;
-position: relative; 
-z-index: 9999; 
+  background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
+  padding-left: 3rem;
+  padding-right: 3rem;
+  position: relative; 
+  z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
-width: 100%;
-height: 100%;
-
-/* THE MAGIC FORMULA: 
-1. minmax(0, 1fr) = Flexible left space
-2. auto = Logo size
-3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
-grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
-align-items: center; 
+  display: grid !important; 
+  width: 100%;
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
-display: flex;
-align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
-gap: 2rem;
-margin: 0 !important;
-padding: 0 !important;
-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important;
+  justify-self: start;
+  gap: 2rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
-display: flex;
-align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
-gap: 2rem;
-margin: 0 !important;
-padding: 0 !important;
-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end !important;
+  justify-self: end;
+  gap: 2rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
-display: flex;
-align-items: center;
-justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
-margin: 0 !important;
-padding: 0 !important;
-width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto;
 }
 
 .navbar-brand img {
-height: 6.25rem;
-display: block;
-max-width: 100%;
+  height: 6.25rem;
+  display: block;
+  max-width: 100%;
 }
-/* --- GENERAL LINK STYLES --- */
+
 .navbar-nav {
-display: flex !important;
-flex-direction: row !important;
+  display: flex !important;
+  flex-direction: row !important;
 }
 
 .navbar-nav .nav-link {
-color: #003766 !important;
-font-size: 1.8rem;
-font-weight: 300;
-transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+  color: #003766 !important;
+  font-size: 1.8rem;
+  font-weight: 300;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  position: relative; 
 }
 
 .navbar-nav .nav-link:hover {
-color: #2979c4 !important;
+  color: #2979c4 !important;
 }
 
-.navbar-nav .nav-link {
-position: relative; 
-}
-
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
-content: "";
-position: absolute;
-left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
-width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #c8761d;
+  border-radius: 2px;
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
-color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+  color: #2979c4 !important;
+  font-weight: 500;
 }
 
-/* --- UTILITIES --- */
-.desktop-navbar {
-display: block;
-}
-
-.navbar-toggler {
-border: none;
-}
-
+/* Utilities */
+.desktop-navbar { display: block; }
+.navbar-toggler { border: none; }
 .navbar-toggler-icon {
-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* =========================================
-STUDIO A PAGE STYLES
-========================================= */
-
-/* Parent Container */
+   STUDIO A HERO
+   ========================================= */
 .studio-a-hero {
-position: relative;
-height: 80vh;
-width: 100%;
-background-image: url('../assets/Index/Soundscapes/studioA.jpg'); /* Existing Asset */
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-font-family: 'Urbanist', sans-serif;
-overflow: hidden; /* Crucial to chop off the text if it gets too big */
-display: flex;
-justify-content: center;
+  position: relative;
+  height: 80vh;
+  width: 100%;
+  background-image: url('../assets/studio A/Studio A Live Room.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Urbanist', sans-serif;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
-/* The Orange-to-Navy Gradient Overlay */
 .studio-a-overlay {
-position: absolute;
-inset: 0;
-background: linear-gradient(
-to bottom, 
-rgba(201, 118, 28, 0.85) 20%,   /* Brand Orange (#c8761d approx) */    /* Brand Blue (#003766) */
-rgba(7, 0, 42, 1) 100%         /* Deepest Navy */
-);
-z-index: 1;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom, 
+    rgba(201, 118, 28, 0.85) 20%,
+    rgba(7, 0, 42, 1) 100%
+  );
+  z-index: 1;
 }
 
-/* Layout Wrapper */
 .studio-a-container {
-position: relative;
-z-index: 2;
-height: 100%;
-width: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center; /* Vertically center the "Rich and Loud" part */
-align-items: center;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* --- Top Content --- */
 .studio-a-text {
-text-align: center;
-color: white;
-padding: 0 1rem;
-max-width: 850px;
-margin-top: -35vh; /* Nudge up slightly to leave room for the big text */
+  text-align: center;
+  color: white;
+  padding: 0 1rem;
+  max-width: 850px;
+  margin-top: -35vh;
 }
 
 .hero-title {
-font-size: 5rem;
-font-weight: 900; /* Extra Bold */
-text-transform: uppercase;
-margin-bottom: 1rem;
-letter-spacing: 1px;
+  font-size: 5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
 }
 
 .hero-desc {
-font-size: 1.2rem;
-font-weight: 300;
-line-height: 1.6;
-color: #f0f0f0;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #f0f0f0;
 }
 
-/* --- Bottom Signature (The Big Text) --- */
 .studio-signature {
-position: absolute;
-bottom: -0.12em; /* Pulls it down to cut off the bottom edge slightly like the design */
-left: 50%;
-transform: translateX(-50%); /* Perfect Center */
-width: 100%;
-text-align: center;
-white-space: nowrap;
-line-height: 0.8;
-z-index: 1; /* Sits behind the description if they overlap */
-pointer-events: none; /* Ensures you can't accidentally select it over buttons */
-margin-bottom: 4rem;
+  position: absolute;
+  bottom: -0.12em;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 0.8;
+  z-index: 1;
+  pointer-events: none;
+  margin-bottom: 4rem;
 }
 
 .text-studio {
-  /* Define the gradient: Dark Blue to slightly lighter Navy */
   background: linear-gradient(to top, #c8761d, #c39eff);
-  
-  /* Clip background to text */
   -webkit-background-clip: text;
   background-clip: text;
   filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
-  /* Make text transparent */
   color: transparent;
-font-size: 20vw; /* Responsive: 22% of viewport width */
-font-weight: 900;
-color: transparent; /* Muted Dark Blue to blend with background */
-text-transform: uppercase;
-letter-spacing: -0.02em;
-}
-
-.text-a {
-font-size: 20vw;
-font-weight: 900;
-color: #c8761d; /* Brand Orange */
-text-transform: uppercase;
+  font-size: 20vw;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
 
 /* =========================================
-   RADIO READY EXPERIENCE SECTION
+   RADIO READY SECTION
    ========================================= */
-
 .radio-ready-section {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Split 50% Text, 50% Image */
+  grid-template-columns: 2fr 1fr;
   min-height: 70vh;
-  background-color: #003766; /* Brand Dark Blue */
+  background-color: #003766;
 }
 
-/* Text Side */
 .radio-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Standard Desktop Padding */
-  padding: 6rem 10rem; 
+  padding: 6rem 10rem;
   text-align: left;
   color: #ffffff;
 }
 
-/* Typography */
 .radio-content h2 {
   font-size: 4rem;
-  font-weight: 900; /* Extra Bold */
+  font-weight: 900;
   text-transform: uppercase;
   line-height: 1.1;
   margin-bottom: 1.5rem;
 }
 
-.radio-content .text-white {
-  color: #ffffff;
-}
-
-.radio-content .text-orange {
-  color: #c8761d;
-}
+.radio-content .text-white { color: #ffffff; }
+.radio-content .text-orange { color: #c8761d; }
 
 .radio-content p {
   font-size: 1.2rem;
@@ -288,10 +240,9 @@ text-transform: uppercase;
   margin-bottom: 4rem;
 }
 
-/* Genre Grid Layout */
 .genre-grid {
   display: flex;
-  gap: 3rem; /* Space between icons */
+  gap: 3rem;
 }
 
 .genre-item {
@@ -302,7 +253,7 @@ text-transform: uppercase;
 }
 
 .genre-item i {
-  font-size: 3rem; /* Large Icon Size */
+  font-size: 3rem;
   margin-bottom: 0.5rem;
   color: #ffffff;
 }
@@ -313,231 +264,324 @@ text-transform: uppercase;
   color: #ffffff;
 }
 
-/* Image Side */
 .radio-image {
-  /* REPLACE THIS with the specific studio room image */
-  background-image: url('../assets/studio A/singerist.jpg'); 
+  background-image: url('../assets/studio A/Drum Recording.png'); 
   background-size: cover;
   background-position: center;
   min-height: 400px;
 }
 
 /* =========================================
-FOOTER STYLES
-========================================= */
+   SOUNDSCAPES CAROUSEL STYLES (SPLIT LAYOUT)
+   ========================================= */
+.soundscapes-section {
+    position: relative;
+    width: 100%;
+    background-color: #003766;
+}
+  
+/* The image is now a separate block on top */
+.slide-img {
+    height: 65vh; /* Fixed height for the visual part */
+    object-fit: cover;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+}
+  
+/* The Caption is now a stacked block below */
+.carousel-caption {
+    position: static; /* Crucial: Removes it from being an overlay */
+    width: 100%;
+    max-width: 100%;
+    right: auto;
+    left: auto;
+    bottom: auto;
+    padding: 6rem 2rem; /* Height of the blue box */
+    text-align: center;
+    background-color: #003766; /* Solid Brand Blue Background */
+}
+  
+.soundscape-title {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    text-shadow: none; /* Clean text for solid background */
+}
+  
+.soundscape-desc {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #e0e0e0;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   CAROUSEL NAVIGATION FIXES (Split Layout)
+   ========================================= */
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 100 !important;
+    opacity: 1 !important;
+    width: 10% !important;
+    /* IMPORTANT: Restrict arrow height to the IMAGE only */
+    height: 65vh; /* Matches .slide-img height */
+    top: 0;
+}
+
+/* Custom Arrow Container */
+.custom-arrow {
+    background-color: #c8761d;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+.custom-arrow i {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.carousel-control-prev:hover .custom-arrow,
+.carousel-control-next:hover .custom-arrow {
+    background-color: #f29f32;
+    transform: scale(1.15);
+}
+
+/* Indicators (Dots) - Positioned on the Image bottom */
+.carousel-indicators {
+    bottom: auto; /* Reset default */
+    top: 60vh; /* Position just above the text cut-off */
+    margin-bottom: 1rem;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #c8761d; /* Orange dots */
+    border: 2px solid white;
+    opacity: 0.7;
+    margin: 0 6px;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    transform: scale(1.2);
+    background-color: #ffffff;
+    border-color: #c8761d;
+}
+
+/* =========================================
+   STUDIO FEATURES (Piano & Orchestra)
+   ========================================= */
+.studio-features-grid {
+  width: 100%;
+}
+
+.feature-block {
+  display: grid;
+  min-height: 60vh; /* Good height for impact */
+}
+
+/* Grid Definitions for Desktop */
+.feature-block.light {
+  grid-template-columns: 1fr 2fr; /* Image (40%) | Text (60%) */
+  background-color: #D4D4E4; /* Light Brand Grey/Blue */
+}
+
+.feature-block.dark {
+  grid-template-columns: 2fr 1fr; /* Text (60%) | Image (40%) */
+  background-color: #003766; /* Dark Brand Blue */
+}
+
+/* Image Styling */
+.feature-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  min-height: 400px; /* Safety height */
+}
+
+/* Content Styling */
+.feature-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 10rem; /* Spacious Padding */
+}
+
+/* Text Alignment based on layout */
+.feature-block.light .feature-content {
+  text-align: right; /* Text on right aligns right (optional, but looks clean) */
+}
+
+.feature-block.dark .feature-content {
+  text-align: left;
+}
+
+/* Titles & Colors */
+.feature-title {
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.text-blue { color: #003766; }
+.text-orange { color: #c8761d; }
+.text-white { color: #ffffff; }
+
+.feature-desc {
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 700px;
+  color: #003766;
+}
+
+/* Align the paragraph to match the text-align of container */
+.feature-block.light .feature-desc {
+  margin-left: auto; /* Pushes text to right if container is flex */
+}
+
+/* =========================================
+   STUDIO GEAR ACCORDION (Blue/Purple Gradient)
+   ========================================= */
+
+.studio-gear-section {
+  /* The Gradient Background you requested */
+  background: linear-gradient(135deg, #003766 0%, #20012C 100%);
+  padding: 6rem 0;
+  position: relative;
+}
+#equipment-header {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.custom-accordion {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 0; /* Sharp edges for clean look */
+}
+
+/* --- Accordion Item Wrapper --- */
+.custom-accordion .accordion-item {
+  background-color: transparent; /* See-through to the gradient */
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle divider */
+}
+
+/* --- The Clickable Header Button --- */
+.custom-accordion .accordion-button {
+  background-color: transparent; /* No background color */
+  color: #ffffff; /* White text when closed */
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding: 1.5rem 0; /* Spacing */
+  box-shadow: none; /* Remove blue glow */
+  transition: all 0.3s ease;
+}
+
+/* --- Active/Open State --- */
+.custom-accordion .accordion-button:not(.collapsed) {
+  color: #f29f32; /* YELLOW/ORANGE text when open */
+  background-color: transparent;
+  box-shadow: none;
+  padding-left: 1rem; /* Slight indent animation */
+}
+
+/* --- The Arrow Icon Customization --- */
+.custom-accordion .accordion-button::after {
+  /* Default white arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  transform: scale(1.2);
+}
+
+.custom-accordion .accordion-button:not(.collapsed)::after {
+  /* Yellow/Orange arrow when open */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23f29f32'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* --- The Dropdown Content Body --- */
+.custom-accordion .accordion-body {
+  background-color: rgba(255, 255, 255, 0.05); /* Very slight glass effect */
+  color: #e0e0e0; /* Off-white text for readability */
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  padding: 2rem 1rem;
+}
+
+.gear-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gear-list li {
+  margin-bottom: 0.8rem;
+  border-left: 2px solid #c8761d; /* Orange accent line */
+  padding-left: 1rem;
+}
+
+.gear-list strong {
+  color: #ffffff;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
 .footer-custom {
-background: linear-gradient(90deg, #011b41 0%, #130029 100%);
-color: #ffffff;
-font-family: 'Urbanist', sans-serif;
+  background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+  color: #ffffff;
+  font-family: 'Urbanist', sans-serif;
 }
 .footer-link {
-color: #ffffff;
-text-decoration: none;
-font-weight: 300;
-white-space: nowrap;
-transition: color 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 300;
+  white-space: nowrap;
+  transition: color 0.3s ease;
 }
 .footer-link:hover { color: #8f8e8e; }
 .footer-icon {
-color: #ffffff;
-font-size: 1.1rem;
-transition: color 0.3s ease;
+  color: #ffffff;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 .footer-icon:hover { color: #8f8e8e; }
-
-
-/* =========================================
-RESPONSIVE MEDIA QUERIES
-========================================= */
-
-/*--navbar --*/
-@media (max-width: 1050px) {
-.desktop-navbar {
-display: none !important;
-}
-.navbar-brand img {
-height: 6rem !important;  
-}
-}
-.mobile-navbar {
-display: none;
-}
-
-/*borgir*/
-@media (max-width: 1050px) {
-.desktop-navbar { display: none !important; }
-.mobile-navbar {
-display: flex !important;
-justify-content: space-between;
-align-items: center;
-padding: 1rem 2rem;
-flex-wrap: wrap !important; 
-}
-#mobileNav {
-width: 100%;
-}
-#mobileNav .navbar-nav {
-flex-direction: row !important;
-justify-content: center !important;
-gap: 1.5rem;
-padding-top: 1rem;
-}
-.mobile-navbar .nav-link { font-size: 1.35rem; }
-}
-
-@media (max-width: 500px) {
-#mobileNav .navbar-nav {
-flex-direction: column !important;
-align-items: center !important; 
-width: 100%;
-padding-right: 1rem;
-padding-top: 1rem;
-}
-#mobileNav .nav-link {
-font-size: 1.25rem;
-text-align: right !important; 
-display: block;
-width: 100%;
-}
-}
-
-/* =========================================
-MOBILE RESPONSIVENESS (Single Line Fix)
-========================================= */
-
-@media (max-width: 1050px) {
-/* 1. Adjust the Hero Container */
-.studio-a-hero {
-height: 70vh; /* Slightly shorter on mobile to fit screen better */
-}
-
-/* 2. Resize the Content Title */
-.hero-title {
-font-size: 3rem; /* Matches your standard mobile header size */
-}
-
-.studio-a-text {
-
-margin-top: -20vh; /* Nudge up slightly to leave room for the big text */
-}
-
-.hero-desc {
-font-size: 1rem;
-padding: 0 1rem;
-}
-
-/* 3. THE BIG TEXT FIX (Single Line) */
-.studio-signature {
-/* Push it to the very bottom */
-bottom: 0; 
-
-/* Ensure it stays on one line */
-white-space: nowrap; 
-
-/* Center alignment */
-width: 100%;
-text-align: center;
-}
-
-/* Target both "STUDIO" and "A" spans */
-.text-studio, .text-a {
-/* 13vw means "13% of the screen width". 
-    This allows the long word "STUDIO" to fit on one line. */
-font-size: 22vw; 
-
-/* Ensure they sit inline */
-display: inline; 
-
-/* Tighten the letter spacing slightly for mobile */
-letter-spacing: -1px;
-}
-}
-
-/* =========================================
-   MOBILE RESPONSIVENESS (Bringing Studio)
-   ========================================= */
-@media (max-width: 992px) {
-  .bringing-studio-section {
-    grid-template-columns: 1fr; /* Stack vertically */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bringing-image {
-    order: 1; /* Image on Top */
-    height: 350px;
-    width: 100%;
-  }
-
-  .bringing-content {
-    order: 2; /* Text on Bottom */
-    padding: 4rem 2rem; 
-    text-align: center; /* Center text on mobile */
-  }
-
-  .bringing-content h2 {
-    font-size: 3rem; /* Scale down title */
-  }
-  
-  .bringing-content p {
-    font-size: 1rem;
-    margin: 0 auto; 
-  }
-}
-
-/* =========================================
-   MOBILE RESPONSIVENESS (Radio Ready)
-   ========================================= */
-@media (max-width: 992px) {
-  .radio-ready-section {
-    grid-template-columns: 1fr; /* Stack vertically */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .radio-image {
-    order: 1; /* Image on Top */
-    height: 350px;
-    width: 100%;
-  }
-
-  .radio-content {
-    order: 2; /* Text on Bottom */
-    padding: 4rem 2rem; 
-    text-align: center; /* Center everything on mobile */
-  }
-
-  .radio-content h2 {
-    font-size: 3rem; 
-  }
-  
-  .radio-content p {
-    font-size: 1rem;
-    margin: 0 auto 3rem auto; 
-  }
-
-  /* Adjust icons for mobile */
-  .genre-grid {
-    justify-content: center; /* Center the row of icons */
-    gap: 2rem;
-    flex-wrap: wrap; /* Allow wrapping on very small screens */
-  }
-  
-  .genre-item i {
-    font-size: 2.5rem;
-  }
-}
 
 /* =========================================
    SERVICE SUB-NAVBAR
    ========================================= */
-
 .service-sub-nav {
-  background-color: #002a4d; /* Slightly darker than brand blue for contrast */
+  background-color: #002a4d;
   padding: 1rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
-  z-index: 9000; /* Sits just below the main navbar z-index */
+  z-index: 9000;
 }
 
 .sub-nav-list {
@@ -545,35 +589,33 @@ letter-spacing: -1px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem; /* Space between items */
+  gap: 2rem;
   margin: 0;
   padding: 0;
 }
 
 .sub-nav-link {
-  color: #ffffff; /* White text by default */
+  color: #ffffff;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
   transition: all 0.3s ease;
-  opacity: 0.7; /* Slightly faded when not active */
+  opacity: 0.7;
 }
 
 .sub-nav-link:hover {
-  color: #c8761d; /* Brand Orange on hover */
+  color: #c8761d;
   opacity: 1;
 }
 
-/* Divider Styling */
 .sub-nav-divider {
   color: #c8761d;
   font-weight: 300;
   opacity: 0.5;
 }
 
-/* ACTIVE STATE (Highlight the current page) */
 .sub-nav-link.active {
   color: #c8761d;
   opacity: 1;
@@ -581,24 +623,172 @@ letter-spacing: -1px;
   padding-bottom: 3px;
 }
 
+
+
 /* =========================================
-   SUB-NAV MOBILE RESPONSIVENESS
+   RESPONSIVE MEDIA QUERIES
    ========================================= */
-@media (max-width: 768px) {
-  .service-sub-nav {
-    padding: 0.8rem 0;
+
+/* Navbar & Mobile Logic */
+@media (max-width: 1050px) {
+  .desktop-navbar { display: none !important; }
+  .navbar-brand img { height: 6rem !important; }
+  .mobile-navbar {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    flex-wrap: wrap !important; 
+  }
+  #mobileNav { width: 100%; }
+  #mobileNav .navbar-nav {
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+  .mobile-navbar .nav-link { font-size: 1.35rem; }
+}
+
+@media (max-width: 500px) {
+  #mobileNav .navbar-nav {
+    flex-direction: column !important;
+    align-items: center !important; 
+    width: 100%;
+    padding-right: 1rem;
+    padding-top: 1rem;
+  }
+  #mobileNav .nav-link {
+    font-size: 1.25rem;
+    text-align: right !important; 
+    display: block;
+    width: 100%;
+  }
+}
+
+/* Studio A Hero & Text */
+@media (max-width: 1050px) {
+  .studio-a-hero { height: 70vh; }
+  .hero-title { font-size: 3rem; }
+  .studio-a-text { margin-top: -20vh; }
+  .hero-desc { font-size: 1rem; padding: 0 1rem; }
+
+  /* Big Text Fix */
+  .studio-signature {
+    bottom: 0; 
+    white-space: nowrap; 
+    width: 100%;
+    text-align: center;
+  }
+  .text-studio {
+    font-size: 22vw; 
+    display: inline; 
+    letter-spacing: -1px;
+  }
+}
+
+/* Radio Ready Section Mobile */
+@media (max-width: 992px) {
+  .radio-ready-section {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+  .radio-image {
+    order: 1;
+    height: 350px;
+    width: 100%;
+  }
+  .radio-content {
+    order: 2;
+    padding: 4rem 2rem; 
+    text-align: center;
+  }
+  .radio-content h2 { font-size: 3rem; }
+  .radio-content p {
+    font-size: 1rem;
+    margin: 0 auto 3rem auto; 
+  }
+  .genre-grid {
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .genre-item i { font-size: 2.5rem; }
+}
+
+/* Soundscapes Carousel Mobile */
+@media (max-width: 992px) {
+    /* Adjust Image Height */
+    .slide-img {
+      height: 50vh; 
+    }
+    /* Adjust click area for arrows */
+    .carousel-control-prev,
+    .carousel-control-next {
+        height: 50vh;
+    }
+    /* Move dots up */
+    .carousel-indicators {
+        top: 45vh;
+    }
+    
+    /* Adjust Caption Padding */
+    .carousel-caption {
+        padding: 4rem 1.5rem;
+    }
+
+    .soundscape-title {
+      font-size: 3rem; 
+    }
+}
+
+/* NEW: Studio Features Mobile */
+@media (max-width: 992px) {
+  .feature-block,
+  .feature-block.light,
+  .feature-block.dark {
+    /* Stack vertically */
+    grid-template-columns: 1fr; 
+    display: flex;
+    flex-direction: column;
   }
 
-  .sub-nav-list {
-    gap: 1rem; /* Tighter spacing on phones */
+  /* Ensure Image is always on TOP for mobile flow */
+  .feature-image {
+    order: 1;
+    height: 350px;
   }
 
-  .sub-nav-link {
-    font-size: 0.9rem; /* Smaller text to fit on one line */
-    letter-spacing: 1px;
+  .feature-content {
+    order: 2;
+    padding: 4rem 2rem; /* Standard mobile padding */
+    text-align: center !important; /* Force center on mobile */
   }
   
-  .sub-nav-divider {
-    font-size: 0.9rem;
+  .feature-title {
+    font-size: 3rem;
   }
+  
+  .feature-desc {
+    font-size: 1rem;
+    margin: 0 auto; /* Center the text block */
+  }
+}
+  
+@media (max-width: 768px) {
+    /* Resize Arrows */
+    .custom-arrow {
+        width: 3rem;
+        height: 3rem;
+        background-color: rgba(200, 118, 29, 0.9);
+    }
+    .custom-arrow i {
+        font-size: 1.2rem;
+    }
+
+    /* Sub Nav */
+    .service-sub-nav { padding: 0.8rem 0; }
+    .sub-nav-list { gap: 1rem; }
+    .sub-nav-link { font-size: 0.9rem; letter-spacing: 1px; }
 }
