@@ -1,6 +1,15 @@
 /* =========================================
    AUTHENTICATION PAGES STYLES
    ========================================= */
+
+/* --- ADD THIS RESET TO FIX WIDTH/CENTERING ISSUES --- */
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
 body {
     font-family: 'Urbanist', sans-serif;
     background-color: #003766;
@@ -115,6 +124,7 @@ body {
     font-size: 1.1rem;
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center; /* Ensure text is centered */
     cursor: pointer;
     border: none;
     transition: transform 0.2s ease, filter 0.2s ease;
