@@ -332,7 +332,7 @@ filter: brightness(1.2);
 /*--Testimonial Section */
 .testimonials {
 background: linear-gradient(rgba(0, 30, 60, 0.9), rgba(0, 30, 60, 0.9)),
-url('assets/Index/Testimonials/background.jpg') center/cover no-repeat;
+url('assets/Index/Testimonials/outboard.png') center/cover no-repeat;
 }
 
 .testimonials h2 {
