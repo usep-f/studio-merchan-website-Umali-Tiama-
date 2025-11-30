@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://studio-merchan.web.app/</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/aboutus.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/contact.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/booking.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/team.html</loc>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://studio-merchan.web.app/dashboards/login.html</loc>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/dashboards/signup.html</loc>
+    <priority>0.60</priority>
+  </url>
+
+  <url>
+    <loc>https://studio-merchan.web.app/services%20subfolder/recordingservice.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/services%20subfolder/mixingservice.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/services%20subfolder/masteringservice.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/services%20subfolder/liveservice.html</loc>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://studio-merchan.web.app/studios%20subfolder/studioA.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/studios%20subfolder/studioB.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://studio-merchan.web.app/studios%20subfolder/studioC.html</loc>
+    <priority>0.70</priority>
+  </url>
+</urlset>
