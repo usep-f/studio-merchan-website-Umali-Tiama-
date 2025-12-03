@@ -72,15 +72,19 @@ onAuthStateChanged(auth, async (user) => {
         currentUser = user;
         console.log("Logged in:", user.uid);
         
-        // 1. Wait for Profile (Vital for Quick Book)
+        // 1. Reveal Dashboard (Stop the loading state)
+        document.body.classList.remove('loading-state');
+
+        // 2. Wait for Profile (Vital for Quick Book)
         await loadUserProfile(user.uid);
         
-        // 2. Load Tables
+        // 3. Load Tables
         loadRemoteProjects(user.uid);
         loadStudioBookings(user.uid);
         loadLiveBookings(user.uid);
     } else {
-        window.location.href = "login.html";
+        // Use REPLACE to prevent "Back Button" loop
+        window.location.replace("login.html");
     }
 });
 

@@ -19,8 +19,30 @@
     />
 
     <link rel="stylesheet" href="dashboard.css" />
+    <style>
+  /* Prevents the dashboard flash before redirect */
+  body.loading-state .dashboard-nav,
+  body.loading-state .dashboard-tabs,
+  body.loading-state .dashboard-content,
+  body.loading-state .fab-upload {
+    display: none !important;
+  }
+
+  /* Optional: Centered loader during auth check */
+  body.loading-state::before {
+    content: "Loading...";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 700;
+    color: #003766;
+    font-size: 1.5rem;
+  }
+</style>
   </head>
-  <body>
+  <body class="loading-state">
     <nav class="dashboard-nav">
       <a class="nav-brand" href="/index.html">
         <img src="../assets/LOGO.png" alt="Logo" />

@@ -122,7 +122,6 @@ function initLiveCalendar() {
         initialView: 'dayGridMonth',
         validRange: { start: new Date().toISOString().split('T')[0] },
         headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
-        eventDisplay: 'block',
         dateClick: function(info) { handleDateClick(info.dateStr, 'live'); },
         events: []
     });
@@ -281,16 +280,22 @@ async function fetchLiveBookings() {
     if (error) { console.error('Live Fetch Error:', error); return; }
 
     const events = data.map(booking => {
+        const startDateStr = booking.start_time.split('T')[0];
+        const endDateStr = booking.end_time.split('T')[0];
+
         liveBookedRanges.push({
             start: new Date(booking.start_time),
             end: new Date(booking.end_time)
         });
         
         return {
-            start: booking.start_time,
-            end: booking.end_time,
-            title: 'Booked: ' + booking.event_type,
-            color: '#c8761d'
+            start: startDateStr,
+            end: addDays(endDateStr, 1),
+            display: 'background',
+            color: '#410000ff', 
+            
+            // ADD THIS LINE:
+            title: 'Booked' 
         };
     });
     liveCalendar.addEventSource(events);
