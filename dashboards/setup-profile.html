@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="style auth.css" />
   </head>
   <body>
+    <!-- 1. Authentication Container (Split Layout) -->
     <div class="auth-container">
+      <!-- 1a. Left Panel (Hero/Branding) -->
       <div class="auth-left">
         <h1 class="auth-title">ONE LAST<br />STEP</h1>
         <p class="auth-text">
@@ -20,12 +22,15 @@
         </p>
       </div>
 
+      <!-- 1b. Right Panel (Profile Setup Form) -->
       <div class="auth-right">
+        <!-- Form Header -->
         <div class="form-header">
           <div class="form-title">COMPLETE</div>
           <div class="form-subtitle">YOUR PROFILE</div>
         </div>
 
+        <!-- Profile Form -->
         <form id="profileForm">
           <div class="form-group">
             <label class="form-label">Full Name</label>
@@ -91,6 +96,7 @@
       </div>
     </div>
 
+    <!-- 2. Scripts -->
     <script type="module" src="profile.js"></script>
   </body>
 </html>

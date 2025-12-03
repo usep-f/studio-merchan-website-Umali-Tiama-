@@ -1,11 +1,8 @@
-/* =========================================
-   1. IMPORTS & CONFIG
-   ========================================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// --- FIREBASE CONFIG ---
-// (Same config as your admin.js/dashboard.js)
+/* 1. Firebase Configuration and Initialization
+   Initializes the Firebase application and Firestore service for database interaction. */
 const firebaseConfig = {
     apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo",
     authDomain: "studio-merchan.firebaseapp.com",
@@ -16,13 +13,12 @@ const firebaseConfig = {
     measurementId: "G-QMC8J9PP9D"
 };
 
-// Initialize
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* =========================================
-   2. FORM SUBMISSION LOGIC
-   ========================================= */
+/* 2. Contact Form Submission Logic
+   Handles user inquiries, saves the message to the 'contact_messages'
+   Firestore collection, and provides UI feedback. */
 const contactForm = document.getElementById('contact-form');
 
 if (contactForm) {
@@ -41,8 +37,8 @@ if (contactForm) {
             email: document.getElementById('contact-email').value,
             subject: document.getElementById('contact-subject').value,
             message: document.getElementById('contact-message').value,
-            timestamp: serverTimestamp(), // Server-side time
-            status: 'unread' // Useful for Admin Panel later
+            timestamp: serverTimestamp(), 
+            status: 'unread' 
         };
 
         try {
@@ -53,14 +49,14 @@ if (contactForm) {
             alert("Message sent successfully! We'll be in touch.");
             contactForm.reset();
             btn.innerHTML = 'MESSAGE SENT <i class="bi bi-check-lg"></i>';
-            btn.classList.remove('btn-primary'); // Optional style change
-            btn.style.backgroundColor = '#198754'; // Green color
+            btn.classList.remove('btn-primary'); 
+            btn.style.backgroundColor = '#198754'; 
 
             // Reset button after 3 seconds
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                btn.style.backgroundColor = '#c9761c'; // Back to Orange
+                btn.style.backgroundColor = '#c9761c'; 
             }, 3000);
 
         } catch (error) {
@@ -72,9 +68,9 @@ if (contactForm) {
     });
 }
 
-/* =========================================
-   3. REVIEW SUBMISSION LOGIC
-   ========================================= */
+/* 3. Review Submission Logic
+   Handles client reviews for services, saves the data to the 'reviews'
+   Firestore collection, and requires manual admin approval ('pending' status). */
 const reviewForm = document.getElementById('review-form');
 
 if (reviewForm) {
@@ -104,7 +100,7 @@ if (reviewForm) {
             role: document.getElementById('rev-role').value || 'Client',
             message: document.getElementById('rev-msg').value,
             timestamp: serverTimestamp(),
-            status: 'pending' // pending approval
+            status: 'pending' // pending admin approval
         };
 
         try {

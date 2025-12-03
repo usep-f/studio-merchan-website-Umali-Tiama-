@@ -1,3 +1,4 @@
+/* 1. Global Reset & Body */
 html {
 box-sizing: border-box;
 }
@@ -14,7 +15,7 @@ margin: 0;
 padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -23,53 +24,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-    1. minmax(0, 1fr) = Flexible left space
-    2. auto = Logo size
-    3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important; 
+justify-self: start; 
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important; 
+justify-self: end; 
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center; 
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -81,7 +70,6 @@ display: block;
 max-width: 100%;
 }
 
-/* --- GENERAL LINK STYLES --- */
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -92,7 +80,7 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
 }
 
 .navbar-nav .nav-link:hover {
@@ -103,25 +91,22 @@ color: #2979c4 !important;
 position: relative; 
 }
 
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0; 
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px; 
+background-color: #c8761d; 
+border-radius: 2px; 
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500; 
 }
 
-/* --- UTILITIES --- */
 .desktop-navbar {
 display: block;
 }
@@ -134,13 +119,12 @@ border: none;
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Services Section Styling */
+/* 3. Services Grid (Record, Mix, Master) */
 .services {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 min-height: 80vh;
 text-align: center;
-
 }
 
 .service-card {
@@ -211,6 +195,7 @@ transform: translateY(-5px);
 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* 4. Live Sound Feature */
 .live-sound {
 display: grid;
 grid-template-columns: 2fr 1fr;
@@ -268,9 +253,9 @@ background-size: cover;
 background-position: center;
 }
 
-/* Online Services Section */
+/* 5. Online Services Section */
 .online-services {
-background-color: #003766;        /* Deep studio blue */
+background-color: #003766;        
 padding: 5rem 2rem;
 color: white;
 text-align: center;
@@ -284,7 +269,7 @@ color: white;
 }
 
 .online-services-header h1 span {
-color: #C9761C;                   /* Your orange accent */
+color: #C9761C;                   
 }
 
 .online-services-header p {
@@ -295,7 +280,6 @@ font-size: 1.2rem;
 color: #ffffff;
 }
 
-/* Grid layout */
 .online-services-grid {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
@@ -308,21 +292,18 @@ text-align: center;
 padding: 0.2rem 1rem;
 }
 
-/* Icons */
 .online-service-card .icon {
 font-size: 8rem;
 margin-bottom: 1.2rem;
 color: white;
 }
 
-/* Titles */
 .online-service-card h3 {
 font-size: 1.5rem;
 font-weight: 600;
 margin-bottom: 1rem;
 }
 
-/* Paragraphs */
 .online-service-card p {
 color: #d2d7de;
 font-size: 1rem;
@@ -330,22 +311,21 @@ max-width: 200px;
 margin: 0 auto;
 }
 
+/* 6. Remote/Learn Section (Split Layout) */
 .learn-with-us {
 display: grid;
 grid-template-columns: 1fr 2fr;
 min-height: 50vh;
-background-color: #d5d8e4; /* same light gray-blue tone */
+background-color: #d5d8e4; 
 font-family: 'Urbanist', sans-serif;
 }
 
-/* Left-side image */
 .learn-image {
-background-image: url('assets/services/teach.jpg'); /* replace with your image */
+background-image: url('assets/services/teach.jpg'); 
 background-size: cover;
 background-position: center;
 }
 
-/* Right content block */
 .learn-content {
 padding: 4rem 10rem;
 display: flex;
@@ -369,14 +349,13 @@ color: #C9761C;
 
 .learn-content p {
 max-width: 740px;
-margin-left: auto;  /* ✅ right-align text block */
+margin-left: auto; 
 font-size: 1.2rem;
 font-weight: 300;
 color: #003766;
 margin-bottom: 1.2rem;
 }
 
-/* Button */
 .learn-btn {
 display: inline-block;   
 width: auto; 
@@ -396,14 +375,13 @@ align-self: flex-end;
 background-color: #1d5c92;
 }
 
-/* Spacing to center logo properly */
+/* 7. Footer Styles */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
 font-family: 'Urbanist', sans-serif;
 }
 
-/* Footer Styles */
 .footer-link {
 color: #ffffff;
 text-decoration: none;
@@ -426,20 +404,19 @@ transition: color 0.3s ease;
 color: #8f8e8e;
 }
 
-/* Responsive Styles */
+/* 8. Responsive Media Queries */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -477,114 +454,95 @@ width: 100%;
 }
 }
 
-/* --- 2. MAIN SERVICES GRID (Record, Mix, Master) --- */
 @media (max-width: 768px) {
+/* Services Grid Stack */
 .services {
-  /* Switch from 3 columns to 1 column */
-  grid-template-columns: 1fr; 
-  height: auto; /* Remove fixed height */
+grid-template-columns: 1fr; 
+height: auto; 
 }
 
 .service-card {
-  /* Fixed height for mobile cards */
-  height: 500px; 
+height: 500px; 
 }
 
-/* PADDING ADJUSTMENT HERE */
 .service-content {
-  /* Top: 8rem (moved up) | Left/Right: 2rem | Bottom: 4rem (added space) */
-  padding: 8rem 2rem 4rem !important; 
+padding: 8rem 2rem 4rem !important; 
 }
 
 .service-content h2 {
-  font-size: 3rem; /* Slightly smaller title */
-}
+font-size: 3rem; 
 }
 
-
-/* --- 3. LIVE SOUND SECTION (Split Layout) --- */
-@media (max-width: 768px) {
+/* Live Sound Stack */
 .live-sound {
-  /* Switch from Side-by-Side to Vertical Stack */
-  grid-template-columns: 1fr; 
-  height: auto;
+grid-template-columns: 1fr; 
+height: auto;
 }
 
 .live-sound-content {
-  /* Reduce massive padding */
-  padding: 4rem 2rem; 
-  text-align: center; /* Center align text for mobile */
-  order: 2; /* Optional: Put text BELOW image if you prefer, or keep as is */
+padding: 4rem 2rem; 
+text-align: center; 
+order: 2; 
 }
 
 .live-sound-content h1 {
-  font-size: 2.5rem; /* Down from 4rem */
+font-size: 2.5rem; 
 }
 
-/* The Image Block */
 .live-sound-image {
-  height: 300px; /* Give it a fixed height since it's now a stacked block */
-  width: 100%;
+height: 300px; 
+width: 100%;
 }
 
 .live-btn {
-  align-self: center; /* Center the button */
-  font-size: 1.5rem;
-  margin-top: 2rem;
-}
+align-self: center; 
+font-size: 1.5rem;
+margin-top: 2rem;
 }
 
-
-/* --- 4. ONLINE SERVICES (Icon Grid) --- */
-@media (max-width: 768px) {
+/* Online Services Grid */
 .online-services-header h1 {
-  font-size: 2.5rem;
+font-size: 2.5rem;
 }
 
 .online-services-grid {
-  /* Switch from 3 columns to 1 column */
-  grid-template-columns: 1fr; 
-  gap: 3rem; /* Add space between items */
+grid-template-columns: 1fr; 
+gap: 3rem; 
 }
 
 .online-service-card p {
-  max-width: 100%; /* Let text fill the screen width */
-  font-size: 1.1rem;
-}
+max-width: 100%; 
+font-size: 1.1rem;
 }
 
-
-/* --- 5. LEARN WITH US (Split Layout) --- */
-@media (max-width: 768px) {
+/* Learn With Us Stack */
 .learn-with-us {
-  /* Switch from Side-by-Side to Vertical Stack */
-  grid-template-columns: 1fr; 
+grid-template-columns: 1fr; 
 }
 
-/* The Image Block */
 .learn-image {
-  height: 300px; /* Give it height on mobile */
-  order: 1;      /* Put image on TOP */
+height: 300px; 
+order: 1;      
 }
 
 .learn-content {
-  order: 2;      /* Put text BELOW image */
-  padding: 4rem 2rem;
-  text-align: center; /* Center text */
+order: 2;      
+padding: 4rem 2rem;
+text-align: center; 
 }
 
 .learn-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+font-size: 2.5rem;
+margin-bottom: 1rem;
 }
 
 .learn-content p {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center; /* Override right-align */
+margin-left: auto;
+margin-right: auto;
+text-align: center; 
 }
 
 .learn-btn {
-  align-self: center; /* Center the button */
+align-self: center; 
 }
 }

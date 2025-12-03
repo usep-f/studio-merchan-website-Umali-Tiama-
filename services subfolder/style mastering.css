@@ -1,21 +1,19 @@
-/* =========================================
-   GLOBAL RESETS & FONTS
-   ========================================= */
+/* 1. Global Resets & Body */
 html {
-  box-sizing: border-box;
+box-sizing: border-box;
 }
 *, *::before, *::after {
-  box-sizing: inherit;
+box-sizing: inherit;
 }
 body {
-  font-family: 'Urbanist', sans-serif;
-  line-height: 1.5;
-  background-color: #D4D4E4; /* Default light background */
-  margin: 0;
-  padding: 0;
+font-family: 'Urbanist', sans-serif;
+line-height: 1.5;
+background-color: #D4D4E4; 
+margin: 0;
+padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -24,53 +22,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-    1. minmax(0, 1fr) = Flexible left space
-    2. auto = Logo size
-    3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important;
+justify-self: start;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important;
+justify-self: end;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center;
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -81,7 +67,7 @@ height: 6.25rem;
 display: block;
 max-width: 100%;
 }
-/* --- GENERAL LINK STYLES --- */
+
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -92,415 +78,400 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
+position: relative; 
 }
 
 .navbar-nav .nav-link:hover {
 color: #2979c4 !important;
 }
 
-.navbar-nav .nav-link {
-position: relative; 
-}
-
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0;
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px;
+background-color: #c8761d;
+border-radius: 2px;
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500;
 }
 
-/* --- UTILITIES --- */
-.desktop-navbar {
-display: block;
-}
-
-.navbar-toggler {
-border: none;
-}
-
+.desktop-navbar { display: block; }
+.navbar-toggler { border: none; }
 .navbar-toggler-icon {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* =========================================
-   HERO SECTION (Matches Figma Design)
-   ========================================= */
+/* 3. Service Sub-Navbar */
+.service-sub-nav {
+background-color: #002a4d; 
+padding: 1rem 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+position: relative;
+z-index: 9000; 
+}
+
+.sub-nav-list {
+list-style: none;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2rem; 
+margin: 0;
+padding: 0;
+}
+
+.sub-nav-link {
+color: #ffffff; 
+text-decoration: none;
+font-size: 1.1rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 2px;
+transition: all 0.3s ease;
+opacity: 0.7; 
+}
+
+.sub-nav-link:hover {
+color: #c8761d; 
+opacity: 1;
+}
+
+.sub-nav-divider {
+color: #c8761d;
+font-weight: 300;
+opacity: 0.5;
+}
+
+.sub-nav-link.active {
+color: #c8761d;
+opacity: 1;
+border-bottom: 2px solid #c8761d;
+padding-bottom: 3px;
+}
+
+/* 4. Mastering Hero Section */
 .mastering-hero {
-  position: relative;
-  min-height: 80vh;
-  /* Ensure you have this image or replace with the correct filename */
-  background-image: url('../assets/services/mastering subpage/mastering.jpeg'); 
-  background-size: cover;
-  background-position: center;
-  
-  /* Flexbox alignment for text */
-  display: flex;
-  align-items: center;
-  
-  /* Desktop Padding: Consistent with Mixing/Recording pages */
-  padding: 4rem 10rem;
-  
-  font-family: 'Urbanist', sans-serif;
+position: relative;
+min-height: 80vh;
+background-image: url('../assets/services/mastering subpage/mastering.jpeg'); 
+background-size: cover;
+background-position: center;
+display: flex;
+align-items: center;
+padding: 4rem 10rem;
+font-family: 'Urbanist', sans-serif;
 }
 
-/* Dark Blue Overlay */
 .mastering-hero-overlay {
-  position: absolute;
-  inset: 0;
-  /* Dark blue tint to match the design */
-  background: linear-gradient(rgba(0, 55, 102, 0.85), rgba(7, 0, 42, 0.85));
-  backdrop-filter: blur(1px);
-  z-index: 1;
+position: absolute;
+inset: 0;
+background: linear-gradient(rgba(0, 55, 102, 0.85), rgba(7, 0, 42, 0.85));
+backdrop-filter: blur(1px);
+z-index: 1;
 }
 
-/* Text Container */
 .mastering-hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
+position: relative;
+z-index: 2;
+max-width: 800px;
 }
 
-/* Title Style (Orange & Extra Bold) */
 .mastering-hero-content h1 {
-  font-size: 4rem;
-  font-weight: 900; /* Extra Bold as per parameters */
-  margin-bottom: 1.2rem;
-  color: #c8761d;   /* Brand Orange */
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  line-height: 1.1;
+font-size: 4rem;
+font-weight: 900; 
+margin-bottom: 1.2rem;
+color: #c8761d; 
+text-transform: uppercase;
+letter-spacing: 1px;
+line-height: 1.1;
 }
 
-/* Body Text Style (Orange tint as per image) */
 .mastering-hero-content p {
-  font-size: 1.2rem;
-  font-weight: 300;
-  line-height: 1.6;
-  /* In your Figma image, the text is also orange/gold */
-  color: #c8761d; 
-  margin-bottom: 2.5rem;
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.6;
+color: #c8761d; 
+margin-bottom: 2.5rem;
 }
 
-/* Button Style (Pill Shape) */
 .mastering-btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background-color: #c8761d; /* Flat Orange */
-  color: white;
-  text-decoration: none;
-  border-radius: 30px; /* Pill shape */
-  font-weight: 500;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
+display: inline-block;
+padding: 1rem 2.5rem;
+background-color: #c8761d; 
+color: white;
+text-decoration: none;
+border-radius: 30px; 
+font-weight: 500;
+font-size: 1.2rem;
+transition: all 0.3s ease;
 }
 
 .mastering-btn:hover {
-  background-color: #f29f32; /* Lighter Accent on Hover */
-  transform: translateY(-3px);
-  color: white;
+background-color: #f29f32; 
+transform: translateY(-3px);
+color: white;
 }
 
-/* =========================================
-   STREAM READY SECTION
-   ========================================= */
-
+/* 5. Stream Ready Section */
 .stream-ready-section {
-  background-color: #ffffff; /* White background as per design */
-  padding: 6rem 2rem;
-  text-align: center;
-  color: #003766;
+background-color: #ffffff; 
+padding: 6rem 2rem;
+text-align: center;
+color: #003766;
 }
 
-/* Typography */
 .stream-title {
-  font-size: 4rem;
-  font-weight: 900; /* Extra Bold */
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
+font-size: 4rem;
+font-weight: 900; 
+line-height: 1.1;
+margin-bottom: 1.5rem;
+text-transform: uppercase;
 }
 
 .stream-title .accent-text {
-  color: #c8761d; /* Brand Orange */
+color: #c8761d; 
 }
 
 .stream-title .blue-text {
-  color: #003766; /* Brand Blue */
+color: #003766; 
 }
 
 .stream-description {
-  max-width: 800px;
-  margin: 0 auto 4rem auto;
-  font-size: 1.2rem;
-  font-weight: 300;
-  color: #003766;
-  line-height: 1.6;
+max-width: 800px;
+margin: 0 auto 4rem auto;
+font-size: 1.2rem;
+font-weight: 300;
+color: #003766;
+line-height: 1.6;
 }
 
-/* Platform Icons Grid */
 .platform-grid {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
+display: flex;
+justify-content: center;
+gap: 2rem;
+flex-wrap: wrap;
 }
 
-/* Circular Icon Base Style */
 .platform-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
+width: 80px;
+height: 80px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2.5rem;
+color: white;
+box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+transition: transform 0.3s ease;
 }
 
 .platform-icon:hover {
-  transform: translateY(-5px);
+transform: translateY(-5px);
 }
 
-/* Specific Brand Colors */
 .platform-icon.spotify {
-  background-color: #1DB954; /* Spotify Green */
+background-color: #1DB954; 
 }
 
 .platform-icon.soundcloud {
-  background-color: #FF5500; /* SoundCloud Orange */
+background-color: #FF5500; 
 }
 
 .platform-icon.youtube {
-  background-color: #FF0000; /* YouTube Red */
-  font-size: 3rem; /* Play button needs to be slightly larger */
+background-color: #FF0000; 
+font-size: 3rem; 
 }
 
 .platform-icon.radio {
-  background-color: #C15D5D; /* Muted Red/Brown for Radio */
+background-color: #C15D5D; 
 }
 
 .platform-icon.vinyl {
-  background: radial-gradient(circle at 30% 30%, #444, #000); /* Vinyl Black gradient */
-  color: #ddd;
+background: radial-gradient(circle at 30% 30%, #444, #000); 
+color: #ddd;
 }
 
-/* =========================================
-   DOLBY SURROUND SECTION
-   ========================================= */
-
+/* 6. Dolby Surround Section */
 .surround-section {
-  position: relative;
-  min-height: 90vh; /* Gives it substantial height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  padding: 6rem 10rem; 
-  background-color: #003766;
-  overflow: hidden;
-  background-image: url('../assets/services/mastering subpage/surround.png'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+position: relative;
+min-height: 90vh; 
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+color: white;
+padding: 6rem 10rem; 
+background-color: #003766;
+overflow: hidden;
+background-image: url('../assets/services/mastering subpage/surround.png'); 
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
 }
 
-/* The Gradient Background */
 .surround-bg-overlay {
-  position: absolute;
-  inset: 0;
-  /* Creates the Orange-to-Blue fade seen in the Figma design */
-  background: linear-gradient(135deg, #c8761d 0%, #003766 60%, #07002A 100%);
-  opacity: 0.92;
-  z-index: 1;
+position: absolute;
+inset: 0;
+background: linear-gradient(135deg, #c8761d 0%, #003766 60%, #07002A 100%);
+opacity: 0.92;
+z-index: 1;
 }
 
-/* Logo Styling */
 .dolby-feature-logo {
-  max-width: 700px;
-  height: auto;
-  /* This filter turns the black logo into a Light Silver/Grey to match the design */
-  filter: brightness(0) saturate(100%) invert(80%);
-  margin-bottom: 1rem;
+max-width: 700px;
+height: auto;
+filter: brightness(0) saturate(100%) invert(80%);
+margin-bottom: 1rem;
 }
 
-/* Typography */
 .surround-title {
-  font-size: 4rem;
-  font-weight: 900; /* Extra Bold */
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1.5rem;
-  line-height: 1;
+font-size: 4rem;
+font-weight: 900; 
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 1.5rem;
+line-height: 1;
 }
 
 .surround-description {
-  font-size: 1.2rem;
-  font-weight: 300;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
-  color: #e0e0e0; /* Slightly off-white for better readability */
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.6;
+max-width: 800px;
+margin: 0 auto;
+color: #e0e0e0; 
 }
 
-/* =========================================
-   MASTERS OF ANALOG SECTION
-   ========================================= */
-
+/* 7. Masters of Analog Section (Split Layout) */
 .analog-section {
-  display: grid;
-  grid-template-columns: 2fr 1fr; /* Split 50% Text, 50% Image */
-  min-height: 70vh; /* Substantial height for impact */
+display: grid;
+grid-template-columns: 2fr 1fr; 
+min-height: 70vh; 
 }
 
-/* Text Side (Dark Blue) */
 .analog-content {
-  background-color: #003766; /* Brand Dark Blue */
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  
-  /* Consistent Desktop Padding */
-  padding: 6rem 10rem; 
+background-color: #003766; 
+color: #ffffff;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 6rem 10rem; 
 }
 
 .analog-content h2 {
-  font-size: 4rem;
-  font-weight: 900; /* Extra Bold */
-  text-transform: uppercase;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  letter-spacing: 1px;
+font-size: 4rem;
+font-weight: 900; 
+text-transform: uppercase;
+line-height: 1.1;
+margin-bottom: 1.5rem;
+letter-spacing: 1px;
 }
 
 .analog-content p {
-  font-size: 1.2rem;
-  font-weight: 300;
-  line-height: 1.6;
-  max-width: 800px; /* Prevents text from stretching too wide */
-  color: #e0e0e0;
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.6;
+max-width: 800px; 
+color: #e0e0e0;
 }
 
-/* Image Side */
 .analog-image {
-  /* REPLACE THIS with your specific tape machine image file */
-  background-image: url('../assets/services/mastering subpage/tape.webp'); 
-  background-size: cover;
-  background-position: center;
-  min-height: 400px; /* Ensures image has height if content is empty */
+background-image: url('../assets/services/mastering subpage/tape.webp'); 
+background-size: cover;
+background-position: center;
+min-height: 400px; 
 }
 
-/* =========================================
-   REVIVING THE VINYL SECTION
-   ========================================= */
-
+/* 8. Reviving the Vinyl Section (Split Layout) */
 .vinyl-section {
-  display: grid;
-  grid-template-columns: 1fr 2fr; /* Split 50% Image, 50% Text */
-  min-height: 70vh;
-  background-color: #e0e0e0; /* Light Grey Background from design */
+display: grid;
+grid-template-columns: 1fr 2fr; 
+min-height: 70vh;
+background-color: #e0e0e0; 
 }
 
-/* Image Side */
 .vinyl-image {
-  /* REPLACE THIS with your specific vinyl machine image file */
-  background-image: url('../assets/services/mastering subpage/tapecutter.jpg'); 
-  background-size: cover;
-  background-position: center;
-  min-height: 400px;
+background-image: url('../assets/services/mastering subpage/tapecutter.jpg'); 
+background-size: cover;
+background-position: center;
+min-height: 400px;
 }
 
-/* Text Side */
 .vinyl-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* Standard Desktop Padding */
-  padding: 6rem 10rem; 
-  color: #003766; /* Dark Blue Text */
-  text-align: right; /* Right aligned as per design */
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 6rem 10rem; 
+color: #003766; 
+text-align: right; 
 }
 
 .vinyl-content h2 {
-  font-size: 4rem;
-  font-weight: 900; /* Extra Bold */
-  text-transform: uppercase;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  color: #003766;
+font-size: 4rem;
+font-weight: 900; 
+text-transform: uppercase;
+line-height: 1.1;
+margin-bottom: 1.5rem;
+color: #003766;
 }
 
 .vinyl-content h2 .accent-text {
-  color: #c8761d; /* Orange Accent */
+color: #c8761d; 
 }
 
 .vinyl-content p {
-  font-size: 1.2rem;
-  font-weight: 300;
-  line-height: 1.6;
-  color: #003766;
-  /* Push text to the right side to match alignment */
-  margin-left: auto; 
-  max-width: 800px;
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.6;
+color: #003766;
+margin-left: auto; 
+max-width: 800px;
 }
 
-/* =========================================
-   FOOTER STYLES
-   ========================================= */
+/* 9. Footer Styles */
 .footer-custom {
-  background: linear-gradient(90deg, #011b41 0%, #130029 100%);
-  color: #ffffff;
-  font-family: 'Urbanist', sans-serif;
+background: linear-gradient(90deg, #011b41 0%, #130029 100%);
+color: #ffffff;
+font-family: 'Urbanist', sans-serif;
 }
 .footer-link {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 300;
-  white-space: nowrap;
-  transition: color 0.3s ease;
+color: #ffffff;
+text-decoration: none;
+font-weight: 300;
+white-space: nowrap;
+transition: color 0.3s ease;
 }
 .footer-link:hover { color: #8f8e8e; }
 .footer-icon {
-  color: #ffffff;
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
+color: #ffffff;
+font-size: 1.1rem;
+transition: color 0.3s ease;
 }
 .footer-icon:hover { color: #8f8e8e; }
 
 
-/* =========================================
-   RESPONSIVE MEDIA QUERIES
-   ========================================= */
+/* 10. Responsive Media Queries */
 
-/*--navbar --*/
+/* Navbar & Mobile Logic */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -514,7 +485,7 @@ flex-wrap: wrap !important;
 width: 100%;
 }
 #mobileNav .navbar-nav {
-flex-direction: row !important;
+flex-direction: column !important;
 justify-content: center !important;
 gap: 1.5rem;
 padding-top: 1rem;
@@ -530,216 +501,125 @@ width: 100%;
 padding-right: 1rem;
 padding-top: 1rem;
 }
-#mobileNav .nav-link {
-font-size: 1.25rem;
-text-align: right !important; 
-display: block;
+.mobile-navbar .nav-link { font-size: 1.25rem; text-align: right !important; display: block; width: 100%; }
+}
+
+/* HERO RESPONSIVENESS */
+@media (max-width: 992px) {
+.mastering-hero {
+padding: 6rem 1.5rem; 
+min-height: 60vh;
+text-align: center;
+justify-content: center;
+}
+
+.mastering-hero-content h1 {
+font-size: 3rem !important; 
+}
+
+.mastering-hero-content p {
+font-size: 1rem; 
+}
+}
+
+@media (max-width: 576px) {
+.mastering-hero-content h1 {
+font-size: 2.5rem !important;
+}
+}
+
+/* STREAM READY RESPONSIVENESS */
+@media (max-width: 768px) {
+.stream-ready-section {
+padding: 4rem 1.5rem;
+}
+
+.stream-title {
+font-size: 2.5rem; 
+}
+
+.platform-grid {
+gap: 1rem;
+}
+
+.platform-icon {
+width: 60px;
+height: 60px;
+font-size: 1.8rem;
+}
+}
+
+/* SURROUND SECTION RESPONSIVENESS */
+@media (max-width: 992px) {
+.surround-section {
+padding: 6rem 1.5rem;
+}
+
+.surround-title {
+font-size: 3rem; 
+}
+
+.dolby-feature-logo {
+max-width: 200px; 
+}
+
+.surround-description {
+font-size: 1rem;
+}
+}
+
+/* SPLIT LAYOUT SECTIONS (Analog & Vinyl) */
+@media (max-width: 992px) {
+.analog-section,
+.vinyl-section {
+grid-template-columns: 1fr; 
+display: flex;
+flex-direction: column;
+}
+
+.analog-image,
+.vinyl-image {
+order: 1; 
+height: 350px;
 width: 100%;
 }
+
+.analog-content,
+.vinyl-content {
+order: 2; 
+padding: 4rem 2rem; 
+text-align: center; 
 }
 
-/* 3. HERO RESPONSIVENESS */
-@media (max-width: 992px) {
-  .mastering-hero {
-    /* Unlock padding for smaller screens */
-    padding: 6rem 1.5rem; 
-    min-height: 60vh;
-    text-align: center;
-    justify-content: center;
-  }
-
-  .mastering-hero-content h1 {
-    /* Consistent Mobile Title Size */
-    font-size: 3rem !important; 
-  }
-
-  .mastering-hero-content p {
-    font-size: 1rem; /* Readable body text */
-  }
+.analog-content h2,
+.vinyl-content h2 {
+font-size: 3rem; 
 }
 
-/* =========================================
-   MOBILE RESPONSIVENESS (Stream Section)
-   ========================================= */
+.analog-content p,
+.vinyl-content p {
+font-size: 1rem;
+margin: 0 auto; 
+text-align: center;
+}
+}
+
+/* SUB-NAV MOBILE RESPONSIVENESS */
 @media (max-width: 768px) {
-  .stream-ready-section {
-    padding: 4rem 1.5rem;
-  }
-
-  .stream-title {
-    font-size: 2.5rem; /* Scale down title */
-  }
-
-  .platform-grid {
-    gap: 1rem;
-  }
-
-  .platform-icon {
-    width: 60px;
-    height: 60px;
-    font-size: 1.8rem;
-  }
-}
-
-/* =========================================
-   MOBILE RESPONSIVENESS (Surround Section)
-   ========================================= */
-@media (max-width: 992px) {
-  .surround-section {
-    /* Unlock padding on mobile */
-    padding: 6rem 1.5rem;
-  }
-
-  .surround-title {
-    font-size: 3rem; /* Scale down title */
-  }
-
-  .dolby-feature-logo {
-    max-width: 200px; /* Smaller logo on phones */
-  }
-  
-  .surround-description {
-    font-size: 1rem;
-  }
-}
-
-/* =========================================
-   MOBILE RESPONSIVENESS (Analog Section)
-   ========================================= */
-@media (max-width: 992px) {
-  .analog-section {
-    grid-template-columns: 1fr; /* Stack vertically */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .analog-image {
-    order: 1; /* Image on Top */
-    height: 350px;
-    width: 100%;
-  }
-
-  .analog-content {
-    order: 2; /* Text on Bottom */
-    padding: 4rem 2rem; /* Standard mobile padding */
-    text-align: center;
-  }
-
-  .analog-content h2 {
-    font-size: 3rem; /* Scale down title */
-  }
-  
-  .analog-content p {
-    font-size: 1rem;
-    margin: 0 auto; /* Center text block */
-  }
-}
-
-
-/* =========================================
-   MOBILE RESPONSIVENESS (Vinyl Section)
-   ========================================= */
-@media (max-width: 992px) {
-  .vinyl-section {
-    grid-template-columns: 1fr; /* Stack vertically */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .vinyl-image {
-    order: 1; /* Image on Top */
-    height: 350px;
-    width: 100%;
-  }
-
-  .vinyl-content {
-    order: 2; /* Text on Bottom */
-    padding: 4rem 2rem; /* Standard mobile padding */
-    text-align: center; /* Center text on mobile */
-  }
-
-  .vinyl-content h2 {
-    font-size: 3rem; /* Scale down title */
-  }
-  
-  .vinyl-content p {
-    font-size: 1rem;
-    margin: 0 auto; /* Center text block */
-    text-align: center;
-  }
-}
-
-/* =========================================
-   SERVICE SUB-NAVBAR
-   ========================================= */
-
 .service-sub-nav {
-  background-color: #002a4d; /* Slightly darker than brand blue for contrast */
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 9000; /* Sits just below the main navbar z-index */
+padding: 0.8rem 0;
 }
 
 .sub-nav-list {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem; /* Space between items */
-  margin: 0;
-  padding: 0;
+gap: 1rem; 
 }
 
 .sub-nav-link {
-  color: #ffffff; /* White text by default */
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-  opacity: 0.7; /* Slightly faded when not active */
+font-size: 0.9rem; 
+letter-spacing: 1px;
 }
 
-.sub-nav-link:hover {
-  color: #c8761d; /* Brand Orange on hover */
-  opacity: 1;
-}
-
-/* Divider Styling */
 .sub-nav-divider {
-  color: #c8761d;
-  font-weight: 300;
-  opacity: 0.5;
+font-size: 0.9rem;
 }
-
-/* ACTIVE STATE (Highlight the current page) */
-.sub-nav-link.active {
-  color: #c8761d;
-  opacity: 1;
-  border-bottom: 2px solid #c8761d;
-  padding-bottom: 3px;
-}
-
-/* =========================================
-   SUB-NAV MOBILE RESPONSIVENESS
-   ========================================= */
-@media (max-width: 768px) {
-  .service-sub-nav {
-    padding: 0.8rem 0;
-  }
-
-  .sub-nav-list {
-    gap: 1rem; /* Tighter spacing on phones */
-  }
-
-  .sub-nav-link {
-    font-size: 0.9rem; /* Smaller text to fit on one line */
-    letter-spacing: 1px;
-  }
-  
-  .sub-nav-divider {
-    font-size: 0.9rem;
-  }
 }

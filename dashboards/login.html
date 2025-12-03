@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="style auth.css" />
   </head>
   <body>
+    <!-- 1. Authentication Container (Split Layout) -->
     <div class="auth-container">
+      <!-- 1a. Left Panel (Hero/Branding) -->
       <div class="auth-left">
         <h1 class="auth-title">ACCESS OUR<br />ONLINE SERVICES</h1>
         <p class="auth-text">
@@ -20,12 +22,15 @@
         </p>
       </div>
 
+      <!-- 1b. Right Panel (Login Form) -->
       <div class="auth-right">
+        <!-- Form Header -->
         <div class="form-header">
           <div class="form-title">ACCOUNT</div>
           <div class="form-subtitle">LOGIN</div>
         </div>
 
+        <!-- Login Form -->
         <form id="loginForm">
           <div class="form-group">
             <label class="form-label">Email:</label>
@@ -63,6 +68,7 @@
           ></div>
         </form>
 
+        <!-- Links -->
         <div class="auth-link">
           Don't have an account? <a href="signup.html">Register</a>
         </div>
@@ -72,6 +78,7 @@
       </div>
     </div>
 
+    <!-- 2. Scripts -->
     <script type="module" src="auth.js"></script>
   </body>
 </html>

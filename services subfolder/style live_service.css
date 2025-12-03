@@ -1,6 +1,4 @@
-/* =========================================
-GLOBAL RESETS & FONTS
-========================================= */
+/* 1. Global Resets & Body */
 html {
 box-sizing: border-box;
 }
@@ -10,12 +8,12 @@ box-sizing: inherit;
 body {
 font-family: 'Urbanist', sans-serif;
 line-height: 1.5;
-background-color: #D4D4E4; /* Default light background */
+background-color: #D4D4E4; 
 margin: 0;
 padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -24,53 +22,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-1. minmax(0, 1fr) = Flexible left space
-2. auto = Logo size
-3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important;
+justify-self: start;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important;
+justify-self: end;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center;
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -81,7 +67,7 @@ height: 6.25rem;
 display: block;
 max-width: 100%;
 }
-/* --- GENERAL LINK STYLES --- */
+
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -92,56 +78,88 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
+position: relative; 
 }
 
 .navbar-nav .nav-link:hover {
 color: #2979c4 !important;
 }
 
-.navbar-nav .nav-link {
-position: relative; 
-}
-
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0;
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px;
+background-color: #c8761d;
+border-radius: 2px;
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500;
 }
 
-/* --- UTILITIES --- */
-.desktop-navbar {
-display: block;
-}
-
-.navbar-toggler {
-border: none;
-}
-
+.desktop-navbar { display: block; }
+.navbar-toggler { border: none; }
 .navbar-toggler-icon {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* =========================================
-NOW GOING LIVE SECTION
-========================================= */
+/* 3. Live Service Sub-Navbar */
+.service-sub-nav {
+background-color: #002a4d; 
+padding: 1rem 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+position: relative;
+z-index: 9000; 
+}
 
+.sub-nav-list {
+list-style: none;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2rem; 
+margin: 0;
+padding: 0;
+}
+
+.sub-nav-link {
+color: #ffffff; 
+text-decoration: none;
+font-size: 1.1rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 2px;
+transition: all 0.3s ease;
+opacity: 0.7; 
+}
+
+.sub-nav-link:hover {
+color: #c8761d; 
+opacity: 1;
+}
+
+.sub-nav-divider {
+color: #c8761d;
+font-weight: 300;
+opacity: 0.5;
+}
+
+.sub-nav-link.active {
+color: #c8761d;
+opacity: 1;
+border-bottom: 2px solid #c8761d;
+padding-bottom: 3px;
+}
+
+/* 4. Live Event Hero Section */
 .live-event-section {
 position: relative;
 min-height: 90vh;
-/* Uses the existing live.jpg from your assets, or replace with specific image */
 background-image: url('../assets/services/live sound/livesound.jpg'); 
 background-size: cover;
 background-position: center;
@@ -153,11 +171,9 @@ padding: 6rem 2rem;
 overflow: hidden;
 }
 
-/* The Purple/Red Tint Overlay */
 .live-event-overlay {
 position: absolute;
 inset: 0;
-/* Creates the dark purple/blue vibe */
 background: linear-gradient(to bottom, rgba(30, 0, 60, 0.9), rgba(10, 10, 40, 0.95));
 z-index: 1;
 }
@@ -169,9 +185,8 @@ max-width: 800px;
 margin: 0 auto;
 }
 
-/* Typography */
 .live-event-content h2 {
-font-size: 5rem; /* Very large for impact */
+font-size: 5rem; 
 font-weight: 900;
 text-transform: uppercase;
 line-height: 1;
@@ -179,29 +194,28 @@ margin-bottom: 1.5rem;
 }
 
 .live-event-content .text-orange {
-color: #c8761d; /* Brand Orange */
+color: #c8761d; 
 }
 
 .live-event-content .text-red {
-color: #FF0000; /* Vivid Red for "LIVE" */
+color: #FF0000; 
 }
 
 .live-event-content p {
 font-size: 1.2rem;
 font-weight: 300;
-color: #c8761d; /* Orange text as per design */
+color: #c8761d; 
 line-height: 1.6;
 margin-bottom: 3rem;
 }
 
-/* Button Styling */
 .event-btn {
 display: inline-block;
 padding: 1rem 3rem;
-background-color: #c8761d; /* Orange Button */
+background-color: #c8761d; 
 color: white;
 text-decoration: none;
-border-radius: 50px; /* Pill shape */
+border-radius: 50px; 
 font-size: 1.5rem;
 font-weight: 400;
 transition: all 0.3s ease;
@@ -213,18 +227,14 @@ color: white;
 transform: translateY(-3px);
 }
 
-/* =========================================
-ACCOMMODATING EVENTS SECTION
-========================================= */
-
+/* 5. Accommodating Events Section */
 .accommodating-section {
-background-color: #ffffff; /* Clean white background */
+background-color: #ffffff; 
 padding: 6rem 2rem;
 text-align: center;
 color: #003766;
 }
 
-/* Typography */
 .accommodating-title {
 font-size: 4rem;
 font-weight: 900;
@@ -250,10 +260,9 @@ color: #003766;
 line-height: 1.6;
 }
 
-/* Grid Layout */
 .events-grid {
 display: grid;
-grid-template-columns: repeat(4, 1fr); /* 4 Columns for Desktop */
+grid-template-columns: repeat(4, 1fr); 
 gap: 2rem;
 }
 
@@ -263,16 +272,15 @@ text-align: center;
 
 .event-label {
 font-size: 1.5rem;
-font-weight: 400; /* Lighter weight as per design */
+font-weight: 400; 
 margin-bottom: 1rem;
 color: #003766;
 }
 
-/* Image Styling */
 .event-image-box {
 width: 100%;
-height: 250px; /* Fixed height for uniformity */
-border-radius: 50px; /* The specific rounded shape from Figma */
+height: 250px; 
+border-radius: 50px; 
 overflow: hidden;
 box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 transition: transform 0.3s ease;
@@ -288,40 +296,33 @@ object-fit: cover;
 transform: translateY(-5px);
 }
 
-/* =========================================
-LOUD AND CLEAR SECTION
-========================================= */
-
+/* 6. Loud and Clear Section (Split Layout) */
 .loud-clear-section {
 display: grid;
-grid-template-columns: 1fr 2fr; /* Split 50% Image, 50% Text */
+grid-template-columns: 1fr 2fr; 
 min-height: 70vh;
-background-color: #003766; /* Brand Dark Blue */
+background-color: #003766; 
 }
 
-/* Image Side */
 .loud-image {
-/* REPLACE THIS with your specific speaker array image */
 background-image: url('../assets/services/live sound/PA system.jpeg'); 
 background-size: cover;
 background-position: center;
 min-height: 400px;
 }
 
-/* Text Side */
 .loud-content {
 display: flex;
 flex-direction: column;
 justify-content: center;
-/* Standard Desktop Padding */
 padding: 6rem 10rem; 
-color: #ffffff; /* White text */
-text-align: right; /* Right aligned as per Figma design */
+color: #ffffff; 
+text-align: right; 
 }
 
 .loud-content h2 {
 font-size: 4rem;
-font-weight: 900; /* Extra Bold */
+font-weight: 900; 
 text-transform: uppercase;
 line-height: 1.1;
 margin-bottom: 1.5rem;
@@ -332,36 +333,29 @@ font-size: 1.2rem;
 font-weight: 300;
 line-height: 1.6;
 color: #e0e0e0;
-/* Push text block to the right */
 margin-left: auto; 
 max-width: 600px;
 }
 
-/* =========================================
-BRINGING THE STUDIO TO YOU SECTION
-========================================= */
-
+/* 7. Bringing Studio to You Section (Split Layout) */
 .bringing-studio-section {
 display: grid;
-grid-template-columns: 2fr 1fr; /* Split 50% Text, 50% Image */
+grid-template-columns: 2fr 1fr; 
 min-height: 70vh;
-background-color: #ffffff; /* White background */
+background-color: #ffffff; 
 }
 
-/* Text Side */
 .bringing-content {
 display: flex;
 flex-direction: column;
 justify-content: center;
-/* Standard Desktop Padding matching other split sections */
 padding: 6rem 10rem; 
 text-align: left;
 }
 
-/* Title Typography */
 .bringing-content h2 {
 font-size: 4rem;
-font-weight: 900; /* Extra Bold */
+font-weight: 900; 
 text-transform: uppercase;
 line-height: 1.1;
 margin-bottom: 1.5rem;
@@ -375,7 +369,6 @@ color: #003766;
 color: #c8761d;
 }
 
-/* Body Text */
 .bringing-content p {
 font-size: 1.2rem;
 font-weight: 300;
@@ -384,18 +377,14 @@ color: #003766;
 max-width: 600px;
 }
 
-/* Image Side */
 .bringing-image {
-/* REPLACE THIS with the specific image from your design (mixer in the mall) */
 background-image: url('../assets/services/live sound/live mics.jpeg'); 
 background-size: cover;
 background-position: center;
 min-height: 400px;
 }
 
-/* =========================================
-FOOTER STYLES
-========================================= */
+/* 8. Footer Styles */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
@@ -417,24 +406,21 @@ transition: color 0.3s ease;
 .footer-icon:hover { color: #8f8e8e; }
 
 
-/* =========================================
-RESPONSIVE MEDIA QUERIES
-========================================= */
+/* 9. Responsive Media Queries */
 
-/*--navbar --*/
+/* Navbar & Mobile Logic */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -472,12 +458,10 @@ width: 100%;
 }
 }
 
-/* =========================================
-MOBILE RESPONSIVENESS (Live Event)
-========================================= */
+/* Live Event Hero */
 @media (max-width: 992px) {
 .live-event-content h2 {
-font-size: 3.5rem; /* Scale down title */
+font-size: 3.5rem; 
 }
 
 .live-event-content p {
@@ -492,16 +476,14 @@ padding: 0.8rem 2rem;
 
 @media (max-width: 576px) {
 .live-event-content h2 {
-font-size: 2.8rem; /* Fits on phone screens */
+font-size: 2.8rem; 
 }
 }
 
-/* =========================================
-MOBILE RESPONSIVENESS (Accommodating)
-========================================= */
+/* Accommodating Events */
 @media (max-width: 1200px) {
 .events-grid {
-grid-template-columns: repeat(2, 1fr); /* 2x2 Grid on Tablets */
+grid-template-columns: repeat(2, 1fr); 
 gap: 3rem 2rem;
 }
 }
@@ -516,39 +498,37 @@ font-size: 2.5rem;
 }
 
 .events-grid {
-grid-template-columns: 1fr; /* Stack vertically on Phones */
+grid-template-columns: 1fr; 
 gap: 3rem;
 }
 
 .event-image-box {
-height: 300px; /* Taller images on mobile for impact */
+height: 300px; 
 }
 }
 
-/* =========================================
-MOBILE RESPONSIVENESS (Loud & Clear)
-========================================= */
+/* Loud & Clear Section (Stacking) */
 @media (max-width: 992px) {
 .loud-clear-section {
-grid-template-columns: 1fr; /* Stack vertically */
+grid-template-columns: 1fr; 
 display: flex;
 flex-direction: column;
 }
 
 .loud-image {
-order: 1; /* Image on Top */
+order: 1; 
 height: 350px;
 width: 100%;
 }
 
 .loud-content {
-order: 2; /* Text on Bottom */
+order: 2; 
 padding: 4rem 2rem; 
-text-align: center; /* Center text on mobile for better readability */
+text-align: center; 
 }
 
 .loud-content h2 {
-font-size: 3rem; /* Scale down title */
+font-size: 3rem; 
 }
 
 .loud-content p {
@@ -557,30 +537,28 @@ margin: 0 auto;
 }
 }
 
-/* =========================================
-MOBILE RESPONSIVENESS (Bringing Studio)
-========================================= */
+/* Bringing Studio Section (Stacking) */
 @media (max-width: 992px) {
 .bringing-studio-section {
-grid-template-columns: 1fr; /* Stack vertically */
+grid-template-columns: 1fr; 
 display: flex;
 flex-direction: column;
 }
 
 .bringing-image {
-order: 1; /* Image on Top */
+order: 1; 
 height: 350px;
 width: 100%;
 }
 
 .bringing-content {
-order: 2; /* Text on Bottom */
+order: 2; 
 padding: 4rem 2rem; 
-text-align: center; /* Center text on mobile */
+text-align: center; 
 }
 
 .bringing-content h2 {
-font-size: 3rem; /* Scale down title */
+font-size: 3rem; 
 }
 
 .bringing-content p {
@@ -589,78 +567,69 @@ margin: 0 auto;
 }
 }
 
-/* =========================================
-   SERVICE SUB-NAVBAR
-   ========================================= */
-
+/* Service Sub-Navbar */
 .service-sub-nav {
-  background-color: #002a4d; /* Slightly darker than brand blue for contrast */
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 9000; /* Sits just below the main navbar z-index */
+background-color: #002a4d; 
+padding: 1rem 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+position: relative;
+z-index: 9000; 
 }
 
 .sub-nav-list {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem; /* Space between items */
-  margin: 0;
-  padding: 0;
+list-style: none;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2rem; 
+margin: 0;
+padding: 0;
 }
 
 .sub-nav-link {
-  color: #ffffff; /* White text by default */
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-  opacity: 0.7; /* Slightly faded when not active */
+color: #ffffff; 
+text-decoration: none;
+font-size: 1.1rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 2px;
+transition: all 0.3s ease;
+opacity: 0.7; 
 }
 
 .sub-nav-link:hover {
-  color: #c8761d; /* Brand Orange on hover */
-  opacity: 1;
+color: #c8761d; 
+opacity: 1;
 }
 
-/* Divider Styling */
 .sub-nav-divider {
-  color: #c8761d;
-  font-weight: 300;
-  opacity: 0.5;
+color: #c8761d;
+font-weight: 300;
+opacity: 0.5;
 }
 
-/* ACTIVE STATE (Highlight the current page) */
 .sub-nav-link.active {
-  color: #c8761d;
-  opacity: 1;
-  border-bottom: 2px solid #c8761d;
-  padding-bottom: 3px;
+color: #c8761d;
+opacity: 1;
+border-bottom: 2px solid #c8761d;
+padding-bottom: 3px;
 }
 
-/* =========================================
-   SUB-NAV MOBILE RESPONSIVENESS
-   ========================================= */
 @media (max-width: 768px) {
-  .service-sub-nav {
-    padding: 0.8rem 0;
-  }
-
-  .sub-nav-list {
-    gap: 1rem; /* Tighter spacing on phones */
-  }
-
-  .sub-nav-link {
-    font-size: 0.9rem; /* Smaller text to fit on one line */
-    letter-spacing: 1px;
-  }
-  
-  .sub-nav-divider {
-    font-size: 0.9rem;
-  }
+.service-sub-nav {
+padding: 0.8rem 0;
 }
 
+.sub-nav-list {
+gap: 1rem; 
+}
+
+.sub-nav-link {
+font-size: 0.9rem; 
+letter-spacing: 1px;
+}
+
+.sub-nav-divider {
+font-size: 0.9rem;
+}
+}

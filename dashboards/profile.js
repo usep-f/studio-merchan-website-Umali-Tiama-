@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// 1. FIREBASE CONFIG
+/* 1. Firebase and Supabase Configuration and Initialization */
 const firebaseConfig = {
     apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo", 
     authDomain: "studio-merchan.firebaseapp.com",
@@ -13,37 +13,37 @@ const firebaseConfig = {
     measurementId: "G-QMC8J9PP9D"
 };
 
-// 2. SUPABASE CONFIG
-// ⚠️ PASTE YOUR SUPABASE KEYS HERE ⚠️
 const supabaseUrl = 'https://cishguvndzwtlbchhqbf.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpc2hndXZuZHp3dGxiY2hocWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg0NjMsImV4cCI6MjA3OTMzNDQ2M30.kKcLTk5BTTyDF_tcwTORM93vp-3rDtCpSmj9ypoZECY';
 
-// Initialize
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 let currentUserUID = null;
 
-// 3. CHECK AUTH STATE
-// We need to make sure they are actually logged in before we let them save data.
+/* 2. Authentication State Check
+   This checks if the user is authenticated and, if so, ensures they have 
+   not already completed their profile setup before allowing access. */
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUserUID = user.uid;
         console.log("User detected:", currentUserUID);
         
-        // OPTIONAL CHECK: If they already have a profile, skip this page
+        // Check if profile is already set up in Supabase
         const { data } = await supabase.from('clients').select('*').eq('client_uid', currentUserUID).single();
         if (data) {
             window.location.href = "dashboard.html";
         }
     } else {
-        // If not logged in, kick them back to login
+        // If not logged in, redirect to login page
         window.location.href = "login.html";
     }
 });
 
-// 4. HANDLE FORM SUBMIT
+/* 3. Form Submission Handler
+   This function collects profile data and inserts it into the Supabase 
+   'clients' table, then redirects to the dashboard upon success. */
 document.getElementById('profileForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const errorDiv = document.getElementById('profile-error');
@@ -56,10 +56,9 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
     }
 
     // Collect Data
-    // Collect Data
     const profileData = {
         client_uid: currentUserUID,
-        email: auth.currentUser.email, // <--- ADD THIS LINE
+        email: auth.currentUser.email,
         full_name: document.getElementById('full_name').value,
         phone_number: document.getElementById('phone_number').value,
         artist_name: document.getElementById('artist_name').value,

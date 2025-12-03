@@ -1,9 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// 1. PASTE YOUR FIREBASE CONFIG HERE
+/* 1. Firebase Configuration and Initialization */
 const firebaseConfig = {
-    apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo", // <--- CHECK THIS
+    apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo",
     authDomain: "studio-merchan.firebaseapp.com",
     projectId: "studio-merchan",
     storageBucket: "studio-merchan.firebasestorage.app",
@@ -12,11 +12,12 @@ const firebaseConfig = {
     measurementId: "G-QMC8J9PP9D"
 };
 
-// 2. Initialize
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// 3. Handle LOGIN Page
+/* 2. Login Form Submission Handler
+   This function handles the asynchronous sign-in process and redirects 
+   the user to the dashboard upon successful authentication. */
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
@@ -27,7 +28,6 @@ if (loginForm) {
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Success! Redirect to Dashboard
                 window.location.href = "dashboard.html";
             })
             .catch((error) => {
@@ -37,7 +37,9 @@ if (loginForm) {
     });
 }
 
-// 4. Handle SIGNUP Page
+/* 3. Signup Form Submission Handler
+   This function handles new user registration, including password 
+   confirmation, and redirects to the profile setup page upon success. */
 const signupForm = document.getElementById('signupForm');
 if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
@@ -47,7 +49,6 @@ if (signupForm) {
         const confirmPassword = document.getElementById('confirm-password').value;
         const errorDiv = document.getElementById('auth-error');
 
-        // Basic Validation
         if (password !== confirmPassword) {
             errorDiv.style.display = 'block';
             errorDiv.textContent = "Passwords do not match.";
@@ -56,8 +57,6 @@ if (signupForm) {
 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Success! Redirect to Profile Setup
-                // We send them here first to get their Name/Phone before the dashboard
                 window.location.href = "setup-profile.html";
             })
             .catch((error) => {
@@ -67,7 +66,9 @@ if (signupForm) {
     });
 }
 
-// 5. Auth State Listener (Optional Debugging)
+/* 4. Auth State Listener
+   This listener provides real-time console feedback on the user's 
+   authentication state for debugging purposes. */
 onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log("User is signed in:", user.uid);

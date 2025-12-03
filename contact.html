@@ -13,7 +13,7 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      xintegrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
     <link
@@ -26,9 +26,8 @@
   </head>
 
   <body>
-    <!--HEADER-->
+    <!-- 1. Navigation & Header -->
     <header class="navwrapper">
-      <!--desktop -->
       <nav class="navbar desktop-navbar navbar-custom py-1 d-none d-lg-flex">
         <div class="container-fluid navbar-grid">
           
@@ -50,7 +49,6 @@
         </div>
       </nav>
 
-      <!--mobile-->
       <nav class="navbar mobile-navbar navbar-custom py-2 d-lg-none">
         <div class="container-fluid justify-content-between">
           <a class="navbar-brand mx-2" href="/index.html">
@@ -74,9 +72,11 @@
       </nav>
     </header>
     <main>
+      <!-- 2. Contact Section (Split Layout) -->
         <div class="container-fluid g-0">
       <div class="row g-0 min-vh-100">
         
+        <!-- Left Panel: Info & Socials -->
         <div class="col-lg-5 d-flex flex-column justify-content-center align-items-center p-5 text-white position-relative" 
              style="background: linear-gradient(135deg, #003766 0%, #051b2e 100%);">
           
@@ -131,6 +131,7 @@
           </div>
         </div>
 
+        <!-- Right Panel: Message Form -->
         <div class="col-lg-7 bg-white d-flex flex-column justify-content-center p-5">
           <div class="mx-auto w-100" style="max-width: 600px;">
             <h2 class="fw-bold mb-2" style="color: #003766;">SEND A MESSAGE</h2>
@@ -176,6 +177,7 @@
       </div>
     </div>
 
+    <!-- 3. Review Submission Form -->
     <section class="py-5 bg-review-gradient">
       <div class="container">
         <div class="row justify-content-center">
@@ -243,7 +245,8 @@
       </div>
     </section>
     </main>
-    <!--FOOTER-->
+    
+    <!-- 4. Footer -->
     <footer class="footer-custom text-light mt-0">
         <div class="container py-5">
             <div class="row align-items-center">
@@ -294,12 +297,11 @@
         </div>
     </footer>
 
-    
+    <!-- 5. Scripts -->
     <script type="module" src="contact.js"></script>
-    <!--SCRIPTING FOR BOOTSTRAP-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      xintegrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
   </body>

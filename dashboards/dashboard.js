@@ -1,12 +1,9 @@
-/* =========================================
-   1. IMPORTS & CONFIG
-   ========================================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// --- FIREBASE CONFIG ---
+/* 1. Firebase & Supabase Configuration and Initialization */
 const firebaseConfig = {
     apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo",
     authDomain: "studio-merchan.firebaseapp.com",
@@ -17,22 +14,20 @@ const firebaseConfig = {
     measurementId: "G-QMC8J9PP9D"
 };
 
-// --- SUPABASE CONFIG ---
 const supabaseUrl = 'https://cishguvndzwtlbchhqbf.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpc2hndXZuZHp3dGxiY2hocWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg0NjMsImV4cCI6MjA3OTMzNDQ2M30.kKcLTk5BTTyDF_tcwTORM93vp-3rDtCpSmj9ypoZECY';
 
-// Initialize
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const storage = getStorage(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 let currentUser = null;
-let userProfileData = null; // Global store for Quick Book data
+let userProfileData = null; 
 
-/* =========================================
-   2. GLOBAL FUNCTIONS (Defined Top-Level)
-   ========================================= */
+/* 2. Global Functions (Window Scope)
+   These functions handle client interactions with online projects, 
+   updating the status in the Supabase database. */
 window.requestRevision = async (id, currentCount) => {
     const notes = prompt("What changes would you like? (e.g. 'Vocals are too quiet')");
     if (notes) {
@@ -64,9 +59,9 @@ window.deleteProject = async (id) => {
     if(!error && currentUser) loadRemoteProjects(currentUser.uid);
 };
 
-/* =========================================
-   3. AUTH & LOADING (The Main Entry Point)
-   ========================================= */
+/* 3. Auth State Listener and Loading Sequence
+   This listener handles the main entry point, verifies user status,
+   loads the profile, and then fetches all dashboard data. */
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUser = user;
@@ -88,13 +83,14 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
+/* 4. Logout Handler */
 document.getElementById('logout-btn').addEventListener('click', () => {
     signOut(auth).then(() => window.location.href = "login.html");
 });
 
-/* =========================================
-   4. USER PROFILE LOADER
-   ========================================= */
+/* 5. User Profile Loader
+   Fetches user data from Supabase and updates the display elements. 
+   Stores data globally for use in quick booking forms. */
 async function loadUserProfile(uid) {
     const { data, error } = await supabase.from('clients').select('*').eq('client_uid', uid).single();
 
@@ -112,9 +108,9 @@ async function loadUserProfile(uid) {
     }
 }
 
-/* =========================================
-   5. REMOTE PROJECTS LOADER
-   ========================================= */
+/* 6. Remote Projects Loader
+   Fetches and renders all remote project requests, separating them 
+   into active and past projects with appropriate action buttons. */
 async function loadRemoteProjects(uid) {
     const activeContainer = document.getElementById('active-projects-list');
     const pastContainer = document.getElementById('past-projects-list');
@@ -182,9 +178,8 @@ async function loadRemoteProjects(uid) {
     if (!hasPast) pastContainer.innerHTML = '<div class="text-muted small">No completed projects yet.</div>';
 }
 
-/* =========================================
-   6. UPLOAD FORM HANDLER
-   ========================================= */
+/* 7. Upload Form Handler
+   Handles file upload to Firebase Storage and database entry to Supabase. */
 const uploadForm = document.getElementById('newProjectForm');
 if (uploadForm) {
     uploadForm.addEventListener('submit', async (e) => {
@@ -235,9 +230,8 @@ if (uploadForm) {
     });
 }
 
-/* =========================================
-   7. STUDIO BOOKINGS LOADER
-   ========================================= */
+/* 8. Studio Bookings Loader
+   Fetches and renders the list of studio sessions booked by the current client. */
 async function loadStudioBookings(uid) {
     const container = document.getElementById('bookings-list');
     if(!container) return;
@@ -264,9 +258,8 @@ async function loadStudioBookings(uid) {
     }
 }
 
-/* =========================================
-   8. LIVE BOOKINGS LOADER
-   ========================================= */
+/* 9. Live Bookings Loader
+   Fetches and renders the list of live sound events booked by the current client. */
 async function loadLiveBookings(uid) {
     const container = document.getElementById('live-bookings-list');
     if(!container) return;
@@ -299,9 +292,8 @@ async function loadLiveBookings(uid) {
     }
 }
 
-/* =========================================
-   9. QUICK BOOK HANDLER
-   ========================================= */
+/* 10. Quick Book Studio Handler
+    Handles submission of new studio booking request using auto-filled profile data. */
 const quickBookForm = document.getElementById('quick-book-form');
 if (quickBookForm) {
     quickBookForm.addEventListener('submit', async (e) => {
@@ -360,9 +352,8 @@ if (quickBookForm) {
     });
 }
 
-/* =========================================
-   10. LIVE SOUND QUICK BOOK HANDLER
-   ========================================= */
+/* 11. Quick Book Live Handler
+    Handles submission of new live sound booking request using auto-filled profile data. */
 const quickBookLiveForm = document.getElementById('quick-book-live-form');
 if (quickBookLiveForm) {
     quickBookLiveForm.addEventListener('submit', async (e) => {
@@ -391,8 +382,8 @@ if (quickBookLiveForm) {
         try {
             const { error } = await supabase.from('live_bookings').insert([{
                 client_uid: currentUser.uid,
-                customer_name: userProfileData.full_name,       // Auto-filled
-                contact_number: userProfileData.phone_number,   // Auto-filled (Note: column is 'contact_number' in live_bookings)
+                customer_name: userProfileData.full_name, 
+                contact_number: userProfileData.phone_number, 
                 event_type: document.getElementById('qbl-type').value,
                 package: document.getElementById('qbl-package').value,
                 location: document.getElementById('qbl-location').value,

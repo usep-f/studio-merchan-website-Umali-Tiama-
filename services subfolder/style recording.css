@@ -1,4 +1,4 @@
-
+/* 1. Global Resets & Body */
 html {
 box-sizing: border-box;
 }
@@ -15,7 +15,7 @@ margin: 0;
 padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -24,53 +24,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-1. minmax(0, 1fr) = Flexible left space
-2. auto = Logo size
-3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important;
+justify-self: start;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important;
+justify-self: end;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center;
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -81,7 +69,7 @@ height: 6.25rem;
 display: block;
 max-width: 100%;
 }
-/* --- GENERAL LINK STYLES --- */
+
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -92,69 +80,49 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
+position: relative; 
 }
 
 .navbar-nav .nav-link:hover {
 color: #2979c4 !important;
 }
 
-.navbar-nav .nav-link {
-position: relative; 
-}
-
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0;
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px;
+background-color: #c8761d;
+border-radius: 2px;
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500;
 }
 
-/* --- UTILITIES --- */
-.desktop-navbar {
-display: block;
-}
-
-.navbar-toggler {
-border: none;
-}
-
+.desktop-navbar { display: block; }
+.navbar-toggler { border: none; }
 .navbar-toggler-icon {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/*-- Service Hero Banner (From Image) */
-/* 1. Update the Parent Container to act like the Mixing Page */
+/* 3. Service Hero Banner */
 .service-hero-banner {
 min-height: 80vh;
 background: linear-gradient(rgba(0, 20, 40, 0.8), rgba(0, 20, 40, 0.8)),
 url("/assets/services/recording subpage/In_Studio-_Track_Band_Together_or_Separately_2170x.jpg") center center/cover no-repeat;
-
-/* Padding matches Mixing Page exactly */
 padding: 4rem 10rem; 
-
-/* ENABLE FLEXBOX (This aligns the content box) */
 display: flex;
 align-items: center;
 }
 
-/* 2. Add the Content Box Styling (New) */
 .service-hero-content {
 position: relative;
 z-index: 2;
-
-/* Match the Mixing Page width logic */
 max-width: 800px; 
 color: white;
 }
@@ -163,20 +131,19 @@ color: white;
 font-size: 4rem;
 font-weight: 800;
 text-transform: uppercase;
-color: #c8761d; /* Using the orange from your navbar */
+color: #c8761d; 
 }
 
 .service-hero-subtext {
 font-size: 1.2rem;
 font-weight: 300;
-
 color: #c8761d;
 }
 
 .btn-service-hero {
 display: inline-block;
 padding: 1rem 2.2rem;
-background-color: #C9761C; /* orange */
+background-color: #C9761C; 
 color: white;
 text-decoration: none;
 border-radius: 30px;
@@ -186,74 +153,60 @@ transition: background 0.3s ease;
 }
 
 .btn-service-hero:hover {
-background-color: #a56017;;
+background-color: #a56017;
 }
 
-/* --- Shared Grid Setup --- */
+/* 4. Split Grid Setup */
 .split-grid,
 .split-grid-dark {
 display: grid;
-min-height: 50vh; /* Matches Console height logic */
+min-height: 50vh; 
 overflow: hidden;
 }
 
-/* --- Light Section (Text Left | Image Right) --- */
 .split-grid {
-/* Text gets 2 parts (Wide), Image gets 1 part (Narrow) */
 grid-template-columns: 2fr 1fr; 
 background-color: #d4d4e4;
 }
 
-/* --- Dark Section (Image Left | Text Right) --- */
 .split-grid-dark {
-/* Image gets 1 part (Narrow), Text gets 2 parts (Wide) */
 grid-template-columns: 1fr 2fr; 
 background-color: #003766;
 }
 
-/* --- The Text Container (The "Console" Look) --- */
 .split-grid-content {
-/* UNIFORM PADDING: This fixes the "cramped" feeling. 
-Matches the spacious look of your Mixing page. */
 padding: 6rem 10rem; 
-
 display: flex;
 flex-direction: column;
 justify-content: center;
-
-/* IMPORTANT: Unlocks the text width so it can lengthen naturally */
 max-width: 100%; 
 }
 
-/* Specific adjustment for the Dark Section text to ensure it matches */
 .split-grid-dark .split-grid-content {
-padding: 6rem 10rem; /* Same uniform padding */
+padding: 6rem 10rem; 
 margin-bottom: 0;
 max-width: 100%;
 }
 
-/* --- The Images --- */
 .split-grid-image {
 background-size: cover;
 background-position: center;
 width: 100%;
 height: 100%;
-min-height: 400px; /* Ensures image doesn't disappear on short screens */
+min-height: 400px; 
 }
 
-/* Keep your existing image identifiers */
 .image-mic { background-image: url("../assets/services/recording subpage/mic.jpg"); }
 .image-acoustics { background-image: url("../assets/services/recording subpage/acoustic-materials.jpg"); }
 .image-mixer { background-image: url("../assets/services/recording subpage/preamp.webp"); }
 
-/* Keep Typography Colors */
 .feature-title-dark { font-size: 4rem; font-weight:800; color: #003766;}
 .feature-title-accent { font-size: 4rem; font-weight: 800; color: #c8761d; }
 .feature-subtext { font-weight: 300; font-size: 1.2rem; color: #003766; }
 .feature-title-light { font-size: 4rem; font-weight: 800; color: #ffffff; }
 .feature-subtext-light { font-weight: 300; font-size: 1.2rem; color: #ffffff; }
 
-/* Footer Styles */
+/* 5. Footer Styles */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
@@ -282,21 +235,69 @@ transition: color 0.3s ease;
 color: #8f8e8e;
 }
 
-/* Responsive Styles */
-/*--navbar --*/
+/* 6. Service Sub-Navbar */
+.service-sub-nav {
+background-color: #002a4d; 
+padding: 1rem 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+position: relative;
+z-index: 9000; 
+}
+
+.sub-nav-list {
+list-style: none;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2rem; 
+margin: 0;
+padding: 0;
+}
+
+.sub-nav-link {
+color: #ffffff; 
+text-decoration: none;
+font-size: 1.1rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 2px;
+transition: all 0.3s ease;
+opacity: 0.7; 
+}
+
+.sub-nav-link:hover {
+color: #c8761d; 
+opacity: 1;
+}
+
+.sub-nav-divider {
+color: #c8761d;
+font-weight: 300;
+opacity: 0.5;
+}
+
+.sub-nav-link.active {
+color: #c8761d;
+opacity: 1;
+border-bottom: 2px solid #c8761d;
+padding-bottom: 3px;
+}
+
+/* 7. Responsive Media Queries */
+
+/* Navbar & Mobile Logic */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -334,93 +335,32 @@ width: 100%;
 }
 }
 
-@media (max-width: 768px) {
-.service-hero-title {
-font-size: 2.5rem; /* Matching your .hero-title responsive style */
+/* Hero Banner & Split Grid Mobile */
+@media (max-width: 992px) {
+
+/* Hero Section */
+.service-hero-banner {
+padding: 6rem 1.5rem; 
+min-height: 60vh; 
+text-align: center; 
 }
 
-.service-hero-subtext {
-font-size: 1rem; /* Matching your .hero-subtext responsive style */
+.service-hero-title {
+font-size: 3rem; 
+}
+
+.service-hero-subtext{
+font-size: 1.2rem; 
 }
 
 .btn-service-hero {
 font-size: 1rem;
-padding: 0.7rem 1.5rem; /* Matching your .btn-hero responsive style */
-}
-}
-
-/* Responsive styles for the new grid */
-@media (max-width: 992px) {
-.split-grid {
-grid-template-columns: 1fr; /* Stack them vertically */
+padding: 0.7rem 1.5rem;
 }
 
-.split-grid-content {
-order: 2; /* Text always below image on mobile */
-padding: 3rem 2rem;
-}
-
-.split-grid-image {
-order: 1; /* Image always on top on mobile */
-min-height: 350px;
-}
-}
-
-/* Keep your existing responsive text styles.
-Just make sure the .feature-image-col rule is updated.
-*/
-@media (max-width: 768px) {
-.feature-title-dark,
-.feature-title-accent {
-font-size: 2.5rem; 
-}
-
-.feature-subtext {
-font-size: 1rem; 
-}
-
-.split-grid-image {
-min-height: 300px; /* A shorter height for smaller screens */
-}
-}
-
-@media (max-width: 768px) {
-.feature-title-light {
-font-size: 2.5rem; 
-}
-
-.feature-subtext-light {
-font-size: 1rem; 
-}
-
-/* Fix padding for dark section on mobile */
-.split-grid-dark .split-grid-content {
-padding: 3rem 2rem; /* Match the light sections on mobile */
-}
-}
-
-@media (max-width: 992px) {
-
-/* --- 1. Hero Section --- */
-.service-hero-banner {
-/* Remove the massive desktop padding */
-padding: 6rem 1.5rem; 
-min-height: 60vh; /* Relax height constraint */
-text-align: center; /* Center alignment usually looks better on mobile */
-}
-
-.service-hero-title {
-font-size: 3rem; /* Down from 4rem */
-}
-
-.service-hero-subtext{
-font-size: 1.2rem; /* Down from 1.5rem */
-}
-/* --- 2. Split Grid Sections (The "Feature" Blocks) --- */
-/* This targets both .split-grid and .split-grid-dark */
+/* Split Grid Sections (Features) */
 .split-grid, 
 .split-grid-dark {
-/* Switch from Side-by-Side (2 col) to Vertical Stack (1 col) */
 display: flex !important;
 flex-direction: column;
 }
@@ -428,104 +368,54 @@ flex-direction: column;
 /* Control the Order: Image First, Text Second */
 .split-grid-image {
 order: 1;
-height: 300px; /* Give the image a fixed height block */
+height: 300px; 
 min-height: 300px;
 width: 100%;
 }
 
 .split-grid-content {
 order: 2;
-padding: 4rem 2rem !important; /* Override the huge desktop padding */
+padding: 4rem 2rem !important; 
 text-align: center;
-max-width: 100%; /* Let text fill the screen */
+max-width: 100%; 
 }
 
-/* --- 3. Typography Adjustments --- */
+/* Typography Adjustments */
 .feature-title-dark,
 .feature-title-accent,
 .feature-title-light {
-font-size: 2.5rem; /* Scale down headers */
-text-align: center; /* Force center alignment */
+font-size: 2.5rem; 
+text-align: center; 
 }
 
 .feature-subtext, 
 .feature-subtext-light {
 font-size: 1.2rem;
-text-align: center; /* Force center alignment */
+text-align: center; 
+}
+
+/* Fix padding for dark section on mobile */
+.split-grid-dark .split-grid-content {
+padding: 4rem 2rem !important; 
 }
 }
 
-/* =========================================
-   SERVICE SUB-NAVBAR
-   ========================================= */
-
+/* Sub-Nav Mobile */
+@media (max-width: 768px) {
 .service-sub-nav {
-  background-color: #002a4d; /* Slightly darker than brand blue for contrast */
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 9000; /* Sits just below the main navbar z-index */
+padding: 0.8rem 0;
 }
 
 .sub-nav-list {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem; /* Space between items */
-  margin: 0;
-  padding: 0;
+gap: 1rem; 
 }
 
 .sub-nav-link {
-  color: #ffffff; /* White text by default */
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-  opacity: 0.7; /* Slightly faded when not active */
+font-size: 0.9rem; 
+letter-spacing: 1px;
 }
 
-.sub-nav-link:hover {
-  color: #c8761d; /* Brand Orange on hover */
-  opacity: 1;
-}
-
-/* Divider Styling */
 .sub-nav-divider {
-  color: #c8761d;
-  font-weight: 300;
-  opacity: 0.5;
+font-size: 0.9rem;
 }
-
-/* ACTIVE STATE (Highlight the current page) */
-.sub-nav-link.active {
-  color: #c8761d;
-  opacity: 1;
-  border-bottom: 2px solid #c8761d;
-  padding-bottom: 3px;
-}
-
-/* =========================================
-   SUB-NAV MOBILE RESPONSIVENESS
-   ========================================= */
-@media (max-width: 768px) {
-  .service-sub-nav {
-    padding: 0.8rem 0;
-  }
-
-  .sub-nav-list {
-    gap: 1rem; /* Tighter spacing on phones */
-  }
-
-  .sub-nav-link {
-    font-size: 0.9rem; /* Smaller text to fit on one line */
-    letter-spacing: 1px;
-  }
-  
-  .sub-nav-divider {
-    font-size: 0.9rem;
-  }
 }

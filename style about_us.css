@@ -1,3 +1,4 @@
+/* 1. Global Reset & Body */
 html {
 box-sizing: border-box;
 }
@@ -12,7 +13,7 @@ margin: 0;
 padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -21,53 +22,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-    1. minmax(0, 1fr) = Flexible left space
-    2. auto = Logo size
-    3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important; 
+justify-self: start; 
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important; 
+justify-self: end; 
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center; 
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -79,7 +68,6 @@ display: block;
 max-width: 100%;
 }
 
-/* --- GENERAL LINK STYLES --- */
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -90,7 +78,7 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
 }
 
 .navbar-nav .nav-link:hover {
@@ -101,25 +89,22 @@ color: #2979c4 !important;
 position: relative; 
 }
 
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0; 
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px; 
+background-color: #c8761d; 
+border-radius: 2px; 
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500; 
 }
 
-/* --- UTILITIES --- */
 .desktop-navbar {
 display: block;
 }
@@ -132,6 +117,7 @@ border: none;
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+/* 3. About Us Hero Section */
 .about-section {
 height: 80vh;
 background: 
@@ -176,7 +162,7 @@ color: #f29f32;
 font-weight: 300;
 }
 
-/*EXCELLENCE*/
+/* 4. Excellence Section */
 .excellence-section {
 background-color: #D4D4E4;
 padding: 6rem 6rem;
@@ -192,7 +178,7 @@ gap: 1.1rem;
 }
 
 .excellence-grid > :nth-child(2) {
-margin-left: 1.9rem; /* adjust until it feels balanced */
+margin-left: 1.9rem; 
 }
 
 
@@ -237,7 +223,7 @@ margin-top: 2.5rem;
 margin-bottom: 4.5rem;
 }
 
-/*VOICE*/
+/* 5. Voice Section */
 .voice-section {
 background-color: #0b315d;
 color: #ffffff;
@@ -289,7 +275,7 @@ margin-top: 2rem;
 }
 
 
-/*-- Footer Customization */
+/* 6. Footer Styles */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
@@ -319,21 +305,19 @@ color: #8f8e8e;
 }
 
 
-/*--Responsive */
-/*--navbar --*/
+/* 7. Responsive Media Queries */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -371,106 +355,94 @@ width: 100%;
 }
 }
 
-/* --- 2. HERO SECTION FIX --- */
+/* Hero Responsive */
 @media (max-width: 768px) {
 .about-section {
-  /* Remove fixed 80vh height so text doesn't overflow */
-  height: auto;
-  min-height: 60vh; 
-  padding: 6rem 1.5rem 4rem; /* Add padding for breathing room */
+height: auto;
+min-height: 60vh; 
+padding: 6rem 1.5rem 4rem; 
 }
 
 .about-title {
-  font-size: 3rem; /* Down from 5rem */
-  line-height: 1.1;
+font-size: 3rem; 
+line-height: 1.1;
 }
 
 .about-text {
-  font-size: 1.2rem; /* Slightly smaller body text */
-  padding: 0 0.5rem;
+font-size: 1.2rem; 
+padding: 0 0.5rem;
 }
 }
 
-
-/* --- 3. EXCELLENCE SECTION (Grid Stack) --- */
+/* Excellence Responsive (Grid Stack) */
 @media (max-width: 992px) {
 .excellence-section {
-  padding: 4rem 1.5rem; /* Reduce massive desktop padding */
+padding: 4rem 1.5rem; 
 }
 
 .excellence-grid {
-  /* Switch from 2 columns to 1 */
-  grid-template-columns: 1fr; 
-  gap: 3rem;
-  text-align: center; /* Center align everything on mobile */
+grid-template-columns: 1fr; 
+gap: 3rem;
+text-align: center; 
 }
 
-/* Reset the specific margin tweak used on desktop */
 .excellence-grid > :nth-child(2) {
-  margin-left: 0; 
+margin-left: 0; 
 }
 
-/* Typography Scaling */
 .title, .sub {
-  font-size: 2.5rem; /* Down from 4rem */
+font-size: 2.5rem; 
 }
 
 .paragraph {
-  font-size: 1.2rem;
-  margin: 1rem auto;
+font-size: 1.2rem;
+margin: 1rem auto;
 }
 
-/* Image Styling */
 .image {
-  width: 100%;
-  height: auto;
-  margin: 1.5rem 0; /* Add space above/below images */
-  border-radius: 30px;
+width: 100%;
+height: auto;
+margin: 1.5rem 0; 
+border-radius: 30px;
 }
 
-/* Remove specific margins so images stack neatly */
 .left-img, .right-img {
-  margin-top: 0;
-  margin-bottom: 0;
+margin-top: 0;
+margin-bottom: 0;
 }
 }
 
 
-/* --- 4. VOICE SECTION (Grid Stack) --- */
+/* Voice Responsive (Grid Stack) */
 @media (max-width: 992px) {
 .voice-section {
-  padding: 4rem 1.5rem;
+padding: 4rem 1.5rem;
 }
 
 .voice-grid {
-  grid-template-columns: 1fr; /* Stack vertically */
-  gap: 3rem;
-  text-align: center;
+grid-template-columns: 1fr; 
+gap: 3rem;
+text-align: center;
 }
 
 .voice-section .title {
-  font-size: 2.5rem;
+font-size: 2.5rem;
 }
 
 .voice-section .paragraph {
-  font-size: 1.2rem;
+font-size: 1.2rem;
 }
 
-/* Ensure images fit content width */
 .voice-section .image {
-  max-width: 100%;
-  margin: 0 auto;
+max-width: 100%;
+margin: 0 auto;
 }
 
-/* Adjust vertical order if needed, or keep natural flow */
 .voice-section .top-img {
-  margin-bottom: 1.5rem;
+margin-bottom: 1.5rem;
 }
 
 .voice-section .bottom-img {
-  margin-top: 1.5rem;
+margin-top: 1.5rem;
 }
 }
-
-
-

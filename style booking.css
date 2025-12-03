@@ -1,3 +1,4 @@
+/* 1. Global Reset & Body */
 html {
 box-sizing: border-box;
 }
@@ -8,13 +9,13 @@ box-sizing: inherit;
 body {
 font-family: 'Urbanist', sans-serif; 
 line-height: 1.5;
-background-color: #D4D4E4; /* Match left panel for mobile */
+background-color: #D4D4E4; 
 color: #003766;
 margin: 0;
 padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -23,53 +24,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-1. minmax(0, 1fr) = Flexible left space
-2. auto = Logo size
-3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important; 
+justify-self: start; 
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important; 
+justify-self: end; 
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center; 
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -80,7 +69,7 @@ height: 6.25rem;
 display: block;
 max-width: 100%;
 }
-/* --- GENERAL LINK STYLES --- */
+
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -91,7 +80,7 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
 }
 
 .navbar-nav .nav-link:hover {
@@ -102,25 +91,22 @@ color: #2979c4 !important;
 position: relative; 
 }
 
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0; 
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #2979c4; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px; 
+background-color: #2979c4; 
+border-radius: 2px; 
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500; 
 }
 
-/* --- UTILITIES --- */
 .desktop-navbar {
 display: block;
 }
@@ -134,24 +120,24 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
 }
 
 
-/* Left Panel - Form and Calendar */
+/* 3. Left Panel (Forms) */
 .custom-left-panel {
 background-color: #D4D4E4;
 }
 
 .main-title {
 font-family: 'Urbanist', sans-serif;
-font-size: 3.5rem; /* Larger font size */
-font-weight: 900; /* Extra bold */
+font-size: 3.5rem; 
+font-weight: 900; 
 margin-bottom: 40px;
-line-height: 1; /* Tighter line height */
+line-height: 1; 
 }
 .main-title{
-color: #003766; /* Darker gray for "BOOK A" */
+color: #003766; 
 }
-/* Form Theming (overriding Bootstrap) */
+
 .col-form-label {
-font-weight: 700; /* Bold label */
+font-weight: 700; 
 font-size: 0.95rem;
 color: #003766;
 }
@@ -173,12 +159,12 @@ box-shadow: inset 0 1px 3px rgba(0,0,0,0.1), 0 0 0 0.25rem rgba(0,123,255,.25);
 }
 
 .form-select {
-appearance: none; /* Remove default select arrow */
+appearance: none; 
 background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.6-6.4H18.2c-5.9%200-11.2%203.2-13.6%208.8-2.4%205.6-2%2012.3%201.2%2017.2l132%20140c5.3%205.7%2013%208.6%2020.8%208.6s15.4-2.9%2020.8-8.6l132-140c3.2-5%203.6-11.7%201.2-17.2z%22%2F%3E%3C%2Fsvg%3E');
 background-repeat: no-repeat;
 background-position: right 1rem center;
 background-size: 12px;
-padding-right: 30px; /* Make space for the custom arrow */
+padding-right: 30px; 
 }
 
 .book-button {
@@ -194,31 +180,30 @@ margin-top: 20px;
 transition: background-color 0.3s ease;
 }
 .book-button:hover {
-background-color: #864601; /* Darker blue on hover */
+background-color: #864601; 
 color: white;
 }
 
-/* Right Panel - Background Image Section */
+/* 4. Right Panel (Background Image) */
 .right-panel {
 background-image: 
-linear-gradient(#C9761C,#07002A), /* Gradient overlay */
-url('studio-background.jpg'); /* Studio image background */
+linear-gradient(#C9761C,#07002A), 
+url('studio-background.jpg'); 
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
 }
 
-/* The Main Calendar Container */
+/* 5. Calendar (FullCalendar Overrides) */
 .fc {
 font-family: 'Urbanist', sans-serif;
-background-color: #003766; /* Navy background */
+background-color: #003766; 
 border-radius: 10px;
 padding: 15px;
 box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-color: white; /* Text color inside calendar */
+color: white; 
 }
 
-/* Title (Month Year) */
 .fc-toolbar-title {
 font-size: 1.5rem !important;
 font-weight: 700;
@@ -227,9 +212,8 @@ letter-spacing: 1px;
 color: white;
 }
 
-/* Buttons (Prev, Next, Today) */
 .fc-button-primary {
-background-color: #C9761C !important; /* Orange Accent */
+background-color: #C9761C !important; 
 border: none !important;
 font-weight: 700;
 text-transform: uppercase;
@@ -237,16 +221,14 @@ transition: background-color 0.3s ease;
 }
 
 .fc-button-primary:hover {
-background-color: #864601 !important; /* Darker Orange on hover */
+background-color: #864601 !important; 
 }
 
-/* Disabled buttons (when user can't go further back) */
 .fc-button-primary:disabled {
 background-color: #002a4d !important;
 opacity: 0.6;
 }
 
-/* Day Headers (Sun, Mon, Tue...) */
 .fc-col-header-cell-cushion {
 color: white; 
 text-decoration: none;
@@ -254,51 +236,46 @@ font-weight: 700;
 padding-bottom: 10px;
 }
 
-/* The Grid Cells */
 .fc-daygrid-day {
-background-color: white; /* White cells like your old design */
-border: 2px solid #003766; /* Navy borders */
-cursor: pointer; /* Makes it obvious you can click */
+background-color: white; 
+border: 2px solid #003766; 
+cursor: pointer; 
 transition: background-color 0.2s ease;
 }
 
-/* Hover effect on empty days */
 .fc-daygrid-day:hover {
 background-color: #e9ecef;
 }
 
-/* Day Numbers (1, 2, 3...) */
 .fc-daygrid-day-number {
-color: #003766; /* Navy numbers */
+color: #003766; 
 font-weight: 700;
 text-decoration: none;
 font-size: 0.9rem;
 padding: 8px;
 }
 
-/* Today's Date Highlight */
 .fc-day-today {
-background-color: #fcf3cf !important; /* Light yellow tint */
+background-color: #fcf3cf !important; 
 }
 
-/* Events (The "Booked" bars) */
 .fc-event {
 border: none;
 border-radius: 4px;
 padding: 2px 4px;
 font-size: 0.85rem;
 margin-top: 2px;
-cursor: not-allowed; /* Show user they can't click booked slots */
+cursor: not-allowed; 
 opacity: 0.9;
 }
 
-/* Message Box Styles */
+/* 6. Message Box Styles */
 #message-box {
 padding: 15px;
 margin-bottom: 25px;
 border-radius: 6px;
 font-weight: 500;
-display: none; /* Hidden by default */
+display: none; 
 text-align: center;
 }
 #message-box.success {
@@ -314,61 +291,58 @@ border: 1px solid #f5c6cb;
 display: block;
 }
 
-/* =========================================
-   NEW STYLES: BOOKING TABS
-   ========================================= */
+/* 7. Booking Tabs */
 .booking-tabs-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 1.5rem;
 }
 
 .booking-tab {
-    background: none;
-    border: none;
-    color: #003766; /* Standard Navy */
-    font-family: 'Urbanist', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    padding: 0.5rem 0;
-    position: relative;
-    opacity: 0.6;
-    transition: all 0.3s ease;
+background: none;
+border: none;
+color: #003766; 
+font-family: 'Urbanist', sans-serif;
+font-size: 1.2rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1px;
+cursor: pointer;
+padding: 0.5rem 0;
+position: relative;
+opacity: 0.6;
+transition: all 0.3s ease;
 }
 
 .booking-tab:hover {
-    color: #C9761C;
-    opacity: 1;
+color: #C9761C;
+opacity: 1;
 }
 
 .booking-tab.active {
-    color: #C9761C; /* Active Orange */
-    opacity: 1;
+color: #C9761C; 
+opacity: 1;
 }
 
-/* Underline for active tab */
 .booking-tab.active::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 3px;
-    background-color: #C9761C;
-    border-radius: 2px;
+content: "";
+position: absolute;
+left: 0;
+bottom: 0;
+width: 100%;
+height: 3px;
+background-color: #C9761C;
+border-radius: 2px;
 }
 
 .tab-divider {
-    color: #C9761C;
-    font-size: 1.5rem;
-    font-weight: 300;
+color: #C9761C;
+font-size: 1.5rem;
+font-weight: 300;
 }
 
-/*-- Footer Customization */
+/* 8. Footer Styles */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
@@ -398,21 +372,19 @@ color: #8f8e8e;
 }
 
 
-/* Responsive Adjustments */
-/*--navbar --*/
+/* 9. Responsive Media Queries */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -450,9 +422,9 @@ width: 100%;
 }
 }
 
-@media (max-width: 991.98px) { /* On tablets and below (when right col hides) */
+@media (max-width: 991.98px) { 
 .custom-left-panel {
-align-items: center; /* Center everything */
+align-items: center; 
 }
 }
 
@@ -463,12 +435,12 @@ text-align: center;
 }
 }
 
-@media (max-width: 575.98px) { /* Small mobile */
+@media (max-width: 575.98px) { 
 .main-title {
 font-size: 2rem;
 }
 .col-form-label.text-sm-end {
-text-align: left !important; /* Stack labels on top */
+text-align: left !important; 
 }
 }
 
@@ -476,7 +448,7 @@ text-align: left !important; /* Stack labels on top */
 .fc-toolbar-title { font-size: 1.2rem !important; }
 .fc-button { font-size: 0.8rem !important; padding: 0.2rem 0.5rem !important; }
 .fc-header-toolbar {
-    flex-wrap: wrap;
-    gap: 10px;
+flex-wrap: wrap;
+gap: 10px;
 }
 }

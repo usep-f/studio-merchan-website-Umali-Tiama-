@@ -1,4 +1,4 @@
-
+/* 1. Global Resets & Body */
 html {
 box-sizing: border-box;
 }
@@ -15,7 +15,7 @@ margin: 0;
 padding: 0;
 }
 
-/* Navbar Styles */
+/* 2. Navbar Styling */
 .navbar-custom {
 background: linear-gradient(90deg, #71a4f1 0%, #c8761d 100%);
 padding-left: 3rem;
@@ -24,53 +24,41 @@ position: relative;
 z-index: 9999; 
 }
 
-/* This is the container that holds Left, Logo, and Right */
 .navbar-grid {
-display: grid !important; /* !important ensures grid behavior is forced */
+display: grid !important; 
 width: 100%;
 height: 100%;
-
-/* THE MAGIC FORMULA: 
-    1. minmax(0, 1fr) = Flexible left space
-    2. auto = Logo size
-    3. minmax(0, 1fr) = Flexible right space (equal to left)
-*/
 grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-/* This fixes the "staircase" issue by locking everything to the vertical center */
 align-items: center; 
 }
 
-/* --- LEFT COLUMN (About, Services, Team) --- */
 .left-nav {
 display: flex;
 align-items: center;
-justify-content: flex-start !important; /* Pushes text to the far left */
-justify-self: start; /* Grid alignment */
+justify-content: flex-start !important;
+justify-self: start;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- RIGHT COLUMN (Contact, Book Us, Join Us) --- */
 .right-nav {
 display: flex;
 align-items: center;
-justify-content: flex-end !important; /* Pushes text to the far right */
-justify-self: end; /* Grid alignment */
+justify-content: flex-end !important;
+justify-self: end;
 gap: 2rem;
 margin: 0 !important;
 padding: 0 !important;
 width: 100%;
 }
 
-/* --- CENTER COLUMN (Logo) --- */
 .navbar-brand {
 display: flex;
 align-items: center;
 justify-content: center;
-justify-self: center; /* Locks logo to dead center of the grid */
+justify-self: center;
 margin: 0 !important;
 padding: 0 !important;
 width: auto;
@@ -81,7 +69,7 @@ height: 6.25rem;
 display: block;
 max-width: 100%;
 }
-/* --- GENERAL LINK STYLES --- */
+
 .navbar-nav {
 display: flex !important;
 flex-direction: row !important;
@@ -92,48 +80,37 @@ color: #003766 !important;
 font-size: 1.8rem;
 font-weight: 300;
 transition: color 0.3s ease;
-white-space: nowrap; /* Prevents text from wrapping weirdly */
+white-space: nowrap; 
+position: relative; 
 }
 
 .navbar-nav .nav-link:hover {
 color: #2979c4 !important;
 }
 
-.navbar-nav .nav-link {
-position: relative; 
-}
-
-/* 2. The Active Line Style */
 .navbar-nav .nav-link.active::after {
 content: "";
 position: absolute;
 left: 0;
-bottom: 0; /* Moves the line to the bottom edge of the text */
+bottom: 0;
 width: 100%;
-height: 3px; /* Thickness of the line */
-background-color: #c8761d; /* Your orange accent color */
-border-radius: 2px; /* Rounds the edges slightly */
+height: 3px;
+background-color: #c8761d;
+border-radius: 2px;
 }
 
-/* 3. Optional: Keep the text color 'active' (blue) as well */
 .navbar-nav .nav-link.active {
 color: #2979c4 !important;
-font-weight: 500; /* Slightly bolder to emphasize */
+font-weight: 500;
 }
 
-/* --- UTILITIES --- */
-.desktop-navbar {
-display: block;
-}
-
-.navbar-toggler {
-border: none;
-}
-
+.desktop-navbar { display: block; }
+.navbar-toggler { border: none; }
 .navbar-toggler-icon {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+/* 3. Audio Mixing Hero Section */
 .audio-mixing {
 position: relative;
 min-height: 80vh;
@@ -145,16 +122,14 @@ align-items: center;
 padding: 5rem 10rem;
 }
 
-/* Dark gradient overlay */
 .audio-mixing-overlay {
 position: absolute;
 inset: 0;
-background: #07002ABE; /* dark blue filtering */
+background: #07002ABE; 
 backdrop-filter: blur(2px);
 z-index: 1;
 }
 
-/* Text + Button Container */
 .audio-mixing-content {
 position: relative;
 z-index: 2;
@@ -162,19 +137,17 @@ max-width: 800px;
 color: #C9761C;
 }
 
-/* Heading */
 .audio-mixing-content h1 {
 font-size: 4rem;
 font-weight: 800;
 margin-bottom: 1.2rem;
-color: #C9761C; /* bright orange */
+color: #C9761C; 
 }
 
 .audio-mixing-content h1 span {
 color: #C9761C;
 }
 
-/* Paragraph */
 .audio-mixing-content p {
 font-size: 1.2rem;
 font-weight: 300;
@@ -182,11 +155,10 @@ color: #C9761C;
 margin-bottom: 1.5rem;
 }
 
-/* Button */
 .mixing-btn {
 display: inline-block;
 padding: 1rem 2.2rem;
-background-color: #C9761C; /* orange */
+background-color: #C9761C; 
 color: white;
 text-decoration: none;
 border-radius: 30px;
@@ -199,6 +171,7 @@ transition: background 0.3s ease;
 background-color: #a56017;
 }
 
+/* 4. Finding Sound Section */
 .finding-sound {
 background-color: #D4D4E4;
 padding: 6rem 2rem;
@@ -210,7 +183,6 @@ color: #003766;
 font-size: 4rem;
 font-weight: 800;
 margin-bottom: 1.5rem;
-
 }
 
 .finding-sound-title .accent {
@@ -233,12 +205,12 @@ margin: 0 auto 3rem auto;
 color: #003766;
 font-weight: 300;
 font-size: 1.5rem;
-margin-bottom: 0.75rem; /* Adds a little space above the image */
+margin-bottom: 0.75rem; 
 }
 
 .sound-image {
 width: 100%;
-height: 250px; /* Ensures uniform height */
+height: 250px; 
 object-fit: cover;
 border-radius: 30px;
 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -250,6 +222,7 @@ transform: translateY(-5px);
 box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
+/* 5. Modern Classic Hybrid Section */
 .modern-classic {
 width: 100%;
 margin: 0;
@@ -257,8 +230,6 @@ padding: 0;
 min-height: 100vh;
 }
 
-
-/* ✅ TOP STRIP — 4 IMAGES IN A GRID */
 .mc-image-strip {
 position: relative;
 width: 100%;
@@ -268,11 +239,10 @@ height: 360px;
 }
 .mc-img-box {
 overflow: hidden;
-border-right: 2px solid rgba(255, 255, 255); /* thin divider */
+border-right: 2px solid rgba(255, 255, 255); 
 border-left: 2px solid rgba(255, 255, 255);
 }
 
-/* ✅ OVERLAY */
 .mc-image-strip::after {
 content: "";
 position: absolute;
@@ -285,11 +255,10 @@ to bottom,
 #C9761C88,
 #07002A88
 );
-pointer-events: none;   /* allows clicking through if needed */
+pointer-events: none; 
 z-index: 2;
 }
 
-/* make images sit behind overlay */
 .mc-img-box {
 position: relative;
 z-index: 1;
@@ -302,7 +271,6 @@ height: 100%;
 object-fit: cover;
 }
 
-/* ✅ BLUE TEXT SECTION UNDER IT */
 .modern-classic-content {
 background-color: #003766;
 text-align: center;
@@ -324,11 +292,12 @@ font-size: 1.2rem;
 font-weight: 300;
 }
 
+/* 6. Console Workhorse Section (Split Layout) */
 .console { 
 display: grid;
 grid-template-columns: 2fr 1fr;
 min-height: 50vh;
-background-color: #D4D4E4;   /* centers vertically */
+background-color: #D4D4E4; 
 }
 
 .console-content {
@@ -343,7 +312,7 @@ padding-bottom: 6rem;
 }
 
 .console h1 {
-  padding-right: 10rem;
+padding-right: 10rem;
 font-size: 4rem;
 font-weight: 800;
 }
@@ -364,7 +333,7 @@ background-size: cover;
 background-position: center;
 }
 
-/* Footer Styles */
+/* 7. Footer Styles */
 .footer-custom {
 background: linear-gradient(90deg, #011b41 0%, #130029 100%);
 color: #ffffff;
@@ -392,21 +361,21 @@ transition: color 0.3s ease;
 color: #8f8e8e;
 }
 
-/* Responsive Styles */
-/*--navbar --*/
+/* 8. Responsive Media Queries */
+
+/* Navbar & Mobile Logic */
 @media (max-width: 1050px) {
 .desktop-navbar {
 display: none !important;
 }
 .navbar-brand img {
-height: 6rem !important;  
+height: 6rem !important; 
 }
 }
 .mobile-navbar {
 display: none;
 }
 
-/*borgir*/
 @media (max-width: 1050px) {
 .desktop-navbar { display: none !important; }
 .mobile-navbar {
@@ -444,156 +413,142 @@ width: 100%;
 }
 }
 
-/* =========================================
-   MOBILE RESPONSIVENESS: MIXING CONTENT
-   ========================================= */
+/* MOBILE RESPONSIVENESS: MIXING CONTENT */
 
 @media (max-width: 992px) {
 
-  /* --- 1. Hero Section --- */
-  .audio-mixing {
-    padding: 6rem 1.5rem; /* Fix the 10rem squeeze */
-    min-height: 60vh;
-    text-align: center;
-    justify-content: center; /* Ensure text centers vertically */
-  }
-
-  .audio-mixing-content h1 {
-    font-size: 3rem; /* Down from 4rem */
-  }
-
-  .audio-mixing-content p {
-    font-size: 1.2rem;
-  }
-
-  /* --- 2. "Finding The Right Sound" Grid --- */
-  .finding-sound {
-    padding: 4rem 1.5rem;
-  }
-  
-  .finding-sound-title {
-    font-size: 2.5rem;
-  }
-
-  /* --- 3. "Modern Classic" Image Strip --- */
-  /* Currently 4 images in a row. On mobile, that's too thin.
-     Let's make it a 2x2 Grid. */
-  .mc-image-strip {
-    grid-template-columns: 1fr 1fr; /* 2 columns */
-    height: auto; /* Allow height to grow */
-  }
-  
-  .mc-img-box {
-    height: 200px; /* Set a reasonable height for each square */
-  }
-
-  .modern-classic-content {
-    padding: 4rem 2rem;
-  }
-  
-  .modern-classic-content h2 {
-    font-size: 2.5rem;
-  }
-
-  /* --- 4. Console Section (Split Layout) --- */
-  .console {
-    /* Switch to Vertical Stack */
-    grid-template-columns: 1fr; 
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Image on Top */
-  .console-image {
-    order: 1;
-    height: 300px;
-    width: 100%;
-  }
-
-  /* Text on Bottom */
-  .console-content {
-    order: 2;
-    padding: 4rem 2rem; /* Fix the massive padding */
-    text-align: center;
-  }
-
-  .console h1 {
-    font-size: 2.5rem;
-  }
+/* --- 1. Hero Section --- */
+.audio-mixing {
+padding: 6rem 1.5rem; 
+min-height: 60vh;
+text-align: center;
+justify-content: center; 
 }
 
-/* =========================================
-   SERVICE SUB-NAVBAR
-   ========================================= */
+.audio-mixing-content h1 {
+font-size: 3rem; 
+}
+
+.audio-mixing-content p {
+font-size: 1.2rem;
+}
+
+/* --- 2. "Finding The Right Sound" Grid --- */
+.finding-sound {
+padding: 4rem 1.5rem;
+}
+
+.finding-sound-title {
+font-size: 2.5rem;
+}
+
+.mc-image-strip {
+grid-template-columns: 1fr 1fr; 
+height: auto; 
+}
+
+.mc-img-box {
+height: 200px; 
+}
+
+.modern-classic-content {
+padding: 4rem 2rem;
+}
+
+.modern-classic-content h2 {
+font-size: 2.5rem;
+}
+
+/* --- 4. Console Section (Split Layout) --- */
+.console {
+grid-template-columns: 1fr; 
+display: flex;
+flex-direction: column;
+}
+
+/* Image on Top */
+.console-image {
+order: 1;
+height: 300px;
+width: 100%;
+}
+
+/* Text on Bottom */
+.console-content {
+order: 2;
+padding: 4rem 2rem; 
+text-align: center;
+}
+
+.console h1 {
+font-size: 2.5rem;
+}
+}
+
+/* 9. Service Sub-Navbar (Mobile) */
 
 .service-sub-nav {
-  background-color: #002a4d; /* Slightly darker than brand blue for contrast */
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 9000; /* Sits just below the main navbar z-index */
+background-color: #002a4d; 
+padding: 1rem 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+position: relative;
+z-index: 9000; 
 }
 
 .sub-nav-list {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem; /* Space between items */
-  margin: 0;
-  padding: 0;
+list-style: none;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2rem; 
+margin: 0;
+padding: 0;
 }
 
 .sub-nav-link {
-  color: #ffffff; /* White text by default */
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-  opacity: 0.7; /* Slightly faded when not active */
+color: #ffffff; 
+text-decoration: none;
+font-size: 1.1rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 2px;
+transition: all 0.3s ease;
+opacity: 0.7; 
 }
 
 .sub-nav-link:hover {
-  color: #c8761d; /* Brand Orange on hover */
-  opacity: 1;
+color: #c8761d; 
+opacity: 1;
 }
 
-/* Divider Styling */
 .sub-nav-divider {
-  color: #c8761d;
-  font-weight: 300;
-  opacity: 0.5;
+color: #c8761d;
+font-weight: 300;
+opacity: 0.5;
 }
 
-/* ACTIVE STATE (Highlight the current page) */
 .sub-nav-link.active {
-  color: #c8761d;
-  opacity: 1;
-  border-bottom: 2px solid #c8761d;
-  padding-bottom: 3px;
+color: #c8761d;
+opacity: 1;
+border-bottom: 2px solid #c8761d;
+padding-bottom: 3px;
 }
 
-/* =========================================
-   SUB-NAV MOBILE RESPONSIVENESS
-   ========================================= */
 @media (max-width: 768px) {
-  .service-sub-nav {
-    padding: 0.8rem 0;
-  }
-
-  .sub-nav-list {
-    gap: 1rem; /* Tighter spacing on phones */
-  }
-
-  .sub-nav-link {
-    font-size: 0.9rem; /* Smaller text to fit on one line */
-    letter-spacing: 1px;
-  }
-  
-  .sub-nav-divider {
-    font-size: 0.9rem;
-  }
+.service-sub-nav {
+padding: 0.8rem 0;
 }
 
+.sub-nav-list {
+gap: 1rem; 
+}
+
+.sub-nav-link {
+font-size: 0.9rem; 
+letter-spacing: 1px;
+}
+
+.sub-nav-divider {
+font-size: 0.9rem;
+}
+}

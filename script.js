@@ -1,13 +1,12 @@
-// 1. Import the database connection
+// 1. Import the database connection and Firestore tools
 import { db } from './firebase-config.js'; 
-
-// 2. Import Firestore tools
 import { collection, getDocs, query, orderBy } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// =========================================
-// SECTION A: LOAD ARTISTS (Existing)
-// =========================================
+/* 2. Carousel Loader: loadArtists()
+   Fetches the list of featured artists from the Firestore 'featured_artists' 
+   collection, sorts them by the 'order' field, and dynamically generates 
+   the HTML for the carousel items on the homepage. */
 async function loadArtists() {
     const container = document.getElementById('dynamic-artist-container');
     if (!container) return; // Skip if not on homepage
@@ -49,9 +48,9 @@ async function loadArtists() {
     }
 }
 
-// =========================================
-// SECTION B: LOAD TESTIMONIALS (New)
-// =========================================
+/* 3. Testimonial Loader: loadTestimonials()
+   Fetches approved testimonials from the Firestore 'reviews' collection,
+   ordered by the 'order' field, and injects them into the homepage section. */
 async function loadTestimonials() {
     const container = document.getElementById('dynamic-testimonials-container');
     if (!container) return; // Skip if not on homepage
@@ -97,9 +96,7 @@ async function loadTestimonials() {
     }
 }
 
-// =========================================
-// SECTION C: INITIALIZE
-// =========================================
-// Run both functions when the page loads
+/* 4. Initializer
+   Runs both data fetching functions when the page is loaded. */
 loadArtists();
 loadTestimonials();

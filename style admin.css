@@ -1,84 +1,74 @@
-/* =========================================
-   1. GLOBAL & LOGIN STYLES
-   ========================================= */
+/* 1. Global & Login Styles */
 body {
-    background-color: #f4f6f9;
-    overflow-x: hidden; /* Prevent scrollbars from sidebar */
-    font-family: 'Urbanist', sans-serif;
+background-color: #f4f6f9;
+overflow-x: hidden; 
+font-family: 'Urbanist', sans-serif;
 }
 
-/* Login Screen */
 .login-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .login-card {
-    width: 400px;
-    border: none;
-    border-radius: 15px;
+width: 400px;
+border: none;
+border-radius: 15px;
 }
 
-/* =========================================
-   2. SIDEBAR DASHBOARD
-   ========================================= */
+/* 2. Sidebar Dashboard */
 .sidebar {
-    min-height: 100vh;
-    background-color: #003766; /* Studio Navy */
-    color: white;
-    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+min-height: 100vh;
+background-color: #003766; 
+color: white;
+box-shadow: 4px 0 10px rgba(0,0,0,0.1);
 }
 
 .sidebar-brand {
-    color: #C9761C; /* Studio Orange */
+color: #C9761C; 
 }
 
-/* Navigation Links */
 .nav-link {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.1rem;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.2s;
-    margin-bottom: 5px;
-    cursor: pointer;
+color: rgba(255, 255, 255, 0.8);
+font-size: 1.1rem;
+padding: 12px 20px;
+border-radius: 8px;
+transition: all 0.2s;
+margin-bottom: 5px;
+cursor: pointer;
 }
 
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+background-color: rgba(255, 255, 255, 0.1);
+color: white;
 }
 
 .nav-link.active {
-    background-color: #C9761C;
-    color: white;
-    font-weight: 700;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+background-color: #C9761C;
+color: white;
+font-weight: 700;
+box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
-/* =========================================
-   3. CONTENT AREA
-   ========================================= */
+/* 3. Content Area */
 .main-content {
-    height: 100vh;
-    overflow-y: auto;
-    padding: 3rem;
+height: 100vh;
+overflow-y: auto;
+padding: 3rem;
 }
 
 .card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+border: none;
+border-radius: 15px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-/* Table Styling */
 .table-dark {
-    background-color: #003766;
+background-color: #003766;
 }
 
-/* Utilities */
 .hidden {
-    display: none !important;
+display: none !important;
 }

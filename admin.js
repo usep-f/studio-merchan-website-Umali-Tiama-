@@ -1,13 +1,12 @@
-/* =========================================
-   1. IMPORTS & CONFIG
-   ========================================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, deleteDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// --- FIREBASE CONFIG ---
+/* 1. Configuration and Initialization
+   Sets up Firebase (Auth, Firestore, Storage) and Supabase client
+   for database interactions across the dashboard. */
 const firebaseConfig = {
     apiKey: "AIzaSyBd-IxyiDnyfwv7XDntnfHesmqD4_p8fzo",
     authDomain: "studio-merchan.firebaseapp.com",
@@ -18,7 +17,6 @@ const firebaseConfig = {
     measurementId: "G-QMC8J9PP9D"
 };
 
-// --- SUPABASE CONFIG ---
 const supabaseUrl = 'https://cishguvndzwtlbchhqbf.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpc2hndXZuZHp3dGxiY2hocWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg0NjMsImV4cCI6MjA3OTMzNDQ2M30.kKcLTk5BTTyDF_tcwTORM93vp-3rDtCpSmj9ypoZECY';
 
@@ -28,9 +26,8 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-/* =========================================
-   2. AUTHENTICATION
-   ========================================= */
+/* 2. Authentication Handlers and State
+   Handles admin login/logout and checks user permission before showing the dashboard. */
 window.login = () => {
     const e = document.getElementById("login-email").value;
     const p = document.getElementById("login-password").value;
@@ -44,6 +41,7 @@ window.logout = () => signOut(auth);
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
+        // Check if the authenticated user has admin privileges in Supabase
         const { data, error } = await supabase
             .from('clients')
             .select('is_admin')
@@ -57,59 +55,58 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById("login-screen").classList.remove("hidden");
             document.getElementById("dashboard-screen").classList.add("hidden");
         } else {
+            // Admin is verified. Show dashboard and load initial data.
             document.getElementById("login-screen").classList.add("hidden");
             document.getElementById("dashboard-screen").classList.remove("hidden");
             loadSlotData(); 
         }
 
     } else {
+        // No user signed in, show login screen
         document.getElementById("login-screen").classList.remove("hidden");
         document.getElementById("dashboard-screen").classList.add("hidden");
     }
 });
 
-/* =========================================
-   3. NAVIGATION LOGIC
-   ========================================= */
+/* 3. Navigation Logic
+   Controls which section is visible in the main content area and triggers data fetching. */
 window.showSection = (sectionId) => {
-    // 1. Hide all sections
+    // Hide all sections and deactivate buttons (using hardcoded IDs from HTML)
     document.getElementById('section-carousel').classList.add('hidden');
     document.getElementById('section-bookings').classList.add('hidden');
     document.getElementById('section-live').classList.add('hidden');
     document.getElementById('section-testimonials').classList.add('hidden');
     document.getElementById('section-remote').classList.add('hidden');
-    document.getElementById('section-clients').classList.add('hidden'); // <--- NEW
+    document.getElementById('section-clients').classList.add('hidden');
     document.getElementById('section-messages').classList.add('hidden');
     document.getElementById('section-reviews').classList.add('hidden');
 
-    // 2. Deactivate all buttons
     document.getElementById('btn-carousel').classList.remove('active');
     document.getElementById('btn-bookings').classList.remove('active');
     document.getElementById('btn-live').classList.remove('active');
     document.getElementById('btn-testimonials').classList.remove('active');
     document.getElementById('btn-remote').classList.remove('active');
-    document.getElementById('btn-clients').classList.remove('active'); // <--- NEW
+    document.getElementById('btn-clients').classList.remove('active');
     document.getElementById('btn-messages').classList.remove('active');
     document.getElementById('btn-reviews').classList.remove('active');
 
-    // 3. Show target
+    // Show target section and activate button
     document.getElementById('section-' + sectionId).classList.remove('hidden');
     document.getElementById('btn-' + sectionId).classList.add('active');
 
-    // 4. Fetch Data
+    // Fetch data based on section ID
     if (sectionId === 'bookings') fetchAdminBookings();
     if (sectionId === 'live') fetchLiveBookings();
     if (sectionId === 'testimonials') fetchTestimonials();
     if (sectionId === 'remote') fetchRemoteProjects();
-    if (sectionId === 'clients') fetchClients(); // <--- NEW
+    if (sectionId === 'clients') fetchClients();
     if (sectionId === 'messages') fetchMessages();
     if (sectionId === 'reviews') fetchReviews();
     
 };
 
-/* =========================================
-   4. CAROUSEL MANAGER (Firestore)
-   ========================================= */
+/* 4. Carousel Manager (Firestore)
+   Handles loading and saving artist data for the homepage carousel via Firestore. */
 window.loadSlotData = async () => {
     const slotNum = document.getElementById("slot-selector").value;
     const docId = "artist_" + slotNum;
@@ -168,9 +165,8 @@ window.saveSlot = async () => {
     } catch (e) { alert("Error: " + e.message); }
 };
 
-/* =========================================
-   5. STUDIO BOOKINGS MANAGER
-   ========================================= */
+/* 5. Studio Bookings Manager
+   Fetches, renders, updates status, and deletes studio bookings from Supabase. */
 window.fetchAdminBookings = async () => {
     const tbody = document.getElementById('bookings-table-body');
     tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Loading bookings...</td></tr>';
@@ -236,9 +232,8 @@ window.deleteBooking = async (id) => {
     else fetchAdminBookings();
 };
 
-/* =========================================
-   6. LIVE EVENTS MANAGER (NEW)
-   ========================================= */
+/* 6. Live Events Manager
+   Fetches, renders, updates status, and deletes live sound event bookings from Supabase. */
 window.fetchLiveBookings = async () => {
     const tbody = document.getElementById('live-table-body');
     tbody.innerHTML = '<tr><td colspan="6" class="text-center p-5 text-muted">Loading live events...</td></tr>';
@@ -281,7 +276,7 @@ window.fetchLiveBookings = async () => {
                 <div class="fw-bold text-primary">${b.event_type}</div>
                 <div class="small">${b.package}</div>
             </td>
-             <td>
+              <td>
                 <div class="small fw-bold">${b.location}</div>
             </td>
             <td>
@@ -315,9 +310,8 @@ window.deleteLiveBooking = async (id) => {
 };
 
 
-/* =========================================
-   7. TESTIMONIALS MANAGER
-   ========================================= */
+/* 7. Testimonials Manager (Firestore)
+   Handles CRUD operations and rendering for testimonials displayed on the homepage. */
 window.fetchTestimonials = async () => {
     const tbody = document.getElementById('testimonials-table-body');
     tbody.innerHTML = '<tr><td colspan="3" class="text-center p-4">Loading...</td></tr>';
@@ -433,9 +427,8 @@ window.resetTestiForm = () => {
     document.getElementById('testi-form-title').textContent = "Add New Review";
 };
 
-/* =========================================
-   8. REMOTE PROJECTS MANAGER
-   ========================================= */
+/* 8. Remote Projects Manager (Supabase)
+   Fetches, renders, and manages project status for remote mixing/mastering requests. */
 window.fetchRemoteProjects = async () => {
     const tbody = document.getElementById('remote-table-body');
     tbody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Loading projects...</td></tr>';
@@ -473,10 +466,10 @@ window.fetchRemoteProjects = async () => {
                 <td class="ps-4">
                     <span class="badge ${badgeClass} rounded-pill px-3 py-2 mb-1">${p.status}</span>
                     ${ p.status === 'Revision Requested' && p.revision_notes ? 
-                       `<div class="small text-danger mt-1" style="max-width: 150px; line-height: 1.2;">
-                          <strong>Note:</strong> "${p.revision_notes}"
+                        `<div class="small text-danger mt-1" style="max-width: 150px; line-height: 1.2;">
+                            <strong>Note:</strong> "${p.revision_notes}"
                         </div>` 
-                       : '' 
+                        : '' 
                     }
                 </td>
                 <td>
@@ -538,9 +531,8 @@ window.resetRevisions = async (id) => {
     else fetchRemoteProjects();
 };
 
-/* =========================================
-   9. REVISION SYSTEM LOGIC
-   ========================================= */
+/* 9. Revision System Logic
+   Handles the modal for uploading deliverables/revisions to clients. */
 window.openRevisionModal = (projectId) => {
     document.getElementById('rev-project-id').value = projectId;
     document.getElementById('rev-name').value = "";
@@ -629,9 +621,8 @@ window.deleteRemoteProject = async (id) => {
     else fetchRemoteProjects();
 };
 
-/* =========================================
-   10. CLIENT MANAGEMENT SYSTEM
-   ========================================= */
+/* 10. Client Management System
+    Handles client list fetching, user history viewing, and admin/delete actions. */
 
 // --- A. FETCH & DISPLAY CLIENTS ---
 window.fetchClients = async () => {
@@ -677,7 +668,7 @@ window.fetchClients = async () => {
             const adminBtn = isMe
                 ? ''
                 : `<button onclick="toggleAdmin('${c.client_uid}', ${c.is_admin})" class="btn btn-sm ${c.is_admin ? 'btn-outline-secondary' : 'btn-outline-success'} me-1" title="${c.is_admin ? 'Revoke Admin' : 'Make Admin'}">
-                     <i class="bi ${c.is_admin ? 'bi-person-dash' : 'bi-shield-check'}"></i>
+                    <i class="bi ${c.is_admin ? 'bi-person-dash' : 'bi-shield-check'}"></i>
                    </button>`;
 
             html += `
@@ -802,9 +793,8 @@ window.deleteUser = async (uid) => {
     }
 };
 
-/* =========================================
-   11. MESSAGES / INBOX SYSTEM (Firestore)
-   ========================================= */
+/* 11. Messages / Inbox System (Firestore)
+    Handles fetching, viewing, and deleting client contact messages from Firestore. */
 
 // --- A. FETCH MESSAGES & UPDATE BADGE ---
 window.fetchMessages = async () => {
@@ -815,7 +805,6 @@ window.fetchMessages = async () => {
 
     try {
         // 1. Fetch from Firestore (Collection: 'contact_messages')
-        // We use the existing 'db' variable initialized at the top of admin.js
         const q = query(collection(db, "contact_messages"), orderBy("timestamp", "desc"));
         const querySnapshot = await getDocs(q);
 
@@ -847,7 +836,7 @@ window.fetchMessages = async () => {
             if (msg.timestamp) {
                 // Firestore Timestamp to JS Date
                 dateStr = msg.timestamp.toDate().toLocaleDateString() + ' ' + 
-                          msg.timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                                 msg.timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             }
 
             // Escape quotes for the onclick handler
@@ -937,9 +926,8 @@ window.deleteMessage = async (id) => {
     }
 };
 
-/* =========================================
-   12. REVIEWS MANAGEMENT (Firestore)
-   ========================================= */
+/* 12. Reviews Management (Firestore)
+    Handles fetching, rendering, approving, and deleting public user reviews. */
 
 // --- A. FETCH REVIEWS ---
 window.fetchReviews = async () => {
